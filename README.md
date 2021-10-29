@@ -4,7 +4,27 @@ Project template used for quickly scaffolding new Flutter based projects that ea
 Bedrock back-end while following industry best practices for things like state management, 
 localization & internationalization, unit & widget testing, and much more.
 
+## ✨ Features
+
+✅ Localization
+
+✅ State management using [Provider](https://pub.dev/packages/provider) with example screens for Shops & Products using Bedrock API
+
+✅ Authentication using Bedrock API
+
+✅ Unit testing, API Mocks using [Mockito](https://pub.dev/packages/mockito)
+
+✅ Widget tests
+
+✅ Support for 🌓 Dark/Light mode
+
+
 ## Getting Started
+
+### Prerequisites
+
+1. Install Flutter SDK [here](https://flutter.dev/docs/get-started/install).
+2. Run `flutter doctor` in terminal and install all missing dependencies required by Flutter to run.
 
 ### Setup
 
@@ -24,6 +44,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Running
 
+Before running the app, make sure you have the Bedrock API running whether on localhost or on a public URL. You can pass in the API URL by passing in a variable using `--dart-define` See below ⬇️.
+
 - Install dependencies `flutter pub get`
 - Run application
   ```bash
@@ -33,7 +55,10 @@ samples, guidance on mobile development, and a full API reference.
 
 #### Environment variables
 
-- `BEDROCK_API`: This should be pointed to the base url of where the API is running.
+| Variable              | Default Value          | Description |
+| -                     | -                      | -           |
+| `BEDROCK_API`         | https://localhost:2300 | Base url of where the API is running |
+| `BEDROCK_API_VERSION` | 1                      | API Version |
 
 ### Localization
 
