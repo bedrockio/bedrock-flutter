@@ -1,46 +1,58 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../services/bedrock_service.dart';
+import 'auth_storage.dart';
 
-class AuthController extends ChangeNotifier {
+abstract class IAuth {
+  Future<void> login(String email, String password);
+  Future<void> logout();
+  Future<void> register(
+    String email,
+    String firstName,
+    String lastName,
+    String password,
+  );
+  Future<void> resetPassword(String email);
+  Future<void> setPassword(String newPassword);
+}
+
+class AuthController extends ChangeNotifier implements IAuth {
   late String apiResponse;
   final BedrockService apiService = BedrockService();
-  final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final IAuthTokenStorage storage;
+
+  AuthController({required this.storage});
 
   Future<bool> get authenticated async {
-    String? token = await readAuthToken();
+    String? token = await storage.readAuthToken();
     if (token != null) {
-      return !JwtDecoder.isExpired(token);
+      try {
+        return !JwtDecoder.isExpired(token);
+      } on FormatException {
+        return false;
+      }
     } else {
       return false;
     }
   }
 
-  Future<String?> readAuthToken() async {
-    return await storage.read(key: BedrockService.tokenKey);
-  }
-
-  Future<void> storeAuthToken(String token) async {
-    return await storage.write(key: BedrockService.tokenKey, value: token);
-  }
-
-  // TODO: Implement methods below which will connect to the Bedrock API
-  void login(String email, String password) async {
+  @override
+  Future<void> login(String email, String password) async {
     http.Response? response = await apiService.post('/auth/login', payload: {
       'email': email,
       'password': password,
     });
+
     if (response != null) {
       var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         String token = jsonResponse['data']['token'];
         if (!JwtDecoder.isExpired(token)) {
-          await storeAuthToken(token);
+          await storage.storeAuthToken(token);
           notifyListeners();
         }
       }
@@ -51,12 +63,14 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  void logout() async {
-    await storeAuthToken("");
+  @override
+  Future<void> logout() async {
+    await storage.storeAuthToken('');
     notifyListeners();
   }
 
-  void register(
+  @override
+  Future<void> register(
     String email,
     String firstName,
     String lastName,
@@ -69,15 +83,12 @@ class AuthController extends ChangeNotifier {
       'password': password,
     });
 
-    print(response!.statusCode.toString());
-    print(response!.body.toString());
-
     if (response != null) {
       var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         String token = jsonResponse['data']['token'];
         if (!JwtDecoder.isExpired(token)) {
-          await storeAuthToken(token);
+          await storage.storeAuthToken(token);
           notifyListeners();
         }
       }
@@ -88,6 +99,13 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  resetPassword(String email) {}
-  setPassword(String newPassword) {}
+  @override
+  Future<void> resetPassword(String email) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> setPassword(String newPassword) {
+    throw UnimplementedError();
+  }
 }

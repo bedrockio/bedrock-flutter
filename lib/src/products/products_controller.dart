@@ -1,14 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../auth/auth_controller.dart';
+import '../auth/auth_storage.dart';
 import '../services/bedrock_service.dart';
 import 'product_model.dart';
 
 class ProductsController extends ChangeNotifier {
   final BedrockService _apiService = BedrockService();
-  final AuthController _authController = AuthController();
+  final AuthController _authController = AuthController(
+    storage: AuthStorage(const FlutterSecureStorage()),
+  );
   final List<Product> _products = List.empty(growable: true);
 
   Future<List<Product>> get products async {
@@ -20,7 +24,7 @@ class ProductsController extends ChangeNotifier {
   void _emptyProducts() => _products.removeRange(0, _products.length);
 
   Future<void> fetchProducts() async {
-    String? token = await _authController.readAuthToken();
+    String? token = await _authController.storage.readAuthToken();
     if (token != null) {
       var response = await _apiService.post('/products/search', token: token);
       var json = jsonDecode(utf8.decode(response!.bodyBytes));
