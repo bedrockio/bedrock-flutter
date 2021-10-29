@@ -7,6 +7,10 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import '../services/bedrock_service.dart';
 import 'auth_storage.dart';
 
+/// Interface used for declaring all the necessary methods for authentication
+/// and authorization.
+///
+/// This is also helpful for creating Mock tests to simulate API behavior
 abstract class IAuth {
   Future<void> login(String email, String password);
   Future<void> logout();
@@ -20,6 +24,14 @@ abstract class IAuth {
   Future<void> setPassword(String newPassword);
 }
 
+/// Responsible for interacting with Bedrock API through [BedrockService] and
+/// updating the UI by calling notifyListeners() to trigger a widget rebuild
+/// on authentication status updates.
+///
+/// [storage] Storage is a required class member which corresponds to
+/// [IAuthTokenStorage] for the mechanism to use for storing JWT tokens. This is
+/// mainly useful for providing other methods of storing token such as
+/// in-memory (for mock tests).
 class AuthController extends ChangeNotifier implements IAuth {
   late String apiResponse;
   final BedrockService apiService = BedrockService();

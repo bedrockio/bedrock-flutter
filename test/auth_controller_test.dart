@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mockito/mockito.dart';
 
+/// Mock AuthController to simulate Bedrock API behavior by generating JWT tokens
+/// and implementing authentication methods through [IAuth]
 class MockAuthController extends Mock implements IAuth {
   final IAuthTokenStorage storage;
 
@@ -64,6 +66,9 @@ class MockAuthController extends Mock implements IAuth {
   }
 }
 
+/// Implement [IAuthTokenStorage] for mocking JWT storage mechanism to use
+/// in-memory variable storage since flutter_secure_storage can't be used inside
+/// a unit test
 class MockAuthStorage implements IAuthTokenStorage {
   String _token = '';
 
