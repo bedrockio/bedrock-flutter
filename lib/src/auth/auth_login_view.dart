@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'auth_controller.dart';
 
 class AuthLoginView extends StatefulWidget {
-  AuthLoginView({Key? key}) : super(key: key);
+  const AuthLoginView({Key? key}) : super(key: key);
 
   @override
   State<AuthLoginView> createState() => _AuthLoginViewState();
@@ -13,8 +13,6 @@ class AuthLoginView extends StatefulWidget {
 
 class _AuthLoginViewState extends State<AuthLoginView> {
   final GlobalKey _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
-  late String _apiResponse;
   late String _email;
   late String _password;
 

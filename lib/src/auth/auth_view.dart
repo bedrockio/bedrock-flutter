@@ -52,8 +52,8 @@ class _AuthViewState extends State<AuthView> {
 
   Widget _renderAuthView() {
     return (_authState == AuthState.login)
-        ? AuthLoginView()
-        : AuthRegisterView();
+        ? const AuthLoginView()
+        : const AuthRegisterView();
   }
 
   Widget _renderAuthFooter() {

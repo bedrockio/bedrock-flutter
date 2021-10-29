@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/auth_controller.dart';
+import 'auth/auth_storage.dart';
 import 'home/home_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
@@ -21,7 +23,11 @@ class App extends StatelessWidget {
           create: (context) => BottomNavigationController(),
         ),
         ChangeNotifierProvider(create: (context) => SettingsController()),
-        ChangeNotifierProvider(create: (context) => AuthController()),
+        ChangeNotifierProvider(
+          create: (context) => AuthController(
+            storage: AuthStorage(const FlutterSecureStorage()),
+          ),
+        ),
       ],
       child: Consumer<SettingsController>(
         builder: (context, controller, child) {

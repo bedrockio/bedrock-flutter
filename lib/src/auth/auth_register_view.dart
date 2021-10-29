@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'auth_controller.dart';
 
 class AuthRegisterView extends StatefulWidget {
-  AuthRegisterView({Key? key}) : super(key: key);
+  const AuthRegisterView({Key? key}) : super(key: key);
 
   @override
   State<AuthRegisterView> createState() => _AuthRegisterViewState();
