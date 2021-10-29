@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 
 import 'auth_controller.dart';
 
-class AuthRegisterView extends StatefulWidget {
-  const AuthRegisterView({Key? key}) : super(key: key);
+class AuthRegisterForm extends StatefulWidget {
+  const AuthRegisterForm({Key? key}) : super(key: key);
 
   @override
-  State<AuthRegisterView> createState() => _AuthRegisterViewState();
+  State<AuthRegisterForm> createState() => _AuthRegisterFormState();
 }
 
-class _AuthRegisterViewState extends State<AuthRegisterView> {
+class _AuthRegisterFormState extends State<AuthRegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _tosStatus = false;
   late String _firstName;
@@ -36,9 +36,7 @@ class _AuthRegisterViewState extends State<AuthRegisterView> {
               hintText: 'First Name',
             ),
             validator: (value) {
-              if (value!.isEmpty) {
-                return 'First Name cannot be empty';
-              }
+              if (value!.isEmpty) return 'First Name cannot be empty';
             },
             onChanged: (value) => _firstName = value,
           ),

@@ -1,9 +1,12 @@
-import 'package:bedrock_flutter/src/auth/auth_register_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'auth_login_view.dart';
+import '../auth/auth_controller.dart';
+import '../auth/auth_register_form.dart';
+import '../auth/auth_reset_password_form.dart';
+import 'auth_login_form.dart';
 
-enum AuthState { login, register }
+enum AuthState { login, register, passwordReset }
 
 class AuthView extends StatefulWidget {
   const AuthView({Key? key}) : super(key: key);
@@ -15,6 +18,17 @@ class AuthView extends StatefulWidget {
 class _AuthViewState extends State<AuthView> {
   AuthState _authState = AuthState.login;
 
+  String _setTitle() {
+    switch (_authState) {
+      case AuthState.login:
+        return 'Login';
+      case AuthState.register:
+        return 'Create Your Account';
+      case AuthState.passwordReset:
+        return 'Password Reset';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,15 +38,14 @@ class _AuthViewState extends State<AuthView> {
           child: Column(
             children: [
               Text(
-                _authState == AuthState.register
-                    ? 'Create Your Account'
-                    : 'Login',
+                _setTitle(),
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 20),
+              _renderErrorMessages(context),
               _renderAuthView(),
               _renderAuthFooter(),
             ],
@@ -42,18 +55,36 @@ class _AuthViewState extends State<AuthView> {
     );
   }
 
-  void _toggleAuthState() {
-    setState(() {
-      _authState = (_authState == AuthState.login)
-          ? AuthState.register
-          : AuthState.login;
-    });
+  Widget _renderErrorMessages(BuildContext context) {
+    return Consumer<AuthController>(
+      builder: (context, controller, child) {
+        if (controller.apiResponse != null) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              controller.apiResponse!,
+              style: const TextStyle(color: Colors.red),
+              textAlign: TextAlign.center,
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 
+  void _toggleAuthState(AuthState state) => setState(() => _authState = state);
+
   Widget _renderAuthView() {
-    return (_authState == AuthState.login)
-        ? const AuthLoginView()
-        : const AuthRegisterView();
+    switch (_authState) {
+      case AuthState.login:
+        return const AuthLoginForm();
+      case AuthState.register:
+        return const AuthRegisterForm();
+      case AuthState.passwordReset:
+        return const AuthResetPasswordForm();
+    }
   }
 
   Widget _renderAuthFooter() {
@@ -62,11 +93,11 @@ class _AuthViewState extends State<AuthView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton(
-            onPressed: _toggleAuthState,
+            onPressed: () => _toggleAuthState(AuthState.register),
             child: const Text('Signup'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () => _toggleAuthState(AuthState.passwordReset),
             child: const Text('Forgot Password'),
           ),
         ],
@@ -77,7 +108,7 @@ class _AuthViewState extends State<AuthView> {
         children: [
           const Text('Already have an account?'),
           TextButton(
-            onPressed: _toggleAuthState,
+            onPressed: () => _toggleAuthState(AuthState.login),
             child: const Text('Login'),
           ),
         ],

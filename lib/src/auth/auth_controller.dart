@@ -21,7 +21,6 @@ abstract class IAuth {
     String password,
   );
   Future<void> resetPassword(String email);
-  Future<void> setPassword(String newPassword);
 }
 
 /// Responsible for interacting with Bedrock API through [BedrockService] and
@@ -33,7 +32,7 @@ abstract class IAuth {
 /// mainly useful for providing other methods of storing token such as
 /// in-memory (for mock tests).
 class AuthController extends ChangeNotifier implements IAuth {
-  late String apiResponse;
+  String? apiResponse;
   final BedrockService apiService = BedrockService();
   final IAuthTokenStorage storage;
 
@@ -65,14 +64,19 @@ class AuthController extends ChangeNotifier implements IAuth {
         String token = jsonResponse['data']['token'];
         if (!JwtDecoder.isExpired(token)) {
           await storage.storeAuthToken(token);
-          notifyListeners();
         }
+        apiResponse = null;
       }
 
       if (response.statusCode == 401) {
-        // TODO: Handle API Errors
+        String errorMessage = jsonResponse['error']['message'];
+        apiResponse = errorMessage;
       }
+    } else {
+      apiResponse = 'Error with request. Try again later';
     }
+
+    notifyListeners();
   }
 
   @override
@@ -101,23 +105,37 @@ class AuthController extends ChangeNotifier implements IAuth {
         String token = jsonResponse['data']['token'];
         if (!JwtDecoder.isExpired(token)) {
           await storage.storeAuthToken(token);
-          notifyListeners();
         }
+        apiResponse = null;
       }
 
       if (response.statusCode == 401) {
-        // TODO: Handle API Errors
+        String errorMessage = jsonResponse['error']['message'];
+        apiResponse = errorMessage;
       }
+    } else {
+      apiResponse = "Error with request. Try again later";
     }
+
+    notifyListeners();
   }
 
   @override
-  Future<void> resetPassword(String email) {
-    throw UnimplementedError();
-  }
+  Future<void> resetPassword(String email) async {
+    http.Response? response = await apiService.post(
+      '/auth/request-password',
+      payload: {'email': email},
+    );
 
-  @override
-  Future<void> setPassword(String newPassword) {
-    throw UnimplementedError();
+    if (response != null) {
+      if (response.statusCode == 204) {
+        apiResponse =
+            'A link has been sent to your email with reset instructions';
+      }
+    } else {
+      apiResponse = 'Error with request. Try again later';
+    }
+
+    notifyListeners();
   }
 }
