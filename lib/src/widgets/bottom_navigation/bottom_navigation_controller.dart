@@ -1,11 +1,11 @@
-import 'package:bedrock_flutter/src/products/products_controller.dart';
-import 'package:bedrock_flutter/src/products/products_list_view.dart';
-import 'package:bedrock_flutter/src/shops/shops_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../products/products_controller.dart';
+import '../../products/products_list_view.dart';
 import '../../settings/settings_view.dart';
 import '../../shops/shop_list_view.dart';
+import '../../shops/shops_controller.dart';
 
 class BottomNavigationController extends ChangeNotifier {
   int selectedTab = 0;
