@@ -8,18 +8,12 @@ localization & internationalization, unit & widget testing, and much more.
 
 ## ✨ Features
 
-✅ Localization
-
-✅ State management using [Provider](https://pub.dev/packages/provider) with example screens for Shops & Products using Bedrock API
-
-✅ Authentication using Bedrock API
-
-✅ Unit testing, API Mocks using [Mockito](https://pub.dev/packages/mockito)
-
-✅ Widget tests
-
-✅ Support for 🌓 Dark/Light mode
-
+✅ Localization  
+✅ State management using [Provider](https://pub.dev/packages/provider) with example screens for Shops & Products using Bedrock API  
+✅ Authentication using Bedrock API  
+✅ Unit testing, API Mocks using [Mockito](https://pub.dev/packages/mockito)  
+✅ Widget tests  
+✅ Support for 🌓 Dark/Light mode  
 ✅ CI via Github Actions
 
 ## 🏁 Getting Started
