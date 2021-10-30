@@ -56,7 +56,7 @@ Before running the app, make sure you have the Bedrock API running whether on lo
   ```
   `--dart-define` is used to pass environment configuration.
 
-#### Environment variables
+#### ⚙️ Environment variables
 
 | Variable              | Default Value          | Description |
 | -                     | -                      | -           |
