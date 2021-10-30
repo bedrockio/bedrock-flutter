@@ -20,15 +20,16 @@ localization & internationalization, unit & widget testing, and much more.
 
 ✅ Support for 🌓 Dark/Light mode
 
+✅ CI via Github Actions
 
-## Getting Started
+## 🏁 Getting Started
 
-### Prerequisites
+### 📚 Prerequisites
 
 1. Install Flutter SDK [here](https://flutter.dev/docs/get-started/install).
 2. Run `flutter doctor` in terminal and install all missing dependencies required by Flutter to run.
 
-### Setup
+### 🛠 Setup
 
 ```bash
 git clone git@github.com:bedrockio/bedrock-flutter.git <name_of_project>
@@ -44,7 +45,7 @@ For help getting started with Flutter, view our
 [online documentation](), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-### Running
+### 🚀 Running
 
 Before running the app, make sure you have the Bedrock API running whether on localhost or on a public URL. You can pass in the API URL by passing in a variable using `--dart-define` See below ⬇️.
 
@@ -62,7 +63,7 @@ Before running the app, make sure you have the Bedrock API running whether on lo
 | `BEDROCK_API`         | https://localhost:2300 | Base url of where the API is running |
 | `BEDROCK_API_VERSION` | 1                      | API Version |
 
-### Localization
+### 🗺 Localization
 
 This project generates localized messages based on arb files found in
 the `lib/src/localization` directory.
@@ -71,6 +72,6 @@ To support additional languages, please visit the tutorial on
 [Internationalizing Flutter
 apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
 
-## Useful Links
+## ℹ️ Useful Links
 
 - [Flutter Official Docs](https://flutter.dev/docs)
