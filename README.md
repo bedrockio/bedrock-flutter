@@ -1,3 +1,5 @@
+![bedrock-flutter](https://user-images.githubusercontent.com/11186948/139514397-a11087ac-7c28-48fc-bc8e-bde27a6ab902.jpg)
+
 # Bedrock Flutter Template
 
 Project template used for quickly scaffolding new Flutter based projects that easily integrate with 
