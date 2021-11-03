@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_controller.dart';
+import 'user_model.dart';
 
 class AuthLoginForm extends StatefulWidget {
   const AuthLoginForm({Key? key}) : super(key: key);
@@ -19,7 +20,8 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
     final controller = Provider.of<AuthController>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       if (_email.isNotEmpty && _password.isNotEmpty) {
-        await controller.login(_email, _password);
+        final user = User(email: _email, password: _password);
+        await controller.login(user);
       }
     }
   }
