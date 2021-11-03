@@ -81,7 +81,7 @@ class AuthController extends ChangeNotifier implements IAuth {
 
   @override
   Future<void> logout() async {
-    await storage.storeAuthToken('');
+    await storage.deleteAuthToken();
     notifyListeners();
   }
 

@@ -50,7 +50,7 @@ class MockAuthController extends Mock implements IAuth {
   }
 
   @override
-  Future<void> logout() async => await storage.storeAuthToken('');
+  Future<void> logout() async => await storage.deleteAuthToken();
 
   @override
   Future<void> register(
@@ -70,7 +70,7 @@ class MockAuthController extends Mock implements IAuth {
 /// in-memory variable storage since flutter_secure_storage can't be used inside
 /// a unit test
 class MockAuthStorage implements IAuthTokenStorage {
-  String _token = '';
+  String? _token = '';
 
   @override
   Future<String?> readAuthToken() {
@@ -80,6 +80,11 @@ class MockAuthStorage implements IAuthTokenStorage {
   @override
   Future<void> storeAuthToken(String token) {
     return Future.delayed(const Duration(seconds: 1), () => _token = token);
+  }
+
+  @override
+  Future<void> deleteAuthToken() {
+    return Future.delayed(const Duration(seconds: 1), () => _token = '');
   }
 }
 
