@@ -1,9 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'owner_model.dart';
+
+part 'shop_model.g.dart';
+
+@JsonSerializable()
 class Shop {
   String id;
   String name;
   List<dynamic> images;
   List<dynamic> categories;
-  String? owner;
+  Owner? owner;
   String createdAt;
   String updatedAt;
 
@@ -17,12 +23,7 @@ class Shop {
     required this.updatedAt,
   });
 
-  Shop.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        images = json['images'],
-        categories = json['categories'],
-        owner = json['owner'] ?? '',
-        createdAt = json['createdAt'],
-        updatedAt = json['updatedAt'];
+  factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShopToJson(this);
 }
