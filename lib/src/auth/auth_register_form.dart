@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/auth/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,13 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
   void _submit(BuildContext context) async {
     final controller = Provider.of<AuthController>(context, listen: false);
     if (_formKey.currentState!.validate() && _tosStatus) {
-      controller.register(_email, _firstName, _lastName, _password);
+      final user = User(
+        email: _email,
+        password: _password,
+        firstName: _firstName,
+        lastName: _lastName,
+      );
+      controller.register(user);
     }
   }
 
