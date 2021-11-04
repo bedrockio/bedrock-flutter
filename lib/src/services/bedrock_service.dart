@@ -1,5 +1,25 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+
+class BedrockNetworkInterceptor extends Interceptor {
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
+
+  @override
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    String token = await storage.read(key: BedrockService.tokenKey) ?? '';
+
+    options.headers.addAll({
+      'Authorization': 'Bearer $token',
+      'Accept': 'application/json',
+      'content-type': 'application/json'
+    });
+
+    super.onRequest(options, handler);
+  }
+}
 
 class BedrockService {
   static const api = String.fromEnvironment(
@@ -9,21 +29,18 @@ class BedrockService {
   static const apiVersion = '1';
   static const tokenKey =
       'bedrock_token'; // This is used for local token storage
-  final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final Dio dio = Dio();
 
-  Future<http.Response?> post(
-    String endpoint, {
-    Map payload = const {},
-    String? token,
-  }) async {
-    Uri url = Uri.parse("$api/$apiVersion$endpoint");
-    Map<String, String> headers =
-        (token != null) ? {'Authorization': 'Bearer $token'} : {};
-    return await http.post(url, body: payload, headers: headers);
+  BedrockService() {
+    dio.interceptors.add(BedrockNetworkInterceptor());
+    dio.options.baseUrl = "$api/$apiVersion";
+    dio.options.connectTimeout = 100000;
+    dio.options.receiveTimeout = 100000;
   }
 
-  Future<http.Response?> get(String endpoint, String token) async {
-    Uri url = Uri.parse("$api/$apiVersion$endpoint");
-    return await http.get(url, headers: {'Authorization': 'Bearer $token'});
+  Future<Response> post(String endpoint, {Map payload = const {}}) async {
+    return await dio.post(endpoint, data: payload);
   }
+
+  Future<Response> get(String endpoint) async => await dio.get(endpoint);
 }

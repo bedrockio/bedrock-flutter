@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:bedrock_flutter/src/auth/user_model.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../services/bedrock_service.dart';
@@ -47,32 +45,30 @@ class AuthController extends ChangeNotifier implements IAuth {
     }
   }
 
+  void _handleError(DioError e) {
+    if (e.response != null) {
+      apiResponse = e.response!.data['error']['message'];
+    } else {
+      apiResponse =
+          "Error with request. Try again later\n${e.requestOptions}\n${e.message}";
+    }
+  }
+
   @override
   Future<void> login(User user) async {
-    http.Response? response = await apiService.post(
-      '/auth/login',
-      payload: {
-        'email': user.email,
-        'password': user.password,
-      },
-    );
+    try {
+      final response = await apiService.post(
+        '/auth/login',
+        payload: user.loginParams,
+      );
 
-    if (response != null) {
-      var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      if (response.statusCode == 200) {
-        String token = jsonResponse['data']['token'];
-        if (!JwtDecoder.isExpired(token)) {
-          await storage.storeAuthToken(token);
-        }
+      String token = response.data['data']['token'];
+      if (!JwtDecoder.isExpired(token)) {
+        await storage.storeAuthToken(token);
         apiResponse = null;
       }
-
-      if (response.statusCode == 401) {
-        String errorMessage = jsonResponse['error']['message'];
-        apiResponse = errorMessage;
-      }
-    } else {
-      apiResponse = 'Error with request. Try again later';
+    } on DioError catch (e) {
+      _handleError(e);
     }
 
     notifyListeners();
@@ -86,32 +82,18 @@ class AuthController extends ChangeNotifier implements IAuth {
 
   @override
   Future<void> register(User user) async {
-    http.Response? response = await apiService.post(
-      '/auth/register',
-      payload: {
-        'email': user.email,
-        'firstName': user.firstName ?? '',
-        'lastName': user.lastName ?? '',
-        'password': user.password,
-      },
-    );
-
-    if (response != null) {
-      var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      if (response.statusCode == 200) {
-        String token = jsonResponse['data']['token'];
-        if (!JwtDecoder.isExpired(token)) {
-          await storage.storeAuthToken(token);
-        }
+    try {
+      Response response = await apiService.post(
+        '/auth/register',
+        payload: user.registerParams,
+      );
+      String token = response.data['data']['token'];
+      if (!JwtDecoder.isExpired(token)) {
+        await storage.storeAuthToken(token);
         apiResponse = null;
       }
-
-      if (response.statusCode == 401) {
-        String errorMessage = jsonResponse['error']['message'];
-        apiResponse = errorMessage;
-      }
-    } else {
-      apiResponse = "Error with request. Try again later";
+    } on DioError catch (e) {
+      _handleError(e);
     }
 
     notifyListeners();
@@ -119,18 +101,17 @@ class AuthController extends ChangeNotifier implements IAuth {
 
   @override
   Future<void> resetPassword(String email) async {
-    http.Response? response = await apiService.post(
-      '/auth/request-password',
-      payload: {'email': email},
-    );
-
-    if (response != null) {
+    try {
+      Response response = await apiService.post(
+        '/auth/request-password',
+        payload: {'email': email},
+      );
       if (response.statusCode == 204) {
         apiResponse =
             'A link has been sent to your email with reset instructions';
       }
-    } else {
-      apiResponse = 'Error with request. Try again later';
+    } on DioError catch (e) {
+      _handleError(e);
     }
 
     notifyListeners();
