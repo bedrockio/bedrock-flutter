@@ -15,7 +15,7 @@ localization & internationalization, unit & widget testing, and much more.
 ✅ Widget tests  
 ✅ Support for 🌓 Dark/Light mode  
 ✅ CI via Github Actions
-✅ Tool to generate data transfer objects serialization/deserialization boiler plate code [json_serializable](https://pub.dev/packages/json_serializable)
+✅ Tool to generate data transfer objects serialization/deserialization boiler plate code using [json_serializable](https://pub.dev/packages/json_serializable)
 
 ## 🏁 Getting Started
 
@@ -41,7 +41,10 @@ For help getting started with Flutter, view our
 [online documentation](), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-When adding new models (check [shop_model.dart](https://github.com/bedrockio/bedrock-flutter/blob/authentication/lib/src/shops/shop_model.dart)) generate - Simplified models according to the best practices by google on documentation (https://flutter.dev/docs/development/data-and-backend/json) - Generate models in the code by running (`flutter pub run build_runner build`) (1) - Clean models ( `flutter packages pub run build_runner build --delete-conflicting-outputs`)
+When adding new data transfer objects (check [shop_model.dart](https://github.com/bedrockio/bedrock-flutter/blob/authentication/lib/src/shops/shop_model.dart)) generate the boiler plate code by running
+
+- `flutter pub run build_runner build`
+- (In case there's conflicts run) `flutter packages pub run build_runner build --delete-conflicting-outputs`
 
 ### 🚀 Running
 
