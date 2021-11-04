@@ -36,15 +36,6 @@ class Home extends StatelessWidget {
                 appBar: AppBar(
                   centerTitle: false,
                   title: _setAppBarTitle(context),
-                  actions: [
-                    TextButton(
-                      onPressed: () => authController.logout(),
-                      child: const Text(
-                        'Logout',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
                 ),
                 body: Consumer<BottomNavigationController>(
                   builder: (context, controller, child) => controller.body,
