@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/bedrock_service.dart';
-import 'shop_model.dart';
+import 'models/shop_model.dart';
 
 class ShopsController extends ChangeNotifier {
   final BedrockService _apiService = BedrockService();
@@ -21,5 +21,10 @@ class ShopsController extends ChangeNotifier {
     for (var shop in data) {
       _shops.add(Shop.fromJson(shop));
     }
+  }
+
+  Future<Shop> fetchShopById(String id) async {
+    var response = await _apiService.get('/shops/$id');
+    return Shop.fromJson(response.data['data']);
   }
 }

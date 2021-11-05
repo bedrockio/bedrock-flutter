@@ -1,27 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'owner_model.dart';
+part of 'category_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Owner _$OwnerFromJson(Map<String, dynamic> json) => Owner(
+ShopCategory _$ShopCategoryFromJson(Map<String, dynamic> json) => ShopCategory(
       id: json['id'] as String,
       name: json['name'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      email: json['email'] as String,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
     );
 
-Map<String, dynamic> _$OwnerToJson(Owner instance) => <String, dynamic>{
+Map<String, dynamic> _$ShopCategoryToJson(ShopCategory instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'email': instance.email,
+      'name': instance.name,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
-      'name': instance.name,
     };

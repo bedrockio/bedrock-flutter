@@ -9,8 +9,14 @@ part of 'shop_model.dart';
 Shop _$ShopFromJson(Map<String, dynamic> json) => Shop(
       id: json['id'] as String,
       name: json['name'] as String,
-      images: json['images'] as List<dynamic>,
-      categories: json['categories'] as List<dynamic>,
+      address: ShopAddress.fromJson(json['address'] as Map<String, dynamic>),
+      images: (json['images'] as List<dynamic>)
+          .map((e) => ShopImage.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => ShopCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      description: json['description'] as String,
       owner: json['owner'] == null
           ? null
           : Owner.fromJson(json['owner'] as Map<String, dynamic>),
@@ -21,8 +27,10 @@ Shop _$ShopFromJson(Map<String, dynamic> json) => Shop(
 Map<String, dynamic> _$ShopToJson(Shop instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'address': instance.address,
       'images': instance.images,
       'categories': instance.categories,
+      'description': instance.description,
       'owner': instance.owner,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,

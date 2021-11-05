@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +10,7 @@ import 'auth/auth_storage.dart';
 import 'home/home_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
+import 'shops/shops_controller.dart';
 import 'widgets/bottom_navigation/bottom_navigation_controller.dart';
 import 'widgets/dismiss_keyboard.dart';
 
@@ -75,6 +77,16 @@ class App extends StatelessWidget {
                 return MaterialPageRoute<void>(
                   settings: routeSettings,
                   builder: (BuildContext context) {
+                    var uri = Uri.parse(routeSettings.name ?? '/');
+                    if (uri.pathSegments.length == 2 &&
+                        uri.pathSegments.first == 'shop-detail') {
+                      var id = uri.pathSegments[1];
+                      return ChangeNotifierProvider<ShopsController>(
+                        create: (context) => ShopsController(),
+                        child: ShopDetailScreen(id: id),
+                      );
+                    }
+
                     switch (routeSettings.name) {
                       case SettingsView.routeName:
                       // return SettingsView(controller: settingsController);

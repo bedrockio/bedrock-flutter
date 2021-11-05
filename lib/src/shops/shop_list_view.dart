@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'shop_model.dart';
+import 'models/shop_model.dart';
 import 'shop_view.dart';
 import 'shops_controller.dart';
 
