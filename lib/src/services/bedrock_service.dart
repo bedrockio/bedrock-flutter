@@ -1,21 +1,30 @@
+import 'package:bedrock_flutter/src/auth/auth_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class BedrockNetworkInterceptor extends Interceptor {
-  final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final IAuthTokenStorage storage = AuthStorage(const FlutterSecureStorage());
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    String token = await storage.read(key: BedrockService.tokenKey) ?? '';
-
-    options.headers.addAll({
-      'Authorization': 'Bearer $token',
+    String token = await storage.readAuthToken() ?? '';
+    Map<String, dynamic> headers = {
       'Accept': 'application/json',
-      'content-type': 'application/json'
-    });
+      'content-type': 'application/json',
+    };
+
+    try {
+      if (!JwtDecoder.isExpired(token)) {
+        await storage.storeAuthToken(token);
+        options.headers.addAll({...headers, 'Authorization': 'Bearer $token'});
+      }
+    } catch (e) {
+      options.headers.addAll(headers);
+    }
 
     super.onRequest(options, handler);
   }

@@ -57,16 +57,11 @@ class AuthController extends ChangeNotifier implements IAuth {
   @override
   Future<void> login(User user) async {
     try {
-      final response = await apiService.post(
+      Response response = await apiService.post(
         '/auth/login',
         payload: user.loginParams,
       );
-
-      String token = response.data['data']['token'];
-      if (!JwtDecoder.isExpired(token)) {
-        await storage.storeAuthToken(token);
-        apiResponse = null;
-      }
+      await storage.storeAuthToken(response.data['data']['token']);
     } on DioError catch (e) {
       _handleError(e);
     }
@@ -87,11 +82,8 @@ class AuthController extends ChangeNotifier implements IAuth {
         '/auth/register',
         payload: user.registerParams,
       );
-      String token = response.data['data']['token'];
-      if (!JwtDecoder.isExpired(token)) {
-        await storage.storeAuthToken(token);
-        apiResponse = null;
-      }
+      await storage.storeAuthToken(response.data['data']['token']);
+      apiResponse = null;
     } on DioError catch (e) {
       _handleError(e);
     }
