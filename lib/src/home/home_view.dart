@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/auth_controller.dart';
+import '../auth/auth_view.dart';
 import '../widgets/bottom_navigation/bottom_navigation_controller.dart';
 import '../widgets/bottom_navigation/bottom_navigation_view.dart';
+import '../widgets/loading_screen.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,14 +18,35 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: _setAppBarTitle(context),
-      ),
-      body: Consumer<BottomNavigationController>(
-        builder: (context, controller, child) => controller.body,
-      ),
-      bottomNavigationBar: const BottomNavigation(),
+    final authController = Provider.of<AuthController>(context);
+
+    return FutureBuilder(
+      future: authController.authenticated,
+      builder: (context, AsyncSnapshot<bool> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return const AuthView();
+          case ConnectionState.waiting:
+            return const LoadingScreen();
+          case ConnectionState.active:
+            return const AuthView();
+          case ConnectionState.done:
+            if (snapshot.data == true) {
+              return Scaffold(
+                appBar: AppBar(
+                  centerTitle: false,
+                  title: _setAppBarTitle(context),
+                ),
+                body: Consumer<BottomNavigationController>(
+                  builder: (context, controller, child) => controller.body,
+                ),
+                bottomNavigationBar: const BottomNavigation(),
+              );
+            } else {
+              return const AuthView();
+            }
+        }
+      },
     );
   }
 }

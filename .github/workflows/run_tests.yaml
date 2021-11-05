@@ -1,0 +1,26 @@
+name: Run Tests
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  analyze:
+    name: 'Analyze Code (linting)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@master
+        with:
+          channel: master
+      - run: flutter pub get
+      - run: flutter analyze
+
+  tests:
+    name: 'Execute Tests (Unit & Widgets)'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@master
+        with:
+          channel: master
+      - run: flutter pub get
+      - run: flutter test --reporter=expanded

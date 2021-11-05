@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,14 @@ class SettingsView extends StatelessWidget {
                 );
               },
             ),
+          ),
+          Consumer<AuthController>(
+            builder: (context, controller, child) {
+              return ElevatedButton(
+                onPressed: controller.logout,
+                child: const Text('Logout'),
+              );
+            },
           ),
         ],
       ),
