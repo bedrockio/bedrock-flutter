@@ -52,13 +52,13 @@ class BedrockNetworkInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    DioLogger.onSuccess(TAG, response);
+    DioLogger.onSuccess(tag, response);
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    DioLogger.onError(TAG, err);
+    DioLogger.onError(tag, err);
     if (err.response?.statusCode == 401) {
       //TODO perform logout
     }
