@@ -86,12 +86,18 @@ class MockAuthStorage implements IAuthTokenStorage {
 
   @override
   Future<void> readRefreshToken() {
-    return Future.delayed(const Duration(seconds: 1), () => _token = '');
+    return Future.delayed(const Duration(seconds: 1), () => _refreshToken);
   }
 
   @override
   Future<void> storeAuthRefreshToken(String refreshToken) {
-    return Future.delayed(const Duration(seconds: 1), () => _token = '');
+    return Future.delayed(
+        const Duration(seconds: 1), () => _refreshToken = refreshToken);
+  }
+
+  @override
+  Future<void> deleteRefrehToken() {
+    return Future.delayed(const Duration(seconds: 1), () => _refreshToken = '');
   }
 }
 
