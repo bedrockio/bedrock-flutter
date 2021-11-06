@@ -10,7 +10,7 @@ final Dio dio = Dio();
 class BedrockNetworkInterceptor extends Interceptor {
   final IAuthTokenStorage storage = AuthStorage(const FlutterSecureStorage());
 
-  static String TAG = "services_base_api";
+  static String tag = "services_base_api";
 
   @override
   void onRequest(

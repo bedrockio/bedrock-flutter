@@ -67,6 +67,7 @@ class MockAuthController extends Mock implements IAuth {
 /// a unit test
 class MockAuthStorage implements IAuthTokenStorage {
   String? _token = '';
+  String? _refreshToken = '';
 
   @override
   Future<String?> readAuthToken() {
@@ -80,6 +81,16 @@ class MockAuthStorage implements IAuthTokenStorage {
 
   @override
   Future<void> deleteAuthToken() {
+    return Future.delayed(const Duration(seconds: 1), () => _token = '');
+  }
+
+  @override
+  Future<void> readRefreshToken() {
+    return Future.delayed(const Duration(seconds: 1), () => _token = '');
+  }
+
+  @override
+  Future<void> storeAuthRefreshToken(String refreshToken) {
     return Future.delayed(const Duration(seconds: 1), () => _token = '');
   }
 }
