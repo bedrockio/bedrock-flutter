@@ -19,8 +19,20 @@ class AuthStorage implements IAuthTokenStorage {
   }
 
   @override
-  Future<void> storeAuthToken(String token) async {
-    return await _storage.write(key: BedrockService.tokenKey, value: token);
+  Future<void> storeAuthToken(String refreshToken) async {
+    return await _storage.write(
+        key: BedrockService.refreshToken, value: refreshToken);
+  }
+
+  @override
+  Future<String?> readAuthRefreshToken() async {
+    return await _storage.read(key: BedrockService.tokenKey);
+  }
+
+  @override
+  Future<void> storeAuthRefreshToken(String refreshToken) async {
+    return await _storage.write(
+        key: BedrockService.refreshToken, value: refreshToken);
   }
 
   @override
