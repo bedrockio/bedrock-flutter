@@ -84,8 +84,8 @@ class BedrockService {
     dio.options.receiveTimeout = 100000;
   }
 
-  Future<dynamic> post(
-      String url, dynamic body, Map<String, dynamic>? queryParams) async {
+  Future<dynamic> post(String url,
+      {dynamic body, Map<String, dynamic>? queryParams}) async {
     var response =
         await dio.post(url, data: body, queryParameters: queryParams);
     return response.data;

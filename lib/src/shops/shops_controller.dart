@@ -16,7 +16,7 @@ class ShopsController extends ChangeNotifier {
   void _emptyShops() => _shops.removeRange(0, _shops.length);
 
   Future<void> fetchShops() async {
-    var response = await _apiService.post('/shops/search', null, null);
+    var response = await _apiService.post('/shops/search');
     var data = List.from(response.data['data']);
     for (var shop in data) {
       _shops.add(Shop.fromJson(shop));

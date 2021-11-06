@@ -5,6 +5,8 @@ import '../services/bedrock_service.dart';
 abstract class IAuthTokenStorage {
   Future<String?> readAuthToken();
   Future<void> storeAuthToken(String token);
+  Future<void> storeAuthRefreshToken(String refreshToken);
+  Future<void> readRefreshToken();
   Future<void> deleteAuthToken();
 }
 
@@ -19,14 +21,13 @@ class AuthStorage implements IAuthTokenStorage {
   }
 
   @override
-  Future<void> storeAuthToken(String refreshToken) async {
-    return await _storage.write(
-        key: BedrockService.refreshToken, value: refreshToken);
+  Future<String?> readRefreshToken() async {
+    return await _storage.read(key: BedrockService.refreshToken);
   }
 
   @override
-  Future<String?> readAuthRefreshToken() async {
-    return await _storage.read(key: BedrockService.tokenKey);
+  Future<void> storeAuthToken(String token) async {
+    return await _storage.write(key: BedrockService.tokenKey, value: token);
   }
 
   @override
