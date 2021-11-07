@@ -53,16 +53,15 @@ class BedrockNetworkInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     DioLogger.onSuccess(tag, response);
-    super.onResponse(response, handler);
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  dynamic onError(DioError err, ErrorInterceptorHandler handler) {
     DioLogger.onError(tag, err);
     if (err.response?.statusCode == 401) {
       //TODO perform logout
     }
-    super.onError(err, handler);
+    return err;
   }
 }
 
@@ -88,22 +87,22 @@ class BedrockService {
       {dynamic body, Map<String, dynamic>? queryParams}) async {
     var response =
         await dio.post(url, data: body, queryParameters: queryParams);
-    return response.data;
+    return response;
   }
 
   Future<dynamic> get(String url,
       {Map<String, dynamic>? queryParameters}) async {
     final response = await dio.get(url, queryParameters: queryParameters);
-    return response.data;
+    return response;
   }
 
   Future<dynamic> put(String url, dynamic body) async {
     final response = await dio.put(url, data: body);
-    return response.data;
+    return response;
   }
 
   Future<dynamic> delete(String url) async {
     final response = await dio.delete(url);
-    return response.data;
+    return response;
   }
 }
