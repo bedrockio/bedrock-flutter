@@ -13,10 +13,8 @@ class ShopView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () => Navigator.pushNamed(
-          context,
-          "${ShopDetailScreen.routeName}/${shop.id}",
-        ),
+        onTap: () => Navigator.of(context)
+            .pushNamed(ShopDetailScreen.routeName, arguments: shop.id),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'models/shop_model.dart';
 
 class ShopDetailScreen extends StatelessWidget {
-  static String routeName = '/shop-detail';
+  static const String routeName = '/shop-detail';
   final String id;
 
   const ShopDetailScreen({Key? key, required this.id}) : super(key: key);

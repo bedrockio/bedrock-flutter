@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/route_generator.dart';
 import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,6 +14,8 @@ import 'settings/settings_view.dart';
 import 'shops/shops_controller.dart';
 import 'widgets/bottom_navigation/bottom_navigation_controller.dart';
 import 'widgets/dismiss_keyboard.dart';
+
+typedef Strings = AppLocalizations;
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -50,9 +53,8 @@ class App extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              supportedLocales: const [
-                Locale('en', ''), // English, no country code
-              ],
+              supportedLocales:
+                  AppLocalizations.supportedLocales, // English, no country code
 
               // Use AppLocalizations to configure the correct application title
               // depending on the user's locale.
@@ -73,29 +75,30 @@ class App extends StatelessWidget {
 
               // Define a function to handle named routes in order to support
               // Flutter web url navigation and deep linking.
-              onGenerateRoute: (RouteSettings routeSettings) {
-                return MaterialPageRoute<void>(
-                  settings: routeSettings,
-                  builder: (BuildContext context) {
-                    var uri = Uri.parse(routeSettings.name ?? '/');
-                    if (uri.pathSegments.length == 2 &&
-                        uri.pathSegments.first == 'shop-detail') {
-                      var id = uri.pathSegments[1];
-                      return ChangeNotifierProvider<ShopsController>(
-                        create: (context) => ShopsController(),
-                        child: ShopDetailScreen(id: id),
-                      );
-                    }
+              onGenerateRoute: RouteGenerator.generateRoute,
+              // onGenerateRoute: (RouteSettings routeSettings) {
+              //   return MaterialPageRoute<void>(
+              //     settings: routeSettings,
+              //     builder: (BuildContext context) {
+              //       var uri = Uri.parse(routeSettings.name ?? '/');
+              //       if (uri.pathSegments.length == 2 &&
+              //           uri.pathSegments.first == 'shop-detail') {
+              //         var id = uri.pathSegments[1];
+              //         return ChangeNotifierProvider<ShopsController>(
+              //           create: (context) => ShopsController(),
+              //           child: ShopDetailScreen(id: id),
+              //         );
+              //       }
 
-                    switch (routeSettings.name) {
-                      case SettingsView.routeName:
-                      // return SettingsView(controller: settingsController);
-                      default:
-                        return Container();
-                    }
-                  },
-                );
-              },
+              //       switch (routeSettings.name) {
+              //         case SettingsView.routeName:
+              //         // return SettingsView(controller: settingsController);
+              //         default:
+              //           return Container();
+              //       }
+              //     },
+              //   );
+              // },
             ),
           );
         },
