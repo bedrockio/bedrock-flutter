@@ -19,17 +19,17 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
   late String _email;
   late String _password;
 
-  void _submit(BuildContext context) async {
+  void _submit() async {
     final controller = Provider.of<AuthController>(context, listen: false);
-    if (_formKey.currentState!.validate() && _tosStatus) {
-      final user = User(
-        email: _email,
-        password: _password,
-        firstName: _firstName,
-        lastName: _lastName,
-      );
-      controller.register(user);
-    }
+    // if (_formKey.currentState!.validate() && _tosStatus) {
+    final user = User(
+      email: 'tiago@rekall.ai',
+      password: '_password_password_password',
+      firstName: '_firstName',
+      lastName: '_lastName',
+    );
+    controller.register(user);
+    // }
   }
 
   @override
@@ -104,7 +104,7 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => _submit(context),
+            onPressed: () => _submit(),
             child: const Text('Signup'),
           ),
         ],

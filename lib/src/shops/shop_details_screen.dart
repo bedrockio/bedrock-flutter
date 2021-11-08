@@ -25,9 +25,7 @@ class ShopDetailScreen extends StatelessWidget {
       builder: (context, AsyncSnapshot<Shop> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return const LoadingScreen();
           case ConnectionState.waiting:
-            return const LoadingScreen();
           case ConnectionState.active:
             return const LoadingScreen();
           case ConnectionState.done:

@@ -5,7 +5,7 @@ part 'address_model.g.dart';
 @JsonSerializable()
 class ShopAddress {
   Map<String, dynamic> geometry;
-  String city;
+  String? city;
   String countryCode;
   String line1;
   String postalCode;

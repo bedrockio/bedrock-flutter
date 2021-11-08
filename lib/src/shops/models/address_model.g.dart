@@ -8,7 +8,7 @@ part of 'address_model.dart';
 
 ShopAddress _$ShopAddressFromJson(Map<String, dynamic> json) => ShopAddress(
       geometry: json['geometry'] as Map<String, dynamic>,
-      city: json['city'] as String,
+      city: json['city'] as String?,
       countryCode: json['countryCode'] as String,
       line1: json['line1'] as String,
       postalCode: json['postalCode'] as String,
