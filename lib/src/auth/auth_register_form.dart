@@ -21,15 +21,15 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
 
   void _submit() async {
     final controller = Provider.of<AuthController>(context, listen: false);
-    // if (_formKey.currentState!.validate() && _tosStatus) {
-    final user = User(
-      email: 'tiago@rekall.ai',
-      password: '_password_password_password',
-      firstName: '_firstName',
-      lastName: '_lastName',
-    );
-    controller.register(user);
-    // }
+    if (_formKey.currentState!.validate() && _tosStatus) {
+      final user = User(
+        email: _email,
+        password: _password,
+        firstName: _firstName,
+        lastName: _lastName,
+      );
+      controller.register(user);
+    }
   }
 
   @override

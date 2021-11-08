@@ -10,12 +10,8 @@ import 'auth/auth_controller.dart';
 import 'auth/auth_storage.dart';
 import 'home/home_view.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
-import 'shops/shops_controller.dart';
 import 'widgets/bottom_navigation/bottom_navigation_controller.dart';
 import 'widgets/dismiss_keyboard.dart';
-
-typedef Strings = AppLocalizations;
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -76,29 +72,6 @@ class App extends StatelessWidget {
               // Define a function to handle named routes in order to support
               // Flutter web url navigation and deep linking.
               onGenerateRoute: RouteGenerator.generateRoute,
-              // onGenerateRoute: (RouteSettings routeSettings) {
-              //   return MaterialPageRoute<void>(
-              //     settings: routeSettings,
-              //     builder: (BuildContext context) {
-              //       var uri = Uri.parse(routeSettings.name ?? '/');
-              //       if (uri.pathSegments.length == 2 &&
-              //           uri.pathSegments.first == 'shop-detail') {
-              //         var id = uri.pathSegments[1];
-              //         return ChangeNotifierProvider<ShopsController>(
-              //           create: (context) => ShopsController(),
-              //           child: ShopDetailScreen(id: id),
-              //         );
-              //       }
-
-              //       switch (routeSettings.name) {
-              //         case SettingsView.routeName:
-              //         // return SettingsView(controller: settingsController);
-              //         default:
-              //           return Container();
-              //       }
-              //     },
-              //   );
-              // },
             ),
           );
         },
