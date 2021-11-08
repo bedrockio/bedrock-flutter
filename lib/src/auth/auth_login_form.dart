@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'auth_controller.dart';
 import 'user_model.dart';
+import 'package:bedrock_flutter/src/localization/localized_strings.dart';
 
 class AuthLoginForm extends StatefulWidget {
   const AuthLoginForm({Key? key}) : super(key: key);
@@ -35,16 +35,16 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
         children: [
           TextFormField(
             validator: _emailValidator,
-            decoration: const InputDecoration(
-              hintText: 'E-mail Address',
+            decoration: InputDecoration(
+              hintText: context.i18n.emailAddress,
             ),
             onChanged: (value) => _email = value,
           ),
           const SizedBox(height: 5),
           TextFormField(
             obscureText: true,
-            decoration: const InputDecoration(
-              hintText: 'Password',
+            decoration: InputDecoration(
+              hintText: context.i18n.password,
             ),
             validator: _passwordValidator,
             onChanged: (value) => _password = value,
@@ -53,7 +53,7 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: _submit,
-            child: const Text('Sign In'),
+            child: Text(context.i18n.signIn),
           ),
         ],
       ),
@@ -62,13 +62,13 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
 
   String? _emailValidator(String? value) {
     if (value!.isEmpty || !value.contains('@')) {
-      return 'Invalid email';
+      return context.i18n.invalidEmail;
     }
   }
 
   String? _passwordValidator(String? value) {
     if (value!.isEmpty) {
-      return 'Password cannot be empty';
+      return context.i18n.emptyPassword;
     }
   }
 }
