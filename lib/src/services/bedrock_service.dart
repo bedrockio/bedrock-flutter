@@ -51,9 +51,9 @@ class BedrockNetworkInterceptor extends Interceptor {
   }
 
   @override
-  dynamic onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     DioLogger.onSuccess(tag, response);
-    return response;
+    super.onResponse(response, handler);
   }
 
   @override
@@ -86,19 +86,19 @@ class BedrockService {
 
   Future<dynamic> post(String url,
       {dynamic body, Map<String, dynamic>? queryParams}) async {
-    await dio.post(url, data: body, queryParameters: queryParams);
+    return await dio.post(url, data: body, queryParameters: queryParams);
   }
 
   Future<dynamic> get(String url,
       {Map<String, dynamic>? queryParameters}) async {
-    await dio.get(url, queryParameters: queryParameters);
+    return await dio.get(url, queryParameters: queryParameters);
   }
 
   Future<dynamic> put(String url, dynamic body) async {
-    await dio.put(url, data: body);
+    return await dio.put(url, data: body);
   }
 
   Future<dynamic> delete(String url) async {
-    await dio.delete(url);
+    return await dio.delete(url);
   }
 }
