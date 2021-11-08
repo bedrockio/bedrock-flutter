@@ -43,7 +43,7 @@ class ShopDetailScreen extends StatelessWidget {
                   child: ListView(
                     children: [
                       Image.network(
-                          "${BedrockService.api}/${BedrockService.apiVersion}/uploads/${shop.images[0].id}/image"),
+                          "${BedrockService.baseURL}/${BedrockService.apiVersion}/uploads/${shop.images[0].id}/image"),
                       const SizedBox(height: 20),
                       Text(
                           "${shop.address.line1} ${shop.address.city}, ${shop.address.region} ${shop.address.postalCode}"),

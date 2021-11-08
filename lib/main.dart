@@ -1,5 +1,10 @@
+import 'package:bedrock_flutter/src/env/environment.dart';
 import 'package:flutter/material.dart';
 
 import 'src/app.dart';
 
-void main() => runApp(const App());
+mainCommon() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Environment().load();
+  runApp(const App());
+}
