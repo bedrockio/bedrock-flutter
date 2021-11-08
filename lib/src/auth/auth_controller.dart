@@ -57,10 +57,8 @@ class AuthController extends ChangeNotifier implements IAuth {
   @override
   Future<void> login(User user) async {
     try {
-      Response response = await apiService.post(
-        '/auth/login',
-        payload: user.loginParams,
-      );
+      Response response =
+          await apiService.post('/auth/login', body: user.loginParams);
       await storage.storeAuthToken(response.data['data']['token']);
     } on DioError catch (e) {
       _handleError(e);
@@ -78,10 +76,8 @@ class AuthController extends ChangeNotifier implements IAuth {
   @override
   Future<void> register(User user) async {
     try {
-      Response response = await apiService.post(
-        '/auth/register',
-        payload: user.registerParams,
-      );
+      Response response =
+          await apiService.post('/auth/register', body: user.registerParams);
       await storage.storeAuthToken(response.data['data']['token']);
       apiResponse = null;
     } on DioError catch (e) {
@@ -94,10 +90,8 @@ class AuthController extends ChangeNotifier implements IAuth {
   @override
   Future<void> resetPassword(String email) async {
     try {
-      Response response = await apiService.post(
-        '/auth/request-password',
-        payload: {'email': email},
-      );
+      Response response = await apiService
+          .post('/auth/request-password', body: {'email': email});
       if (response.statusCode == 204) {
         apiResponse =
             'A link has been sent to your email with reset instructions';

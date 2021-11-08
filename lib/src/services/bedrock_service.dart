@@ -3,30 +3,66 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
+import 'dio_logger.dart';
+
+final Dio dio = Dio();
+
 class BedrockNetworkInterceptor extends Interceptor {
   final IAuthTokenStorage storage = AuthStorage(const FlutterSecureStorage());
+
+  static String tag = "services_base_api";
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    String token = await storage.readAuthToken() ?? '';
+    String? token = await storage.readAuthToken(); //get token
     Map<String, dynamic> headers = {
       'Accept': 'application/json',
       'content-type': 'application/json',
     };
 
-    try {
+    if (token != null) {
       if (!JwtDecoder.isExpired(token)) {
         await storage.storeAuthToken(token);
         options.headers.addAll({...headers, 'Authorization': 'Bearer $token'});
+      } else {
+        dio.interceptors.requestLock
+            .lock(); // lock the request to wait for new token to be given
+        dio.interceptors.responseLock
+            .lock(); // lock the request to wait for new token to be given
+
+        //TODO fetch the refresh token from the storage
+        //TODO ask for a new token to the backend using the stored refresh token
+        //TODO set the new token + refresh token again in the storage and put the token in the headers
+
+        dio.interceptors.requestLock
+            .unlock(); // unlock the request when token is given
+        dio.interceptors.responseLock
+            .unlock(); // unlock the request when token is given
       }
-    } catch (e) {
-      options.headers.addAll(headers);
+    } else {
+      options.headers
+          .addAll(headers); //authentication phase doesn't have a token yet
     }
 
     super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    DioLogger.onSuccess(tag, response);
+    super.onResponse(response, handler);
+  }
+
+  @override
+  dynamic onError(DioError err, ErrorInterceptorHandler handler) {
+    DioLogger.onError(tag, err);
+    if (err.response?.statusCode == 401) {
+      //TODO perform logout
+    }
+    return err;
   }
 }
 
@@ -38,7 +74,8 @@ class BedrockService {
   static const apiVersion = '1';
   static const tokenKey =
       'bedrock_token'; // This is used for local token storage
-  final Dio dio = Dio();
+  static const refreshToken =
+      'bedrock_refresh_token'; // This is used for local refresh token storage
 
   BedrockService() {
     dio.interceptors.add(BedrockNetworkInterceptor());
@@ -47,9 +84,21 @@ class BedrockService {
     dio.options.receiveTimeout = 100000;
   }
 
-  Future<Response> post(String endpoint, {Map payload = const {}}) async {
-    return await dio.post(endpoint, data: payload);
+  Future<dynamic> post(String url,
+      {dynamic body, Map<String, dynamic>? queryParams}) async {
+    return await dio.post(url, data: body, queryParameters: queryParams);
   }
 
-  Future<Response> get(String endpoint) async => await dio.get(endpoint);
+  Future<dynamic> get(String url,
+      {Map<String, dynamic>? queryParameters}) async {
+    return await dio.get(url, queryParameters: queryParameters);
+  }
+
+  Future<dynamic> put(String url, dynamic body) async {
+    return await dio.put(url, data: body);
+  }
+
+  Future<dynamic> delete(String url) async {
+    return await dio.delete(url);
+  }
 }
