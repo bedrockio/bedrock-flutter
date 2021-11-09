@@ -67,19 +67,20 @@ class BedrockNetworkInterceptor extends Interceptor {
 }
 
 class BedrockService {
-  static const api = String.fromEnvironment(
-    'BEDROCK_API',
-    defaultValue: 'http://localhost:2300',
-  );
+  static String baseURL = "";
   static const apiVersion = '1';
   static const tokenKey =
       'bedrock_token'; // This is used for local token storage
   static const refreshToken =
       'bedrock_refresh_token'; // This is used for local refresh token storage
 
+  static setBaseURL(String url) {
+    baseURL = url;
+  }
+
   BedrockService() {
     dio.interceptors.add(BedrockNetworkInterceptor());
-    dio.options.baseUrl = "$api/$apiVersion";
+    dio.options.baseUrl = "$baseURL/$apiVersion";
     dio.options.connectTimeout = 100000;
     dio.options.receiveTimeout = 100000;
   }

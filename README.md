@@ -64,6 +64,38 @@ Before running the app, make sure you have the Bedrock API running whether on lo
 | `BEDROCK_API`         | https://localhost:2300 | Base url of where the API is running |
 | `BEDROCK_API_VERSION` | 1                      | API Version                          |
 
+
+**Run app in dev** 
+`flutter run lib/src/env/main_dev.dart`  
+
+**Run app in uat** 
+`flutter run lib/src/env/main_uat.dart`  
+
+**Run app in prod** 
+`flutter run lib/src/env/main_prod.dart`  
+
+**Make android dev buid**
+`flutter build apk lib/src/env/main_dev.dart`
+
+ **Make android qa build**
+`flutter build apk lib/src/env/main_uat.dart`
+
+ **Make andrid prod build**
+`flutter build apk lib/src/env/main_prod.dart`
+
+**Make ios dev buid**
+`flutter build ios lib/src/env/main_dev.dart`
+
+ **Make ios uat build**
+`flutter build ios lib/src/env/main_uat.dart`
+
+ **Make ios prod build**
+`flutter build ios lib/src/env/main_prod.dart`
+
+ **Default is Dev**
+ `flutter run lib/src/main.dart`
+
+
 ### 🗺 Localization
 
 This project generates localized messages based on arb files found in
