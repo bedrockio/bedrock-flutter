@@ -66,34 +66,34 @@ Before running the app, make sure you have the Bedrock API running whether on lo
 
 
 **Run app in dev** 
-`flutter run lib/env/main_dev.dart`  
+`flutter run lib/src/env/main_dev.dart`  
 
 **Run app in uat** 
-`flutter run lib/env/main_uat.dart`  
+`flutter run lib/src/env/main_uat.dart`  
 
 **Run app in prod** 
-`flutter run lib/env/main_prod.dart`  
+`flutter run lib/src/env/main_prod.dart`  
 
 **Make android dev buid**
-`flutter build apk lib/env/main_dev.dart`
+`flutter build apk lib/src/env/main_dev.dart`
 
  **Make android qa build**
-`flutter build apk lib/env/main_uat.dart`
+`flutter build apk lib/src/env/main_uat.dart`
 
  **Make andrid prod build**
-`flutter build apk lib/env/main_prod.dart`
+`flutter build apk lib/src/env/main_prod.dart`
 
 **Make ios dev buid**
-`flutter build ios lib/env/main_dev.dart`
+`flutter build ios lib/src/env/main_dev.dart`
 
  **Make ios uat build**
-`flutter build ios lib/env/main_uat.dart`
+`flutter build ios lib/src/env/main_uat.dart`
 
  **Make ios prod build**
-`flutter build ios lib/env/main_prod.dart`
+`flutter build ios lib/src/env/main_prod.dart`
 
  **Default is Dev**
- `flutter run lib/main.dart`
+ `flutter run lib/src/main.dart`
 
 
 ### 🗺 Localization
