@@ -25,11 +25,10 @@ class Home extends StatelessWidget {
       builder: (context, AsyncSnapshot<bool> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
+          case ConnectionState.active:
             return const AuthView();
           case ConnectionState.waiting:
             return const LoadingScreen();
-          case ConnectionState.active:
-            return const AuthView();
           case ConnectionState.done:
             if (snapshot.data == true) {
               return Scaffold(
