@@ -19,7 +19,7 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
   late String _email;
   late String _password;
 
-  void _submit(BuildContext context) async {
+  void _submit() async {
     final controller = Provider.of<AuthController>(context, listen: false);
     if (_formKey.currentState!.validate() && _tosStatus) {
       final user = User(
@@ -104,7 +104,7 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => _submit(context),
+            onPressed: () => _submit(),
             child: const Text('Signup'),
           ),
         ],

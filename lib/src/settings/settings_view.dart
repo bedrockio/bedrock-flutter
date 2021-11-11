@@ -1,4 +1,5 @@
 import 'package:bedrock_flutter/src/auth/auth_controller.dart';
+import 'package:bedrock_flutter/src/localization/localized_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +48,7 @@ class SettingsView extends StatelessWidget {
             builder: (context, controller, child) {
               return ElevatedButton(
                 onPressed: controller.logout,
-                child: const Text('Logout'),
+                child: Text(context.i18n.logout),
               );
             },
           ),

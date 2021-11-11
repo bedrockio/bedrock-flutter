@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'models/shop_model.dart';
 
 class ShopDetailScreen extends StatelessWidget {
-  static String routeName = '/shop-detail';
+  static const String routeName = '/shop-detail';
   final String id;
 
   const ShopDetailScreen({Key? key, required this.id}) : super(key: key);
@@ -25,9 +25,7 @@ class ShopDetailScreen extends StatelessWidget {
       builder: (context, AsyncSnapshot<Shop> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return const LoadingScreen();
           case ConnectionState.waiting:
-            return const LoadingScreen();
           case ConnectionState.active:
             return const LoadingScreen();
           case ConnectionState.done:
