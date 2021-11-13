@@ -1,7 +1,8 @@
-import 'package:bedrock_flutter/src/auth/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+import '../auth/models/update_user_request.dart';
+import '../auth/models/user_model.dart';
 import '../services/bedrock_service.dart';
 
 class ProfileController extends ChangeNotifier {
@@ -14,8 +15,8 @@ class ProfileController extends ChangeNotifier {
     return User.fromJson(response.data['data']);
   }
 
-  Future<void> updateUser(User user) async {
-    await apiService.patch('/users/me', body: user.updateParams);
+  Future<void> updateUser(UpdateUserRequest request) async {
+    await apiService.patch('/users/me', body: request.toJson());
 
     notifyListeners();
   }

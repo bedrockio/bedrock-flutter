@@ -1,7 +1,9 @@
-import 'package:bedrock_flutter/src/auth/user_model.dart';
-import 'package:bedrock_flutter/src/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../auth/models/update_user_request.dart';
+import '../auth/models/user_model.dart';
+import '../profile/profile_controller.dart';
 
 class ProfileView extends StatefulWidget {
   static const String appBarLabel = 'Profile';
@@ -14,7 +16,6 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final _formKey = GlobalKey<FormState>();
-  late String _email;
   late String _firstName;
   late String _lastName;
 
@@ -22,8 +23,7 @@ class _ProfileViewState extends State<ProfileView> {
     final controller = Provider.of<ProfileController>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       controller.updateUser(
-        User(
-          email: _email,
+        UpdateUserRequest(
           firstName: _firstName,
           lastName: _lastName,
         ),
@@ -41,14 +41,11 @@ class _ProfileViewState extends State<ProfileView> {
         if (snapshot.hasData) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return const CircularProgressIndicator.adaptive();
             case ConnectionState.waiting:
-              return const CircularProgressIndicator.adaptive();
             case ConnectionState.active:
               return const CircularProgressIndicator.adaptive();
             case ConnectionState.done:
               User user = snapshot.data!;
-              _email = user.email;
               _firstName = user.firstName ?? '';
               _lastName = user.lastName ?? '';
 

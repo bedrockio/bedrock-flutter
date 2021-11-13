@@ -26,25 +26,6 @@ class User {
     this.roles,
   });
 
-  Map<String, dynamic> get loginParams => {
-        'email': email,
-        'password': password,
-      };
-
-  Map<String, dynamic> get registerParams => {
-        'email': email,
-        'firstName': firstName,
-        'lastName': lastName,
-        'password': password,
-      };
-
-  Map<String, dynamic> get resetPasswordParams => {'email': email};
-
-  Map<String, dynamic> get updateParams => {
-        'firstName': firstName ?? '',
-        'lastName': lastName ?? '',
-      };
-
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
