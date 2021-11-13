@@ -1,5 +1,6 @@
 import 'package:bedrock_flutter/src/profile/profile_controller.dart';
 import 'package:bedrock_flutter/src/profile/profile_view.dart';
+import 'package:bedrock_flutter/src/services/bedrock_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,17 +37,23 @@ class BottomNavigationController extends ChangeNotifier {
     switch (selectedTab) {
       case 0:
         return ChangeNotifierProvider<ShopsController>(
-          create: (BuildContext context) => ShopsController(),
+          create: (BuildContext context) => ShopsController(
+            apiService: BedrockService(),
+          ),
           child: const ShopListView(),
         );
       case 1:
         return ChangeNotifierProvider<ProductsController>(
-          create: (BuildContext context) => ProductsController(),
+          create: (BuildContext context) => ProductsController(
+            apiService: BedrockService(),
+          ),
           child: const ProductsListView(),
         );
       case 2:
         return ChangeNotifierProvider<ProfileController>(
-          create: (BuildContext context) => ProfileController(),
+          create: (BuildContext context) => ProfileController(
+            apiService: BedrockService(),
+          ),
           child: const ProfileView(),
         );
       case 3:

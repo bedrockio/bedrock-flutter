@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/services/bedrock_service.dart';
 import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -82,7 +83,9 @@ class App extends StatelessWidget {
                         uri.pathSegments.first == 'shop-detail') {
                       var id = uri.pathSegments[1];
                       return ChangeNotifierProvider<ShopsController>(
-                        create: (context) => ShopsController(),
+                        create: (context) => ShopsController(
+                          apiService: BedrockService(),
+                        ),
                         child: ShopDetailScreen(id: id),
                       );
                     }

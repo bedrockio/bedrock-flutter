@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import '../services/bedrock_service.dart';
 
 class ProfileController extends ChangeNotifier {
-  final BedrockService apiService = BedrockService();
+  final BedrockService apiService;
+
+  ProfileController({required this.apiService});
 
   Future<User?> get user async {
     Response response = await apiService.get('/users/me');
@@ -13,8 +15,7 @@ class ProfileController extends ChangeNotifier {
   }
 
   Future<void> updateUser(User user) async {
-    print("updateUser()" + user.updateParams.toString());
-    apiService.patch('/users/me', body: user.updateParams);
+    await apiService.patch('/users/me', body: user.updateParams);
 
     notifyListeners();
   }
