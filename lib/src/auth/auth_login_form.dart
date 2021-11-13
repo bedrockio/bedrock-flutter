@@ -1,9 +1,9 @@
-import 'package:bedrock_flutter/src/auth/models/login_user_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import './models/login_user_request.dart';
+import '../localization/localized_strings.dart';
 import 'auth_controller.dart';
-import 'user_model.dart';
-import 'package:bedrock_flutter/src/localization/localized_strings.dart';
 
 class AuthLoginForm extends StatefulWidget {
   const AuthLoginForm({Key? key}) : super(key: key);
