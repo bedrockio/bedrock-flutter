@@ -1,5 +1,7 @@
+import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_links/uni_links.dart';
 
 import '../auth/auth_controller.dart';
 import '../auth/auth_view.dart';
@@ -7,8 +9,22 @@ import '../widgets/bottom_navigation/bottom_navigation_controller.dart';
 import '../widgets/bottom_navigation/bottom_navigation_view.dart';
 import '../widgets/loading_screen.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    linkStream.listen((event) {
+      Navigator.of(context).pushNamed(ShopDetailScreen.routeName,
+          arguments: '618134f3b41e365d84ab6e2e');
+    });
+  }
 
   Widget _setAppBarTitle(BuildContext context) {
     return Consumer<BottomNavigationController>(

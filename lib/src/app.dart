@@ -1,12 +1,9 @@
 import 'package:bedrock_flutter/src/route_generator.dart';
-import 'package:bedrock_flutter/src/services/deep_link_service.dart';
-import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'auth/auth_controller.dart';
 import 'auth/auth_storage.dart';
@@ -15,21 +12,8 @@ import 'settings/settings_controller.dart';
 import 'widgets/bottom_navigation/bottom_navigation_controller.dart';
 import 'widgets/dismiss_keyboard.dart';
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
-
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  void initState() {
-    super.initState();
-    linkStream.listen((event) {
-      print(event);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
