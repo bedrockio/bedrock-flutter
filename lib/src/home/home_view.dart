@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/services/deep_link_service.dart';
 import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +21,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    linkStream.listen((event) {
-      Navigator.of(context).pushNamed(ShopDetailScreen.routeName,
-          arguments: '618134f3b41e365d84ab6e2e');
-    });
+    DeepLinkService.handleDynamicLinks(context);
   }
 
   Widget _setAppBarTitle(BuildContext context) {
