@@ -7,6 +7,7 @@ import 'dio_logger.dart';
 
 final Dio dio = Dio();
 
+// ignore_for_file: deprecated_member_use
 class BedrockNetworkInterceptor extends Interceptor {
   final IAuthTokenStorage storage = AuthStorage(const FlutterSecureStorage());
 

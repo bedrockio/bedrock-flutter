@@ -1,14 +1,25 @@
+import 'package:bedrock_flutter/src/services/deep_link_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../auth/auth_controller.dart';
 import '../auth/auth_view.dart';
 import '../widgets/bottom_navigation/bottom_navigation_controller.dart';
 import '../widgets/bottom_navigation/bottom_navigation_view.dart';
 import '../widgets/loading_screen.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    DeepLinkService.handleDynamicLinks(context);
+  }
 
   Widget _setAppBarTitle(BuildContext context) {
     return Consumer<BottomNavigationController>(
@@ -25,11 +36,10 @@ class Home extends StatelessWidget {
       builder: (context, AsyncSnapshot<bool> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
+          case ConnectionState.active:
             return const AuthView();
           case ConnectionState.waiting:
             return const LoadingScreen();
-          case ConnectionState.active:
-            return const AuthView();
           case ConnectionState.done:
             if (snapshot.data == true) {
               return Scaffold(
