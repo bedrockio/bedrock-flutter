@@ -1,9 +1,6 @@
 import 'package:bedrock_flutter/src/services/deep_link_service.dart';
-import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_links/uni_links.dart';
-
 import '../auth/auth_controller.dart';
 import '../auth/auth_view.dart';
 import '../widgets/bottom_navigation/bottom_navigation_controller.dart';
