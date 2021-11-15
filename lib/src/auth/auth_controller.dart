@@ -1,19 +1,20 @@
-import 'package:bedrock_flutter/src/auth/user_model.dart';
+import 'package:bedrock_flutter/src/auth/models/login_user_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../services/bedrock_service.dart';
 import 'auth_storage.dart';
+import 'models/register_user_request.dart';
 
 /// Interface used for declaring all the necessary methods for authentication
 /// and authorization.
 ///
 /// This is also helpful for creating Mock tests to simulate API behavior
 abstract class IAuth {
-  Future<void> login(User user);
+  Future<void> login(LoginUserRequest request);
   Future<void> logout();
-  Future<void> register(User user);
+  Future<void> register(RegisterUserRequest request);
   Future<void> resetPassword(String email);
 }
 
@@ -55,10 +56,10 @@ class AuthController extends ChangeNotifier implements IAuth {
   }
 
   @override
-  Future<void> login(User user) async {
+  Future<void> login(LoginUserRequest request) async {
     try {
       Response response =
-          await apiService.post('/auth/login', body: user.loginParams);
+          await apiService.post('/auth/login', body: request.toJson());
       await storage.storeAuthToken(response.data['data']['token']);
     } on DioError catch (e) {
       _handleError(e);
@@ -74,10 +75,10 @@ class AuthController extends ChangeNotifier implements IAuth {
   }
 
   @override
-  Future<void> register(User user) async {
+  Future<void> register(RegisterUserRequest request) async {
     try {
       Response response =
-          await apiService.post('/auth/register', body: user.registerParams);
+          await apiService.post('/auth/register', body: request.toJson());
       await storage.storeAuthToken(response.data['data']['token']);
       apiResponse = null;
     } on DioError catch (e) {

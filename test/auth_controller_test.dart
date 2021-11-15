@@ -1,6 +1,7 @@
 import 'package:bedrock_flutter/src/auth/auth_controller.dart';
 import 'package:bedrock_flutter/src/auth/auth_storage.dart';
-import 'package:bedrock_flutter/src/auth/user_model.dart';
+import 'package:bedrock_flutter/src/auth/models/login_user_request.dart';
+import 'package:bedrock_flutter/src/auth/models/register_user_request.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -43,7 +44,7 @@ class MockAuthController extends Mock implements IAuth {
   }
 
   @override
-  Future<void> login(User user) async {
+  Future<void> login(LoginUserRequest request) async {
     String token = generateJWT();
     if (!JwtDecoder.isExpired(token)) {
       await storage.storeAuthToken(token);
@@ -54,7 +55,7 @@ class MockAuthController extends Mock implements IAuth {
   Future<void> logout() async => await storage.deleteAuthToken();
 
   @override
-  Future<void> register(User user) async {
+  Future<void> register(RegisterUserRequest request) async {
     String token = generateJWT();
     if (!JwtDecoder.isExpired(token)) {
       await storage.storeAuthToken(token);
@@ -113,8 +114,11 @@ void main() {
     });
 
     test('Logging in', () async {
-      final user = User(email: "example@bedrock.io", password: "123456");
-      await authController.login(user);
+      final request = LoginUserRequest(
+        email: "example@bedrock.io",
+        password: "123456",
+      );
+      await authController.login(request);
       bool authenticated = await authController.authenticated;
       expect(authenticated, true);
     });
@@ -126,13 +130,13 @@ void main() {
     });
 
     test('Register', () async {
-      final user = User(
+      final request = RegisterUserRequest(
         email: "example@bedrock.io",
         password: "123456",
         firstName: "John",
         lastName: "Doe",
       );
-      await authController.register(user);
+      await authController.register(request);
       bool authenticated = await authController.authenticated;
       expect(authenticated, true);
     });

@@ -1,7 +1,9 @@
-import 'package:bedrock_flutter/src/shops/shop_details_screen.dart';
-import 'package:bedrock_flutter/src/shops/shops_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import './shops/shop_details_screen.dart';
+import './shops/shops_controller.dart';
+import 'services/bedrock_service.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -14,7 +16,9 @@ class RouteGenerator {
           return MaterialPageRoute<ShopDetailScreen>(
             settings: RouteSettings(name: routeName),
             builder: (_) => ChangeNotifierProvider<ShopsController>(
-              create: (context) => ShopsController(),
+              create: (context) => ShopsController(
+                apiService: BedrockService(),
+              ),
               child: ShopDetailScreen(id: settings.arguments as String),
             ),
           );

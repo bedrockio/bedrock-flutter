@@ -1,3 +1,4 @@
+import 'package:bedrock_flutter/src/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class BottomNavigation extends StatelessWidget {
     return Consumer<BottomNavigationController>(
       builder: (context, controller, child) {
         return BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: controller.selectedTab,
           onTap: controller.navigateTo,
           items: const [
@@ -24,6 +26,10 @@ class BottomNavigation extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(Icons.local_grocery_store_rounded),
               label: ProductsListView.appBarLabel,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: ProfileView.appBarLabel,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),

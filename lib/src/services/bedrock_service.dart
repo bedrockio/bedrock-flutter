@@ -99,6 +99,10 @@ class BedrockService {
     return await dio.put(url, data: body);
   }
 
+  Future<dynamic> patch(String url, {dynamic body}) async {
+    return await dio.patch(url, data: body);
+  }
+
   Future<dynamic> delete(String url) async {
     return await dio.delete(url);
   }

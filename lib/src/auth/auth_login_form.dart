@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import './models/login_user_request.dart';
+import '../localization/localized_strings.dart';
 import 'auth_controller.dart';
-import 'user_model.dart';
-import 'package:bedrock_flutter/src/localization/localized_strings.dart';
 
 class AuthLoginForm extends StatefulWidget {
   const AuthLoginForm({Key? key}) : super(key: key);
@@ -20,8 +21,8 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
     final controller = Provider.of<AuthController>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       if (_email.isNotEmpty && _password.isNotEmpty) {
-        final user = User(email: _email, password: _password);
-        await controller.login(user);
+        final request = LoginUserRequest(email: _email, password: _password);
+        await controller.login(request);
       }
     }
   }
