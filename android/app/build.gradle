@@ -60,6 +60,20 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "flavor-type"
+
+    productFlavors {
+        housebar_uat {
+            dimension "flavor-type"
+            versionNameSuffix "-uat"
+            manifestPlaceholders = [appName: "Runner UAT"]
+        }
+        housebar {
+            dimension "flavor-type"
+            manifestPlaceholders = [appName: "Runner"]
+        }
+    }
 }
 
 flutter {

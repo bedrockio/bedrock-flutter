@@ -132,8 +132,6 @@ class DebugScreen extends StatelessWidget {
             child: Text('Mock GPS', style: BRFontStyle.bodyMedium())),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
-      TextButton(onPressed: () {}, child: Text('Component library', style: BRFontStyle.bodyMedium())),
-      TextButton(onPressed: () {}, child: Text('Test token refresh', style: BRFontStyle.bodyMedium())),
       TextButton(
           onPressed: () {
             ErrorHelper.broadcastError(ApiError(message: 'This is a test. Nothing to see here!'));
