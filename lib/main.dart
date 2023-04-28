@@ -12,6 +12,7 @@ import 'package:bedrock_flutter/src/products/cubit/product_repository.dart';
 import 'package:bedrock_flutter/src/route_generator.dart';
 import 'package:bedrock_flutter/src/utils/auth_storage.dart';
 import 'package:bedrock_flutter/src/utils/error_helper.dart';
+import 'package:bedrock_flutter/src/utils/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,14 +23,17 @@ mainCommon() async {
 
   ErrorHelper.errorStream = StreamController<ApiError>.broadcast();
 
-  runApp(MultiBlocProvider(providers: [
-    BlocProvider<AuthCubit>(
-        create: (context) =>
-            AuthCubit(AuthRepository(ApiService.shared), AuthStorage(const FlutterSecureStorage()), StreamController())
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+            create: (context) => AuthCubit(
+                AuthRepository(ApiService.shared), AuthStorage(const FlutterSecureStorage()), StreamController())
               ..isLoggedIn()),
-    BlocProvider<ProductCubit>(create: (context) => ProductCubit(ProductRepository(ApiService.shared))),
-    BlocProvider<BottomNavCubit>(
-      create: (context) => BottomNavCubit(),
-    ),
-  ], child: const MaterialApp(home: BaseView(), onGenerateRoute: RouteGenerator.generateRoute)));
+        BlocProvider<ProductCubit>(create: (context) => ProductCubit(ProductRepository(ApiService.shared))),
+        BlocProvider<BottomNavCubit>(
+          create: (context) => BottomNavCubit(),
+        ),
+      ],
+      child:
+          const DismissKeyboard(child: MaterialApp(home: BaseView(), onGenerateRoute: RouteGenerator.generateRoute))));
 }

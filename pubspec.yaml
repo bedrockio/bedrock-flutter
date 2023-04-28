@@ -28,7 +28,6 @@ dependencies:
   flutter_svg: ^2.0.4
   flutter_libphonenumber: ^1.4.0
   equatable: ^2.0.5
-  mockito: ^5.4.0
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +37,7 @@ dev_dependencies:
   dart_jsonwebtoken: ^2.4.0
   bloc_test: ^9.1.0
   build_runner: ^2.1.4
+  mockito: ^5.4.0
   
 flutter:
   uses-material-design: true
