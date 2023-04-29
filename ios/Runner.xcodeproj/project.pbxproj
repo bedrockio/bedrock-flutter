@@ -372,6 +372,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 268ZWG6A33;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = "/Users/jannis/Developer/Flutter/bedrock-flutter/lib/src/env/main_prod.dart";
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -451,6 +452,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 268ZWG6A33;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = "/Users/jannis/Developer/Flutter/bedrock-flutter/lib/src/env/main_prod.dart";
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
