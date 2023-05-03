@@ -8,9 +8,11 @@ abstract class ProductState extends Equatable {
 }
 
 class ProductsLoaded extends ProductState {
-  final ProductListResponse data;
+  final List<Product> products;
 
-  const ProductsLoaded(this.data);
+  const ProductsLoaded(this.products);
 }
 
 class ProductsLoading extends ProductState {}
+
+class ProductsLoadingMore extends ProductState {}
