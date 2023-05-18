@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum BedrockPreferenceKey { isHomeFirstVisit, isGuestUser, hasUsedApp }
+enum BedrockPreferenceKey { isHomeFirstVisit, hasUsedApp }
 
 class BedrockPreferences {
   static BedrockPreferences shared = BedrockPreferences();

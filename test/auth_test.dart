@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -73,9 +74,8 @@ void main() {
 
     blocTest<AuthCubit, AuthState>('User log in (Phone number, failure)',
         setUp: () async {
-          loadStub('auth_failure').then((value) {
-            when(repository.login(phoneNumber)).thenAnswer((realInvocation) => throw ApiError.fromJson(value['error']));
-          });
+          when(repository.login(phoneNumber)).thenAnswer(
+              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -107,10 +107,8 @@ void main() {
 
     blocTest<AuthCubit, AuthState>('User log in (Incorrect code)',
         setUp: () async {
-          loadStub('auth_failure').then((value) {
-            when(repository.loginVerify('incorrect@email.com', 'wrong_code'))
-                .thenAnswer((realInvocation) => throw ApiError.fromJson(value['error']));
-          });
+          when(repository.loginVerify('incorrect@email.com', 'wrong_code')).thenAnswer(
+              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -124,10 +122,8 @@ void main() {
 
     blocTest<AuthCubit, AuthState>('User token invalid',
         setUp: () async {
-          loadStub('auth_failure').then((value) {
-            when(repository.loginVerify('incorrect@email.com', 'bogus_data'))
-                .thenAnswer((realInvocation) => throw ApiError.fromJson(value['error']));
-          });
+          when(repository.loginVerify('incorrect@email.com', 'bogus_data')).thenAnswer(
+              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -172,15 +168,13 @@ void main() {
         expect: () => [const TypeMatcher<RegistrationLoading>(), const TypeMatcher<RegistrationSuccess>()]);
     blocTest<AuthCubit, AuthState>('User account registration (Failure, duplicate phone number)',
         setUp: () async {
-          loadStub('auth_failure').then((value) {
-            when(repository.register(
-                    lastName: registrationRequestModel.lastName,
-                    firstName: registrationRequestModel.firstName,
-                    phoneNumber: registrationRequestModel.phoneNumber))
-                .thenAnswer(
-              (realInvocation) => throw ApiError.fromJson(value['error']),
-            );
-          });
+          when(repository.register(
+                  lastName: registrationRequestModel.lastName,
+                  firstName: registrationRequestModel.firstName,
+                  phoneNumber: registrationRequestModel.phoneNumber))
+              .thenAnswer(
+            (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'),
+          );
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -208,10 +202,8 @@ void main() {
 
     blocTest<AuthCubit, AuthState>('User account registration (Incorrect code)',
         setUp: () async {
-          loadStub('auth_failure').then((value) {
-            when(repository.loginVerify(phoneNumber, otp))
-                .thenAnswer((realInvocation) => throw ApiError.fromJson(value['error']));
-          });
+          when(repository.loginVerify(phoneNumber, otp)).thenAnswer(
+              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),

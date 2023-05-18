@@ -76,8 +76,6 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
   _i6.Future<_i3.RegistrationResponseModel> register({
     required String? firstName,
     required String? lastName,
-    String? email,
-    String? password,
     String? phoneNumber,
   }) =>
       (super.noSuchMethod(
@@ -87,8 +85,6 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
           {
             #firstName: firstName,
             #lastName: lastName,
-            #email: email,
-            #password: password,
             #phoneNumber: phoneNumber,
           },
         ),
@@ -101,8 +97,6 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             {
               #firstName: firstName,
               #lastName: lastName,
-              #email: email,
-              #password: password,
               #phoneNumber: phoneNumber,
             },
           ),
@@ -117,8 +111,6 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             {
               #firstName: firstName,
               #lastName: lastName,
-              #email: email,
-              #password: password,
               #phoneNumber: phoneNumber,
             },
           ),

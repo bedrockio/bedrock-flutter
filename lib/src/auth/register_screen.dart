@@ -1,5 +1,5 @@
 import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
-import 'package:bedrock_flutter/src/main_screen.dart';
+import 'package:bedrock_flutter/src/auth/login_otp_screen.dart';
 import 'package:bedrock_flutter/src/network/api_error.dart';
 import 'package:bedrock_flutter/src/utils/constants/fonts.dart';
 import 'package:bedrock_flutter/src/utils/constants/padding.dart';
@@ -14,8 +14,6 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController _firstNameTextController = TextEditingController();
   final TextEditingController _lastNameTextController = TextEditingController();
   final TextEditingController _phoneNumberTextController = TextEditingController();
-  final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _passwordTextController = TextEditingController();
   final ValueNotifier<bool> _formValidated = ValueNotifier(false);
 
   RegisterScreen({super.key});
@@ -63,14 +61,6 @@ class RegisterScreen extends StatelessWidget {
                                   controller: _lastNameTextController,
                                   decoration: const InputDecoration(label: Text('Last name'))),
                               TextFormField(
-                                  controller: _emailTextController,
-                                  decoration: const InputDecoration(label: Text('Email address'))),
-                              TextFormField(
-                                  controller: _passwordTextController,
-                                  decoration: const InputDecoration(label: Text('Password')),
-                                  obscureText: true,
-                                  obscuringCharacter: '*'),
-                              TextFormField(
                                   controller: _phoneNumberTextController,
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
@@ -84,7 +74,11 @@ class RegisterScreen extends StatelessWidget {
                               const SizedBox(height: BRPadding.small),
                               BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
                                 if (state is RegistrationSuccess) {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(MainScreen.route, (route) => false);
+                                  Navigator.pushNamed(
+                                    context,
+                                    LoginOtpScreen.route,
+                                    arguments: _phoneNumberTextController.text,
+                                  );
                                 }
 
                                 if (state is RegistrationError) {
@@ -92,7 +86,7 @@ class RegisterScreen extends StatelessWidget {
                                       SnackBar(content: Text(state.error?.message ?? ApiError.defaultErrorMessage)));
                                 }
                               }, builder: (context, state) {
-                                if (state is LoginLoading) {
+                                if (state is RegistrationLoading) {
                                   return const Center(child: CircularProgressIndicator());
                                 }
                                 return ValueListenableBuilder<bool>(
@@ -102,8 +96,6 @@ class RegisterScreen extends StatelessWidget {
                                           BlocProvider.of<AuthCubit>(context).registerUser(
                                               firstName: _firstNameTextController.text,
                                               lastName: _lastNameTextController.text,
-                                              email: _emailTextController.text,
-                                              password: _passwordTextController.text,
                                               phoneNumber:
                                                   '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}');
                                         },

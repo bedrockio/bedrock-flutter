@@ -29,16 +29,11 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  void registerUser(
-      {required String firstName,
-      required String lastName,
-      String? email,
-      String? password,
-      String? phoneNumber}) async {
+  void registerUser({required String firstName, required String lastName, String? phoneNumber}) async {
     emit(RegistrationLoading());
     try {
-      RegistrationResponseModel response = await repository.register(
-          firstName: firstName, lastName: lastName, email: email, password: password, phoneNumber: phoneNumber);
+      RegistrationResponseModel response =
+          await repository.register(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber);
       await storage.storeAuthToken(response.token);
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
       emit(const RegistrationSuccess());

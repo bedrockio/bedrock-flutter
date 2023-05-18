@@ -15,13 +15,9 @@ class AuthRepository {
   /// Create new user profile
   /// POST /auth/register
   Future<RegistrationResponseModel> register(
-      {required String firstName,
-      required String lastName,
-      String? email,
-      String? password,
-      String? phoneNumber}) async {
-    RegistrationRequestModel request = RegistrationRequestModel(
-        firstName: firstName, lastName: lastName, email: email, password: password, phoneNumber: phoneNumber);
+      {required String firstName, required String lastName, String? phoneNumber}) async {
+    RegistrationRequestModel request =
+        RegistrationRequestModel(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber);
     try {
       Response response = await apiService.post('/auth/register', data: request.toJson());
       return RegistrationResponseModel.fromJson(response.data['data']);
@@ -31,7 +27,7 @@ class AuthRepository {
   }
 
   /// Request verification code for existing user
-  /// POST /auth/login/send-code
+  /// POST /auth/login/send-sms
   Future<bool> login(String phoneNumber) async {
     try {
       LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber);

@@ -10,7 +10,6 @@ LoginUserRequest _$LoginUserRequestFromJson(Map<String, dynamic> json) =>
     LoginUserRequest(
       phoneNumber: json['phoneNumber'] as String,
       code: json['code'] as String?,
-      guestUserToken: json['guestUserToken'] as String?,
     );
 
 Map<String, dynamic> _$LoginUserRequestToJson(LoginUserRequest instance) {
@@ -25,6 +24,5 @@ Map<String, dynamic> _$LoginUserRequestToJson(LoginUserRequest instance) {
   }
 
   writeNotNull('code', instance.code);
-  writeNotNull('guestUserToken', instance.guestUserToken);
   return val;
 }
