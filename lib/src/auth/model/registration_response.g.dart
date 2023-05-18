@@ -9,11 +9,11 @@ part of 'registration_response.dart';
 RegistrationResponseModel _$RegistrationResponseModelFromJson(
         Map<String, dynamic> json) =>
     RegistrationResponseModel(
-      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      token: json['token'] as String,
     );
 
 Map<String, dynamic> _$RegistrationResponseModelToJson(
         RegistrationResponseModel instance) =>
     <String, dynamic>{
-      'user': instance.user,
+      'token': instance.token,
     };

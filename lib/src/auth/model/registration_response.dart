@@ -1,13 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:bedrock_flutter/src/profile/model/user_model.dart';
 
 part 'registration_response.g.dart';
 
 @JsonSerializable()
 class RegistrationResponseModel {
-  UserModel user;
+  String token;
 
-  RegistrationResponseModel({required this.user});
+  RegistrationResponseModel({required this.token});
 
   factory RegistrationResponseModel.fromJson(Map<String, dynamic> json) => _$RegistrationResponseModelFromJson(json);
 

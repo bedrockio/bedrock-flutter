@@ -4,14 +4,14 @@ part 'registration_request.g.dart';
 
 @JsonSerializable()
 class RegistrationRequestModel {
-  String? firstName;
-  String? lastName;
-  String? dateOfBirth;
-  String? phoneNo;
-  @JsonKey(includeIfNull: false)
-  String? guestUserToken;
+  String firstName;
+  String lastName;
+  String? email;
+  String? password;
+  String? phoneNumber;
 
-  RegistrationRequestModel({this.firstName, this.lastName, this.dateOfBirth, this.phoneNo, this.guestUserToken});
+  RegistrationRequestModel(
+      {required this.firstName, required this.lastName, this.email, this.password, this.phoneNumber});
 
   factory RegistrationRequestModel.fromJson(Map<String, dynamic> json) => _$RegistrationRequestModelFromJson(json);
 

@@ -23,9 +23,6 @@ class ErrorDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AnalyticEvents.logEvent(AnalyticEvents.errorDialog,
-    // parameters: {'title': title, 'description': description.substring(0, min(100, description.length))});
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -83,7 +80,7 @@ class ErrorDialog extends StatelessWidget {
               child: CtaButton(
                 colorScheme: BRColorScheme.black,
                 text: buttonLabel,
-                onClick: () {
+                onPressed: () {
                   if (onTap != null) onTap!();
                   Navigator.of(context).pop();
                 },

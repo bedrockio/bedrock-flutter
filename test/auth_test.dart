@@ -33,8 +33,8 @@ void main() {
   const String otp = '12345';
   const String token = '__sample_token';
 
-  RegistrationRequestModel registrationRequestModel = RegistrationRequestModel(
-      firstName: 'Test', lastName: 'Person', dateOfBirth: '10-20-1992', phoneNo: '+15551234567');
+  RegistrationRequestModel registrationRequestModel =
+      RegistrationRequestModel(firstName: 'Test', lastName: 'Person', phoneNumber: '+15551234567');
   ErrorHelper.errorStream = StreamController<ApiError>.broadcast();
 
   const MethodChannel channel = MethodChannel('dev.fluttercommunity.plus/package_info');
@@ -99,13 +99,10 @@ void main() {
         act: (bloc) => bloc.performLogin(phoneNumber, otp),
         expect: () {
           authStorage.readAuthToken().then((value) {
-            assert(value == '__sample_token');
+            assert(value == token);
           });
 
-          return [
-            const TypeMatcher<LoginLoading>(),
-            const TypeMatcher<LoginSuccess>().having((p0) => p0.token, 'token', token)
-          ];
+          return [const TypeMatcher<LoginLoading>(), const TypeMatcher<LoginSuccess>()];
         });
 
     blocTest<AuthCubit, AuthState>('User log in (Incorrect code)',
@@ -161,8 +158,7 @@ void main() {
             when(repository.register(
                     lastName: registrationRequestModel.lastName,
                     firstName: registrationRequestModel.firstName,
-                    dateOfBirth: registrationRequestModel.dateOfBirth,
-                    phoneNo: registrationRequestModel.phoneNo))
+                    phoneNumber: registrationRequestModel.phoneNumber))
                 .thenAnswer(
               (realInvocation) => Future.value(
                 RegistrationResponseModel.fromJson(value['data']),
@@ -172,8 +168,7 @@ void main() {
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
-        act: (bloc) => bloc.registerUser(
-            firstName: 'Test', lastName: 'Person', dateOfBirth: '10-20-1992', phoneNumber: '+15551234567'),
+        act: (bloc) => bloc.registerUser(firstName: 'Test', lastName: 'Person', phoneNumber: '+15551234567'),
         expect: () => [const TypeMatcher<RegistrationLoading>(), const TypeMatcher<RegistrationSuccess>()]);
     blocTest<AuthCubit, AuthState>('User account registration (Failure, duplicate phone number)',
         setUp: () async {
@@ -181,8 +176,7 @@ void main() {
             when(repository.register(
                     lastName: registrationRequestModel.lastName,
                     firstName: registrationRequestModel.firstName,
-                    dateOfBirth: registrationRequestModel.dateOfBirth,
-                    phoneNo: registrationRequestModel.phoneNo))
+                    phoneNumber: registrationRequestModel.phoneNumber))
                 .thenAnswer(
               (realInvocation) => throw ApiError.fromJson(value['error']),
             );
@@ -190,8 +184,7 @@ void main() {
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
-        act: (bloc) => bloc.registerUser(
-            firstName: 'Test', lastName: 'Person', dateOfBirth: '10-20-1992', phoneNumber: '+15551234567'),
+        act: (bloc) => bloc.registerUser(firstName: 'Test', lastName: 'Person', phoneNumber: '+15551234567'),
         expect: () => [
               const TypeMatcher<RegistrationLoading>(),
               const TypeMatcher<RegistrationError>().having((p0) {
@@ -210,10 +203,7 @@ void main() {
         wait: const Duration(seconds: 1),
         act: (bloc) => bloc.performRegistrationLogin(phoneNumber, otp),
         expect: () {
-          return [
-            const TypeMatcher<LoginLoading>(),
-            const TypeMatcher<RegistrationOTPSuccess>().having((p0) => p0.token, 'token', token)
-          ];
+          return [const TypeMatcher<LoginLoading>(), const TypeMatcher<RegistrationOTPSuccess>()];
         });
 
     blocTest<AuthCubit, AuthState>('User account registration (Incorrect code)',

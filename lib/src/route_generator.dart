@@ -1,6 +1,7 @@
 import 'package:bedrock_flutter/src/_debug/debug_screen.dart';
 import 'package:bedrock_flutter/src/auth/login_otp_screen.dart';
 import 'package:bedrock_flutter/src/auth/login_screen.dart';
+import 'package:bedrock_flutter/src/auth/register_screen.dart';
 import 'package:bedrock_flutter/src/base_view.dart';
 import 'package:bedrock_flutter/src/_debug/change_location_screen.dart';
 import 'package:bedrock_flutter/src/_debug/network_log_screen.dart';
@@ -14,16 +15,15 @@ class RouteGenerator {
 
     dynamic screen;
 
-    // if (env == Stage.prod && !kDebugMode) {
-    //   FirebaseAnalytics.instance.setCurrentScreen(screenName: routeName);
-    // }
-
     switch (routeName) {
       case BaseView.route:
         screen = const BaseView();
         break;
       case LoginScreen.route:
         screen = LoginScreen();
+        break;
+      case RegisterScreen.route:
+        screen = RegisterScreen();
         break;
       case LoginOtpScreen.route:
         if (args is String) {
@@ -69,10 +69,6 @@ class RouteGenerator {
     RouteSettings? routeSettings,
     AnimationController? transitionAnimationController,
   }) {
-    // if (routeSettings != null && env == Stage.prod && !kDebugMode) {
-    //   FirebaseAnalytics.instance.setCurrentScreen(screenName: routeSettings.name);
-    // }
-
     return showModalBottomSheet(
         context: context,
         builder: builder,

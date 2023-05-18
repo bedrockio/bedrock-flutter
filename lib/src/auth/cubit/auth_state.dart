@@ -15,21 +15,15 @@ class LoginLoading extends AuthState {}
 class RegistrationLoading extends AuthState {}
 
 class LoginSuccess extends AuthState {
-  final String? token;
-  final UserModel? user;
-  const LoginSuccess({this.token, this.user});
+  const LoginSuccess();
 }
 
 class RegistrationOTPSuccess extends AuthState {
-  final String? token;
-  final UserModel? user;
-  const RegistrationOTPSuccess({this.token, this.user});
+  const RegistrationOTPSuccess();
 }
 
 class RegistrationSuccess extends AuthState {
-  final UserModel user;
-
-  const RegistrationSuccess({required this.user});
+  const RegistrationSuccess();
 }
 
 class LoginError extends AuthState {

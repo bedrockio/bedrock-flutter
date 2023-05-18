@@ -74,22 +74,22 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
       ) as _i2.ApiService);
   @override
   _i6.Future<_i3.RegistrationResponseModel> register({
-    String? lastName,
-    String? dateOfBirth,
-    String? phoneNo,
-    String? firstName,
-    String? guestUserToken,
+    required String? firstName,
+    required String? lastName,
+    String? email,
+    String? password,
+    String? phoneNumber,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #register,
           [],
           {
-            #lastName: lastName,
-            #dateOfBirth: dateOfBirth,
-            #phoneNo: phoneNo,
             #firstName: firstName,
-            #guestUserToken: guestUserToken,
+            #lastName: lastName,
+            #email: email,
+            #password: password,
+            #phoneNumber: phoneNumber,
           },
         ),
         returnValue: _i6.Future<_i3.RegistrationResponseModel>.value(
@@ -99,11 +99,11 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             #register,
             [],
             {
-              #lastName: lastName,
-              #dateOfBirth: dateOfBirth,
-              #phoneNo: phoneNo,
               #firstName: firstName,
-              #guestUserToken: guestUserToken,
+              #lastName: lastName,
+              #email: email,
+              #password: password,
+              #phoneNumber: phoneNumber,
             },
           ),
         )),
@@ -115,25 +115,20 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             #register,
             [],
             {
-              #lastName: lastName,
-              #dateOfBirth: dateOfBirth,
-              #phoneNo: phoneNo,
               #firstName: firstName,
-              #guestUserToken: guestUserToken,
+              #lastName: lastName,
+              #email: email,
+              #password: password,
+              #phoneNumber: phoneNumber,
             },
           ),
         )),
       ) as _i6.Future<_i3.RegistrationResponseModel>);
   @override
-  _i6.Future<bool> login(
-    String? phoneNumber, {
-    String? guestUserToken,
-  }) =>
-      (super.noSuchMethod(
+  _i6.Future<bool> login(String? phoneNumber) => (super.noSuchMethod(
         Invocation.method(
           #login,
           [phoneNumber],
-          {#guestUserToken: guestUserToken},
         ),
         returnValue: _i6.Future<bool>.value(false),
         returnValueForMissingStub: _i6.Future<bool>.value(false),
@@ -171,29 +166,6 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
               phoneNumber,
               code,
             ],
-          ),
-        )),
-      ) as _i6.Future<_i4.LoginResponseModel>);
-  @override
-  _i6.Future<_i4.LoginResponseModel> registerGuest() => (super.noSuchMethod(
-        Invocation.method(
-          #registerGuest,
-          [],
-        ),
-        returnValue:
-            _i6.Future<_i4.LoginResponseModel>.value(_FakeLoginResponseModel_2(
-          this,
-          Invocation.method(
-            #registerGuest,
-            [],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i6.Future<_i4.LoginResponseModel>.value(_FakeLoginResponseModel_2(
-          this,
-          Invocation.method(
-            #registerGuest,
-            [],
           ),
         )),
       ) as _i6.Future<_i4.LoginResponseModel>);

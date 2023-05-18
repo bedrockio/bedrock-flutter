@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bedrock_flutter/src/profile/model/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -31,18 +30,19 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  void registerUser({String? firstName, String? lastName, String? dateOfBirth, String? phoneNumber}) async {
+  void registerUser(
+      {required String firstName,
+      required String lastName,
+      String? email,
+      String? password,
+      String? phoneNumber}) async {
     emit(RegistrationLoading());
     try {
-      String? guestUserToken = await storage.readAuthToken();
-
       RegistrationResponseModel response = await repository.register(
-          firstName: firstName,
-          lastName: lastName,
-          dateOfBirth: dateOfBirth,
-          phoneNo: phoneNumber,
-          guestUserToken: guestUserToken);
-      emit(RegistrationSuccess(user: response.user));
+          firstName: firstName, lastName: lastName, email: email, password: password, phoneNumber: phoneNumber);
+      await storage.storeAuthToken(response.token);
+      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
+      emit(const RegistrationSuccess());
     } catch (e) {
       emit(RegistrationError(error: e is ApiError ? e : null));
     }
@@ -52,8 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoginLoading());
 
     try {
-      String? guestUserToken = await storage.readAuthToken();
-      await repository.login(phoneNumber, guestUserToken: guestUserToken);
+      await repository.login(phoneNumber);
       emit(LoginRequestSuccess());
     } catch (e) {
       emit(LoginError(error: e is ApiError ? e : null));
@@ -66,9 +65,8 @@ class AuthCubit extends Cubit<AuthState> {
       LoginResponseModel response = await repository.loginVerify(phoneNumber, code);
       await storage.storeAuthToken(response.token);
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, false);
 
-      emit(LoginSuccess(token: response.token));
+      emit(const LoginSuccess());
     } catch (e) {
       emit(LoginError(error: e is ApiError ? e : null));
     }
@@ -80,23 +78,8 @@ class AuthCubit extends Cubit<AuthState> {
       LoginResponseModel response = await repository.loginVerify(phoneNumber, code);
       await storage.storeAuthToken(response.token);
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, false);
 
-      emit(RegistrationOTPSuccess(token: response.token));
-    } catch (e) {
-      emit(LoginError(error: e is ApiError ? e : null));
-    }
-  }
-
-  void performGuestRegistration() async {
-    emit(LoginLoading());
-    try {
-      LoginResponseModel response = await repository.registerGuest();
-      await storage.storeAuthToken(response.token);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, true);
-
-      emit(LoginSuccess(token: response.token));
+      emit(const RegistrationOTPSuccess());
     } catch (e) {
       emit(LoginError(error: e is ApiError ? e : null));
     }
@@ -132,12 +115,7 @@ class AuthCubit extends Cubit<AuthState> {
       String? token = await storage.readAuthToken();
 
       if (token != null && !JwtDecoder.isExpired(token)) {
-        Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-        if (decodedToken['guest'] == true) {
-          BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, true);
-        } else {
-          await profileRepository.fetchUser();
-        }
+        await profileRepository.fetchUser();
         emit(LoggedIn());
       } else {
         emit(LoggedOut());

@@ -1,5 +1,6 @@
 import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
 import 'package:bedrock_flutter/src/main_screen.dart';
+import 'package:bedrock_flutter/src/network/api_error.dart';
 import 'package:bedrock_flutter/src/utils/constants/colors.dart';
 import 'package:bedrock_flutter/src/utils/constants/padding.dart';
 import 'package:bedrock_flutter/src/utils/widgets/otp_widget.dart';
@@ -41,7 +42,7 @@ class LoginOtpScreen extends StatelessWidget {
 
                     if (state is LoginError) {
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(state.error?.message ?? 'Something went wrong.')));
+                          .showSnackBar(SnackBar(content: Text(state.error?.message ?? ApiError.defaultErrorMessage)));
                     }
                   }, builder: (context, state) {
                     if (state is LoginLoading) {

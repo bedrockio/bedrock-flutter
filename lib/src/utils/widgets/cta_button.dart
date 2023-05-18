@@ -3,7 +3,7 @@ import 'package:bedrock_flutter/src/utils/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class CtaButton extends StatelessWidget {
-  final Function() onClick;
+  final Function() onPressed;
   final String text;
   final bool enabled;
   final BRColorScheme? colorScheme;
@@ -11,7 +11,7 @@ class CtaButton extends StatelessWidget {
 
   const CtaButton(
       {super.key,
-      required this.onClick,
+      required this.onPressed,
       required this.text,
       this.enabled = true,
       this.colorScheme,
@@ -34,7 +34,7 @@ class CtaButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: enabled ? onClick : null,
+        onPressed: enabled ? onPressed : null,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

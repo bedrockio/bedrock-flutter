@@ -15,13 +15,13 @@ class AuthRepository {
   /// Create new user profile
   /// POST /auth/register
   Future<RegistrationResponseModel> register(
-      {String? lastName, String? dateOfBirth, String? phoneNo, String? firstName, String? guestUserToken}) async {
+      {required String firstName,
+      required String lastName,
+      String? email,
+      String? password,
+      String? phoneNumber}) async {
     RegistrationRequestModel request = RegistrationRequestModel(
-        lastName: lastName,
-        dateOfBirth: dateOfBirth,
-        phoneNo: phoneNo,
-        firstName: firstName,
-        guestUserToken: guestUserToken);
+        firstName: firstName, lastName: lastName, email: email, password: password, phoneNumber: phoneNumber);
     try {
       Response response = await apiService.post('/auth/register', data: request.toJson());
       return RegistrationResponseModel.fromJson(response.data['data']);
@@ -32,9 +32,9 @@ class AuthRepository {
 
   /// Request verification code for existing user
   /// POST /auth/login/send-code
-  Future<bool> login(String phoneNumber, {String? guestUserToken}) async {
+  Future<bool> login(String phoneNumber) async {
     try {
-      LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber, guestUserToken: guestUserToken);
+      LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber);
       Response response = await apiService.post('/auth/login/send-sms', data: request.toJson());
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
@@ -48,17 +48,6 @@ class AuthRepository {
     LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber, code: code);
     try {
       Response response = await apiService.post('/auth/login/verify-sms', data: request.toJson());
-      return LoginResponseModel(response.data['data']['token']);
-    } catch (_) {
-      rethrow;
-    }
-  }
-
-  /// Create new guest profile4
-  /// POST /auth/register/guest
-  Future<LoginResponseModel> registerGuest() async {
-    try {
-      Response response = await apiService.post('/auth/register/guest');
       return LoginResponseModel(response.data['data']['token']);
     } catch (_) {
       rethrow;
