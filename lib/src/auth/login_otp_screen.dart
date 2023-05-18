@@ -1,6 +1,7 @@
 import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
 import 'package:bedrock_flutter/src/main_screen.dart';
 import 'package:bedrock_flutter/src/network/api_error.dart';
+import 'package:bedrock_flutter/src/profile/cubit/profile_cubit.dart';
 import 'package:bedrock_flutter/src/utils/constants/colors.dart';
 import 'package:bedrock_flutter/src/utils/constants/padding.dart';
 import 'package:bedrock_flutter/src/utils/widgets/otp_widget.dart';
@@ -37,6 +38,7 @@ class LoginOtpScreen extends StatelessWidget {
                   const SizedBox(height: BRPadding.large),
                   BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
                     if (state is LoginSuccess) {
+                      BlocProvider.of<ProfileCubit>(context).fetchUser();
                       Navigator.of(context).pushNamedAndRemoveUntil(MainScreen.route, (route) => false);
                     }
 
