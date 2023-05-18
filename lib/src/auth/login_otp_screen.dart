@@ -38,6 +38,11 @@ class LoginOtpScreen extends StatelessWidget {
                     if (state is LoginSuccess) {
                       Navigator.of(context).pushNamedAndRemoveUntil(MainScreen.route, (route) => false);
                     }
+
+                    if (state is LoginError) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(state.error?.message ?? 'Something went wrong.')));
+                    }
                   }, builder: (context, state) {
                     if (state is LoginLoading) {
                       return const Center(child: CircularProgressIndicator(color: BRColors.black));

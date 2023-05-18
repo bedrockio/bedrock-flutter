@@ -17,7 +17,6 @@ SearchRequest _$SearchRequestFromJson(Map<String, dynamic> json) =>
       sort: json['sort'] == null
           ? null
           : SearchSortRequest.fromJson(json['sort'] as Map<String, dynamic>),
-      visibility: json['visibility'] as String? ?? 'published',
       type: json['type'],
       skip: json['skip'] as int?,
     );
@@ -37,7 +36,6 @@ Map<String, dynamic> _$SearchRequestToJson(SearchRequest instance) {
   writeNotNull('sort', instance.sort);
   writeNotNull('type', instance.type);
   writeNotNull('categories', instance.categories);
-  writeNotNull('visibility', instance.visibility);
   writeNotNull('skip', instance.skip);
   return val;
 }

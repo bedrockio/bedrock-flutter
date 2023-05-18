@@ -45,7 +45,7 @@ class DioLogger {
     curlRequest += '-X ${response.requestOptions.method} "${response.requestOptions.path}" ';
     if (response.requestOptions.data != null && (response.requestOptions.data is! FormData)) {
       final dataMap = json.encode(response.requestOptions.data);
-      curlRequest += '-d "$dataMap"';
+      curlRequest += '-d \'$dataMap\'';
     }
 
     log('Request: $curlRequest');

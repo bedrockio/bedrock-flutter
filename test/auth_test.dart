@@ -12,7 +12,6 @@ import 'package:bedrock_flutter/src/auth/model/login_response_model.dart';
 import 'package:bedrock_flutter/src/auth/model/registration_request.dart';
 import 'package:bedrock_flutter/src/auth/model/registration_response.dart';
 import 'package:bedrock_flutter/src/network/api_error.dart';
-import 'package:bedrock_flutter/src/profile/model/user_model.dart';
 import 'package:bedrock_flutter/src/utils/auth_storage.dart';
 import 'package:bedrock_flutter/src/utils/error_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,8 +90,7 @@ void main() {
     blocTest<AuthCubit, AuthState>('User log in (Correct code)',
         setUp: () async {
           loadStub('auth_success').then((value) {
-            LoginResponseModel response =
-                LoginResponseModel(value['data']['token'], UserModel.fromJson(value['data']['user']));
+            LoginResponseModel response = LoginResponseModel(value['data']['token']);
             when(repository.loginVerify(phoneNumber, otp)).thenAnswer((realInvocation) => Future.value(response));
           });
         },
@@ -204,8 +202,7 @@ void main() {
     blocTest<AuthCubit, AuthState>('User account registration (Correct code)',
         setUp: () async {
           loadStub('auth_success').then((value) {
-            LoginResponseModel response =
-                LoginResponseModel(value['data']['token'], UserModel.fromJson(value['data']['user']));
+            LoginResponseModel response = LoginResponseModel(value['data']['token']);
             when(repository.loginVerify(phoneNumber, otp)).thenAnswer((realInvocation) => Future.value(response));
           });
         },

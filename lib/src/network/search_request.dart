@@ -24,9 +24,6 @@ class SearchRequest {
   List<String>? categories;
 
   @JsonKey(includeIfNull: false)
-  String? visibility;
-
-  @JsonKey(includeIfNull: false)
   int? skip;
 
   SearchRequest({
@@ -35,7 +32,6 @@ class SearchRequest {
     this.categories,
     this.isFeatured,
     this.sort,
-    this.visibility = 'published',
     this.type,
     this.skip,
   });

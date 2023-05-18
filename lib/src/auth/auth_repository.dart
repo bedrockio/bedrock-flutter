@@ -4,7 +4,6 @@ import 'model/login_user_request.dart';
 import 'model/login_response_model.dart';
 import 'model/registration_request.dart';
 import 'model/registration_response.dart';
-import 'package:bedrock_flutter/src/profile/model/user_model.dart';
 
 import '../network/api_service.dart';
 
@@ -35,8 +34,8 @@ class AuthRepository {
   /// POST /auth/login/send-code
   Future<bool> login(String phoneNumber, {String? guestUserToken}) async {
     try {
-      LoginUserRequest request = LoginUserRequest(phoneNo: phoneNumber, guestUserToken: guestUserToken);
-      Response response = await apiService.post('/auth/login/send-code', data: request.toJson());
+      LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber, guestUserToken: guestUserToken);
+      Response response = await apiService.post('/auth/login/send-sms', data: request.toJson());
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
       rethrow;
@@ -44,23 +43,23 @@ class AuthRepository {
   }
 
   /// Verify 2FA code for existing user
-  /// POST /auth/login/verify
+  /// POST /auth/login/verify-sms
   Future<LoginResponseModel> loginVerify(String phoneNumber, String code) async {
-    LoginUserRequest request = LoginUserRequest(phoneNo: phoneNumber, code: code);
+    LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber, code: code);
     try {
-      Response response = await apiService.post('/auth/login/verify', data: request.toJson());
-      return LoginResponseModel(response.data['data']['token'], UserModel.fromJson(response.data['data']['user']));
+      Response response = await apiService.post('/auth/login/verify-sms', data: request.toJson());
+      return LoginResponseModel(response.data['data']['token']);
     } catch (_) {
       rethrow;
     }
   }
 
-  /// Create new guest profile
+  /// Create new guest profile4
   /// POST /auth/register/guest
   Future<LoginResponseModel> registerGuest() async {
     try {
       Response response = await apiService.post('/auth/register/guest');
-      return LoginResponseModel(response.data['data']['token'], UserModel.fromJson(response.data['data']['user']));
+      return LoginResponseModel(response.data['data']['token']);
     } catch (_) {
       rethrow;
     }

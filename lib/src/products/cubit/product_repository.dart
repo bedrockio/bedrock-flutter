@@ -15,7 +15,7 @@ class ProductRepository {
     try {
       final searchRequest = SearchRequest(
         keyword: query,
-        sort: SearchSortRequest(field: sortField ?? 'brandName', order: sortOrder ?? 'asc'),
+        sort: SearchSortRequest(field: sortField ?? 'createdAt', order: sortOrder ?? 'desc'),
         skip: skip,
       ).toJson();
 

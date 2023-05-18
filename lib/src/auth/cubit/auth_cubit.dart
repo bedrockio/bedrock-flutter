@@ -68,7 +68,7 @@ class AuthCubit extends Cubit<AuthState> {
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, false);
 
-      emit(LoginSuccess(token: response.token, user: response.user));
+      emit(LoginSuccess(token: response.token));
     } catch (e) {
       emit(LoginError(error: e is ApiError ? e : null));
     }
@@ -82,7 +82,7 @@ class AuthCubit extends Cubit<AuthState> {
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, false);
 
-      emit(RegistrationOTPSuccess(token: response.token, user: response.user));
+      emit(RegistrationOTPSuccess(token: response.token));
     } catch (e) {
       emit(LoginError(error: e is ApiError ? e : null));
     }
@@ -96,7 +96,7 @@ class AuthCubit extends Cubit<AuthState> {
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isGuestUser, true);
 
-      emit(LoginSuccess(token: response.token, user: response.user));
+      emit(LoginSuccess(token: response.token));
     } catch (e) {
       emit(LoginError(error: e is ApiError ? e : null));
     }
