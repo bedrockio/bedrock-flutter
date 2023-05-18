@@ -37,6 +37,6 @@ showErrorBottomSheet(ApiError error, BuildContext context) {
     builder: (BuildContext context) => ErrorDialog(
         title: 'Something went wrong',
         description: error.message,
-        logMessage: error.details != null ? error.details['details'][0].toString() : ''),
+        logMessage: error.details != null ? error.details['details'].toString() : ''),
   );
 }
