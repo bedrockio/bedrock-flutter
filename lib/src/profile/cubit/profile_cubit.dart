@@ -4,14 +4,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bedrock_flutter/src/profile/model/user_model.dart';
-import 'package:bedrock_flutter/src/profile/profile_repository.dart';
+import 'package:bedrock_flutter/src/profile/cubit/profile_repository.dart';
 import 'package:bedrock_flutter/src/network/api_error.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository repository;
-  UserModel user = UserModel();
+  UserModel? user;
 
   ProfileCubit(this.repository) : super(ProfileInitial());
 
@@ -19,7 +19,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoading());
     try {
       user = await repository.fetchUser();
-      emit(ProfileLoaded(user));
+      emit(ProfileLoaded(user!));
     } catch (e) {
       ErrorHelper.broadcastError(e);
     }
@@ -29,10 +29,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoading());
     try {
       user = await repository.updateUser(newUser);
-      emit(ProfileLoaded(user));
+      emit(ProfileLoaded(user!));
     } catch (e) {
       user = await repository.fetchUser();
-      emit(ProfileLoaded(user));
+      emit(ProfileLoaded(user!));
       ErrorHelper.broadcastError(e);
     }
   }
@@ -41,7 +41,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoading());
     try {
       user = await repository.updateAvatar(data);
-      emit(ProfileLoaded(user));
+      emit(ProfileLoaded(user!));
     } catch (e) {
       ErrorHelper.broadcastError(e);
     }

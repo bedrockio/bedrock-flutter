@@ -9,6 +9,8 @@ import 'package:bedrock_flutter/src/network/api_error.dart';
 import 'package:bedrock_flutter/src/network/api_service.dart';
 import 'package:bedrock_flutter/src/products/cubit/product_cubit.dart';
 import 'package:bedrock_flutter/src/products/cubit/product_repository.dart';
+import 'package:bedrock_flutter/src/profile/cubit/profile_cubit.dart';
+import 'package:bedrock_flutter/src/profile/cubit/profile_repository.dart';
 import 'package:bedrock_flutter/src/route_generator.dart';
 import 'package:bedrock_flutter/src/utils/auth_storage.dart';
 import 'package:bedrock_flutter/src/utils/error_helper.dart';
@@ -30,6 +32,7 @@ mainCommon() async {
                 AuthRepository(ApiService.shared), AuthStorage(const FlutterSecureStorage()), StreamController())
               ..isLoggedIn()),
         BlocProvider<ProductCubit>(create: (context) => ProductCubit(ProductRepository(ApiService.shared))),
+        BlocProvider<ProfileCubit>(create: (context) => ProfileCubit(ProfileRepository(ApiService.shared))),
         BlocProvider<BottomNavCubit>(
           create: (context) => BottomNavCubit(),
         ),

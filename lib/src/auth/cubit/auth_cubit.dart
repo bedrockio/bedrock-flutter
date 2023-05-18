@@ -5,7 +5,6 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../network/api_error.dart';
 import '../../network/api_service.dart';
-import '../../profile/profile_repository.dart';
 import '../../utils/auth_storage.dart';
 import '../../utils/preferences.dart';
 import '../model/registration_response.dart';
@@ -16,7 +15,6 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository repository;
-  final ProfileRepository profileRepository = ProfileRepository(ApiService.shared);
   final StreamController<ApiError> errorStream;
 
   final AuthStorage storage;
@@ -115,7 +113,6 @@ class AuthCubit extends Cubit<AuthState> {
       String? token = await storage.readAuthToken();
 
       if (token != null && !JwtDecoder.isExpired(token)) {
-        await profileRepository.fetchUser();
         emit(LoggedIn());
       } else {
         emit(LoggedOut());

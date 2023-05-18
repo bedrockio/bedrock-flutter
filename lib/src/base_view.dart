@@ -1,6 +1,7 @@
 import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
 import 'package:bedrock_flutter/src/auth/login_screen.dart';
 import 'package:bedrock_flutter/src/main_screen.dart';
+import 'package:bedrock_flutter/src/profile/cubit/profile_cubit.dart';
 import 'package:bedrock_flutter/src/utils/constants/colors.dart';
 import 'package:bedrock_flutter/src/utils/error_helper.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _BaseViewState extends State<BaseView> {
         buildWhen: (previous, current) => current is LoggedIn || current is LoggedOut || current is LoginInitial,
         builder: (context, state) {
           if (state is LoggedIn) {
+            BlocProvider.of<ProfileCubit>(context).fetchUser();
             return const MainScreen();
           }
 

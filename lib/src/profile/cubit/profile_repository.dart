@@ -1,9 +1,9 @@
 import 'package:bedrock_flutter/src/profile/model/user_model.dart';
 import 'package:dio/dio.dart';
 
-import 'model/update_user_request.dart';
-import '../network/upload_response_model.dart';
-import '../network/api_service.dart';
+import '../model/update_user_request.dart';
+import '../../network/upload_response_model.dart';
+import '../../network/api_service.dart';
 
 class ProfileRepository {
   final ApiService apiService;
@@ -32,8 +32,7 @@ class ProfileRepository {
           firstName: newUser.firstName,
           lastName: newUser.lastName,
           email: newUser.email,
-          phoneNo: newUser.phoneNo,
-          dateOfBirth: newUser.dateOfBirth,
+          phoneNumber: newUser.phoneNumber,
         ).toJson(),
       );
       return UserModel.fromJson(response.data['data']);

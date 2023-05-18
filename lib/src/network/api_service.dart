@@ -22,7 +22,7 @@ class ApiService {
   }
 
   String imageUrl(String hash) {
-    return '${dio.options.baseUrl}/uploads/$hash/image';
+    return '${dio.options.baseUrl}/uploads/$hash/raw';
   }
 
   Future<dynamic> get(String url, {Map<String, dynamic>? queryParameters}) async {

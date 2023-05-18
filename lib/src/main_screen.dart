@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bedrock_flutter/src/home/home_screen.dart';
 import 'package:bedrock_flutter/src/navigation/bottom_nav_bar.dart';
 import 'package:bedrock_flutter/src/products/products_screen.dart';
+import 'package:bedrock_flutter/src/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         body: TabBarView(
           controller: tabController,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [HomeScreen(), ProductsScreen(), HomeScreen()],
+          children: const [HomeScreen(), ProductsScreen(), ProfileScreen()],
         ));
   }
 }
