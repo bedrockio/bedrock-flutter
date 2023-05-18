@@ -24,12 +24,21 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.chevron_left, size: 32, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
         body: SafeArea(
             child: Padding(
                 padding: const EdgeInsets.all(BRPadding.small),
                 child: Stack(alignment: Alignment.bottomCenter, children: [
                   Column(children: [
-                    const SizedBox(width: double.infinity, height: BRPadding.small),
                     Image.asset('assets/images/bedrock.png', width: 44, height: 44),
                     const SizedBox(height: BRPadding.small),
                     Text('Create an account', style: BRFontStyle.h2()),
