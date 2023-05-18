@@ -38,14 +38,17 @@ void main() {
       firstName: 'Test', lastName: 'Person', dateOfBirth: '10-20-1992', phoneNo: '+15551234567');
   ErrorHelper.errorStream = StreamController<ApiError>.broadcast();
 
-  const MethodChannel('dev.fluttercommunity.plus/package_info').setMockMethodCallHandler((MethodCall methodCall) async {
-    if (methodCall.method == 'getAll') {
-      return <String, dynamic>{
+  const MethodChannel channel = MethodChannel('dev.fluttercommunity.plus/package_info');
+
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMessageHandler(channel.name, (data) async {
+    final MethodCall call = channel.codec.decodeMethodCall(data);
+    if (call.method == 'getAll') {
+      return channel.codec.encodeSuccessEnvelope(<String, dynamic>{
         'appName': 'Bedrock Flutter',
         'packageName': 'io.bedrock.flutter',
         'version': '0.0.1',
         'buildNumber': '1-test'
-      };
+      });
     }
     return null;
   });
