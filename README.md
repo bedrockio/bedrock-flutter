@@ -32,6 +32,9 @@ git clone git@github.com:bedrockio/bedrock-flutter.git <name_of_project>
 _Note_: Project names should use underscores between words because flutter tool doesn't allow
 dashes/hyphens to be used in project name.
 
+After cloning the project, use your terminal to go into the root folder and execute the following command: `flutter pub get`. After this, go into the `ios` folder, and execute `pod install`.
+This will download the dependencies needed to succesfully build and run the sample project.
+
 This project is a starting point for a Flutter application that follows the
 [simple app state management
 tutorial](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).

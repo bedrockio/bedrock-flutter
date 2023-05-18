@@ -106,6 +106,7 @@ class ApiServiceInterceptor extends Interceptor {
     }
 
     options.headers['Content-Type'] = 'application/json';
+    options.headers['ApiKey'] = 'mobile';
 
     handler.next(options);
   }
