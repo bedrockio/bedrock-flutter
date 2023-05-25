@@ -3,19 +3,20 @@ import '/src/utils/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class CtaButton extends StatelessWidget {
-  final Function() onPressed;
   final String text;
   final bool enabled;
   final BRColorScheme? colorScheme;
   final BorderSide border;
+  final VoidCallback onPressed;
 
-  const CtaButton(
-      {super.key,
-      required this.onPressed,
-      required this.text,
-      this.enabled = true,
-      this.colorScheme,
-      this.border = const BorderSide(color: Colors.transparent, width: 0)});
+  const CtaButton({
+    super.key,
+    required this.text,
+    this.enabled = true,
+    this.colorScheme,
+    this.border = const BorderSide(color: Colors.transparent, width: 0),
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
