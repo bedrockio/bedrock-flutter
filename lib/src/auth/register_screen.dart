@@ -1,9 +1,9 @@
-import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
-import 'package:bedrock_flutter/src/auth/login_otp_screen.dart';
-import 'package:bedrock_flutter/src/network/api_error.dart';
-import 'package:bedrock_flutter/src/utils/constants/fonts.dart';
-import 'package:bedrock_flutter/src/utils/constants/padding.dart';
-import 'package:bedrock_flutter/src/utils/widgets/cta_button.dart';
+import '/src/auth/cubit/auth_cubit.dart';
+import '/src/auth/login_otp_screen.dart';
+import '/src/network/api_error.dart';
+import '/src/utils/constants/fonts.dart';
+import '/src/utils/constants/padding.dart';
+import '/src/utils/widgets/cta_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';

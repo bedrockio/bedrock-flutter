@@ -1,7 +1,7 @@
-import 'package:bedrock_flutter/src/network/api_service.dart';
-import 'package:bedrock_flutter/src/network/search_request.dart';
-import 'package:bedrock_flutter/src/network/search_sort_request.dart';
-import 'package:bedrock_flutter/src/products/model/product_list_response.dart';
+import '/src/network/api_service.dart';
+import '/src/network/search_request.dart';
+import '/src/network/search_sort_request.dart';
+import '/src/products/model/product_list_response.dart';
 import 'package:dio/dio.dart';
 
 class ProductRepository {

@@ -1,5 +1,5 @@
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/constants/fonts.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class CtaButton extends StatelessWidget {

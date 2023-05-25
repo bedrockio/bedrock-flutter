@@ -1,7 +1,7 @@
-import 'package:bedrock_flutter/src/products/model/product_model.dart';
-import 'package:bedrock_flutter/src/utils/constants/padding.dart';
-import 'package:bedrock_flutter/src/utils/widgets/image_placeholder.dart';
-import 'package:bedrock_flutter/src/network/upload_model.dart';
+import '/src/products/model/product_model.dart';
+import '/src/utils/constants/padding.dart';
+import '/src/utils/widgets/image_placeholder.dart';
+import '/src/network/upload_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductListItem extends StatelessWidget {

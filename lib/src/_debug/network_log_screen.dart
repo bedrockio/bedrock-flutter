@@ -1,7 +1,7 @@
-import 'package:bedrock_flutter/src/network/api_service_interceptor.dart';
-import 'package:bedrock_flutter/src/utils/auth_storage.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/constants/padding.dart';
+import '/src/network/api_service_interceptor.dart';
+import '/src/utils/auth_storage.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/constants/padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

@@ -1,6 +1,6 @@
-import 'package:bedrock_flutter/src/navigation/cubit/bottom_nav_cubit.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/constants/fonts.dart';
+import '/src/navigation/cubit/bottom_nav_cubit.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/constants/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

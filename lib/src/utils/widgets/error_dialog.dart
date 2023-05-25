@@ -1,8 +1,8 @@
-import 'package:bedrock_flutter/src/env/environment.dart';
-import 'package:bedrock_flutter/src/route_generator.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/constants/fonts.dart';
-import 'package:bedrock_flutter/src/utils/widgets/cta_button.dart';
+import '/src/env/environment.dart';
+import '/src/route_generator.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/constants/fonts.dart';
+import '/src/utils/widgets/cta_button.dart';
 import 'package:flutter/material.dart';
 
 class ErrorDialog extends StatelessWidget {

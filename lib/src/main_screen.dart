@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:bedrock_flutter/src/home/home_screen.dart';
-import 'package:bedrock_flutter/src/navigation/bottom_nav_bar.dart';
-import 'package:bedrock_flutter/src/products/products_screen.dart';
-import 'package:bedrock_flutter/src/profile/profile_screen.dart';
+import '/src/home/home_screen.dart';
+import '/src/navigation/bottom_nav_bar.dart';
+import '/src/products/products_screen.dart';
+import '/src/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {

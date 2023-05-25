@@ -1,6 +1,6 @@
-import 'package:bedrock_flutter/src/utils/constants/padding.dart';
-import 'package:bedrock_flutter/src/utils/geolocator.dart';
-import 'package:bedrock_flutter/src/utils/shared_preferences.dart';
+import '/src/utils/constants/padding.dart';
+import '/src/utils/geolocator.dart';
+import '/src/utils/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 

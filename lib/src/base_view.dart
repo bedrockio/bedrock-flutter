@@ -1,9 +1,9 @@
-import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
-import 'package:bedrock_flutter/src/auth/login_screen.dart';
-import 'package:bedrock_flutter/src/main_screen.dart';
-import 'package:bedrock_flutter/src/profile/cubit/profile_cubit.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/error_helper.dart';
+import '/src/auth/cubit/auth_cubit.dart';
+import '/src/auth/login_screen.dart';
+import '/src/main_screen.dart';
+import '/src/profile/cubit/profile_cubit.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/error_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

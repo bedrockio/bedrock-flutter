@@ -1,7 +1,7 @@
-import 'package:bedrock_flutter/src/products/cubit/product_cubit.dart';
-import 'package:bedrock_flutter/src/products/widgets/product_list_item.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/constants/padding.dart';
+import '/src/products/cubit/product_cubit.dart';
+import '/src/products/widgets/product_list_item.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/constants/padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

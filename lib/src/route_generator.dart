@@ -1,11 +1,11 @@
-import 'package:bedrock_flutter/src/_debug/debug_screen.dart';
-import 'package:bedrock_flutter/src/auth/login_otp_screen.dart';
-import 'package:bedrock_flutter/src/auth/login_screen.dart';
-import 'package:bedrock_flutter/src/auth/register_screen.dart';
-import 'package:bedrock_flutter/src/base_view.dart';
-import 'package:bedrock_flutter/src/_debug/change_location_screen.dart';
-import 'package:bedrock_flutter/src/_debug/network_log_screen.dart';
-import 'package:bedrock_flutter/src/main_screen.dart';
+import '/src/_debug/debug_screen.dart';
+import '/src/auth/login_otp_screen.dart';
+import '/src/auth/login_screen.dart';
+import '/src/auth/register_screen.dart';
+import '/src/base_view.dart';
+import '/src/_debug/change_location_screen.dart';
+import '/src/_debug/network_log_screen.dart';
+import '/src/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {

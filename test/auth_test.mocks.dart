@@ -6,10 +6,8 @@
 import 'dart:async' as _i6;
 
 import 'package:bedrock_flutter/src/auth/auth_repository.dart' as _i5;
-import 'package:bedrock_flutter/src/auth/model/login_response_model.dart'
-    as _i4;
-import 'package:bedrock_flutter/src/auth/model/registration_response.dart'
-    as _i3;
+import 'package:bedrock_flutter/src/auth/model/login_response_model.dart' as _i4;
+import 'package:bedrock_flutter/src/auth/model/registration_response.dart' as _i3;
 import 'package:bedrock_flutter/src/network/api_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -34,8 +32,7 @@ class _FakeApiService_0 extends _i1.SmartFake implements _i2.ApiService {
         );
 }
 
-class _FakeRegistrationResponseModel_1 extends _i1.SmartFake
-    implements _i3.RegistrationResponseModel {
+class _FakeRegistrationResponseModel_1 extends _i1.SmartFake implements _i3.RegistrationResponseModel {
   _FakeRegistrationResponseModel_1(
     Object parent,
     Invocation parentInvocation,
@@ -45,8 +42,7 @@ class _FakeRegistrationResponseModel_1 extends _i1.SmartFake
         );
 }
 
-class _FakeLoginResponseModel_2 extends _i1.SmartFake
-    implements _i4.LoginResponseModel {
+class _FakeLoginResponseModel_2 extends _i1.SmartFake implements _i4.LoginResponseModel {
   _FakeLoginResponseModel_2(
     Object parent,
     Invocation parentInvocation,
@@ -88,8 +84,7 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             #phoneNumber: phoneNumber,
           },
         ),
-        returnValue: _i6.Future<_i3.RegistrationResponseModel>.value(
-            _FakeRegistrationResponseModel_1(
+        returnValue: _i6.Future<_i3.RegistrationResponseModel>.value(_FakeRegistrationResponseModel_1(
           this,
           Invocation.method(
             #register,
@@ -101,9 +96,7 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             },
           ),
         )),
-        returnValueForMissingStub:
-            _i6.Future<_i3.RegistrationResponseModel>.value(
-                _FakeRegistrationResponseModel_1(
+        returnValueForMissingStub: _i6.Future<_i3.RegistrationResponseModel>.value(_FakeRegistrationResponseModel_1(
           this,
           Invocation.method(
             #register,
@@ -138,8 +131,7 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             code,
           ],
         ),
-        returnValue:
-            _i6.Future<_i4.LoginResponseModel>.value(_FakeLoginResponseModel_2(
+        returnValue: _i6.Future<_i4.LoginResponseModel>.value(_FakeLoginResponseModel_2(
           this,
           Invocation.method(
             #loginVerify,
@@ -149,8 +141,7 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
             ],
           ),
         )),
-        returnValueForMissingStub:
-            _i6.Future<_i4.LoginResponseModel>.value(_FakeLoginResponseModel_2(
+        returnValueForMissingStub: _i6.Future<_i4.LoginResponseModel>.value(_FakeLoginResponseModel_2(
           this,
           Invocation.method(
             #loginVerify,

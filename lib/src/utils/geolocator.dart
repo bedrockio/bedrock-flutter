@@ -1,5 +1,5 @@
-import 'package:bedrock_flutter/src/env/environment.dart';
-import 'package:bedrock_flutter/src/utils/shared_preferences.dart';
+import '/src/env/environment.dart';
+import '/src/utils/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
 
 Future<Position?> getUserLocation() async {

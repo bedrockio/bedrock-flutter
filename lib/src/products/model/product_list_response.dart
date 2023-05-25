@@ -1,5 +1,5 @@
-import 'package:bedrock_flutter/src/network/meta_data.dart';
-import 'package:bedrock_flutter/src/products/model/product_model.dart';
+import '/src/network/meta_data.dart';
+import '/src/products/model/product_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product_list_response.g.dart';

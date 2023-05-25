@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:bedrock_flutter/src/network/api_error.dart';
-import 'package:bedrock_flutter/src/route_generator.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
-import 'package:bedrock_flutter/src/utils/widgets/error_dialog.dart';
+import '/src/network/api_error.dart';
+import '/src/route_generator.dart';
+import '/src/utils/constants/colors.dart';
+import '/src/utils/widgets/error_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

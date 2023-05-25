@@ -1,7 +1,7 @@
-import 'package:bedrock_flutter/src/network/meta_data.dart';
-import 'package:bedrock_flutter/src/products/cubit/product_repository.dart';
-import 'package:bedrock_flutter/src/products/model/product_model.dart';
-import 'package:bedrock_flutter/src/utils/error_helper.dart';
+import '/src/network/meta_data.dart';
+import '/src/products/cubit/product_repository.dart';
+import '/src/products/model/product_model.dart';
+import '/src/utils/error_helper.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

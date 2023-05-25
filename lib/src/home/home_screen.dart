@@ -1,5 +1,5 @@
-import 'package:bedrock_flutter/src/_debug/debug_screen.dart';
-import 'package:bedrock_flutter/src/utils/constants/colors.dart';
+import '/src/_debug/debug_screen.dart';
+import '/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {

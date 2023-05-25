@@ -1,4 +1,4 @@
-import 'package:bedrock_flutter/src/profile/model/user_model.dart';
+import '/src/profile/model/user_model.dart';
 import 'package:dio/dio.dart';
 
 import '../model/update_user_request.dart';
