@@ -75,7 +75,7 @@ void main() {
     blocTest<AuthCubit, AuthState>('User log in (Phone number, failure)',
         setUp: () async {
           when(repository.login(phoneNumber)).thenAnswer(
-              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
+              (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -108,7 +108,7 @@ void main() {
     blocTest<AuthCubit, AuthState>('User log in (Incorrect code)',
         setUp: () async {
           when(repository.loginVerify('incorrect@email.com', 'wrong_code')).thenAnswer(
-              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
+              (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -123,7 +123,7 @@ void main() {
     blocTest<AuthCubit, AuthState>('User token invalid',
         setUp: () async {
           when(repository.loginVerify('incorrect@email.com', 'bogus_data')).thenAnswer(
-              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
+              (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
@@ -173,7 +173,7 @@ void main() {
                   firstName: registrationRequestModel.firstName,
                   phoneNumber: registrationRequestModel.phoneNumber))
               .thenAnswer(
-            (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'),
+            (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'),
           );
         },
         build: () => authBloc,
@@ -203,7 +203,7 @@ void main() {
     blocTest<AuthCubit, AuthState>('User account registration (Incorrect code)',
         setUp: () async {
           when(repository.loginVerify(phoneNumber, otp)).thenAnswer(
-              (realInvocation) => throw DioError(requestOptions: RequestOptions(), message: 'Incorrect password'));
+              (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'));
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),

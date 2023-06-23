@@ -38,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
       BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
       emit(const RegistrationSuccess());
     } catch (e) {
-      emit(RegistrationError(error: e is DioError ? e : null));
+      emit(RegistrationError(error: e is DioException ? e : null));
     }
   }
 
@@ -49,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
       await repository.login(phoneNumber);
       emit(LoginRequestSuccess());
     } catch (e) {
-      emit(LoginError(error: e is DioError ? e : null));
+      emit(LoginError(error: e is DioException ? e : null));
     }
   }
 
@@ -62,7 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(const LoginSuccess());
     } catch (e) {
-      emit(LoginError(error: e is DioError ? e : null));
+      emit(LoginError(error: e is DioException ? e : null));
     }
   }
 
@@ -75,7 +75,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(const RegistrationOTPSuccess());
     } catch (e) {
-      emit(LoginError(error: e is DioError ? e : null));
+      emit(LoginError(error: e is DioException ? e : null));
     }
   }
 

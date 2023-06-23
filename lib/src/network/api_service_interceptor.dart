@@ -25,7 +25,7 @@ class DioLogger {
     }
   }
 
-  static void onError(DioError error) {
+  static void onError(DioException error) {
     if (DioLogger.isLogOn) {
       log('### ON ERROR ###');
       if (null != error.response) {
@@ -118,7 +118,7 @@ class ApiServiceInterceptor extends Interceptor {
   }
 
   @override
-  dynamic onError(DioError err, ErrorInterceptorHandler handler) async {
+  dynamic onError(DioException err, ErrorInterceptorHandler handler) async {
     DioLogger.onError(err);
 
     RequestOptions? origin = err.response?.requestOptions;
@@ -131,20 +131,20 @@ class ApiServiceInterceptor extends Interceptor {
           // TODO: Implement
           log('Token invalid -- RefreshToken not implemented');
 
-          handler.next(DioError(requestOptions: err.requestOptions, message: ApiError.defaultErrorMessage));
+          handler.next(DioException(requestOptions: err.requestOptions, message: ApiError.defaultErrorMessage));
         }
       } catch (e) {
         errorStream?.sink.add(ApiError(message: 'invalid_token'));
       }
     } else {
       if (err.response != null && err.response!.data is Map<String, dynamic>) {
-        return handler.next(DioError(
+        return handler.next(DioException(
             requestOptions: err.requestOptions,
             message: err.response!.data['error']['message'],
             error: err.response!.data['error']));
       }
 
-      handler.next(DioError(requestOptions: err.requestOptions, message: ApiError.defaultErrorMessage));
+      handler.next(DioException(requestOptions: err.requestOptions, message: ApiError.defaultErrorMessage));
     }
   }
 }

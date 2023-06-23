@@ -27,7 +27,7 @@ dependencies:
   geolocator: ^9.0.2
   flutter_svg: ^2.0.6
   equatable: ^2.0.5
-  flutter_libphonenumber: ^2.1.3
+  flutter_libphonenumber: ^2.1.4
 
 dev_dependencies:
   flutter_test:

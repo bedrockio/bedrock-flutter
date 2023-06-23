@@ -14,7 +14,7 @@ class ErrorHelper {
     if (e is ApiError) {
       errorStream.sink.add(e);
       logErrorMessage(e.message);
-    } else if (e is DioError) {
+    } else if (e is DioException) {
       errorStream.sink.add(ApiError(message: e.message!, details: e.error));
     } else {
       errorStream.sink.add(ApiError(message: e.toString()));

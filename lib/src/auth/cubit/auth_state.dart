@@ -27,7 +27,7 @@ class RegistrationSuccess extends AuthState {
 }
 
 class LoginError extends AuthState {
-  final DioError? error;
+  final DioException? error;
 
   const LoginError({this.error});
 }
@@ -35,7 +35,7 @@ class LoginError extends AuthState {
 class LoginRequestSuccess extends AuthState {}
 
 class RegistrationError extends AuthState {
-  final DioError? error;
+  final DioException? error;
 
   const RegistrationError({this.error});
 }
