@@ -71,19 +71,19 @@ For custom error handling, continue to emit error states either instead of, or i
 `flutter run --flavor runner_uat -t lib/src/env/main_uat.dart`  
 
 **Run app in Production** 
-`flutter run --flavor runner -t lib/src/env/main_prod.dart`  
+`flutter run --flavor runner_prod -t lib/src/env/main_prod.dart`  
 
 **Make Android UAT build**
 `flutter build apk --flavor runner_uat -t lib/src/env/main_uat.dart`
 
 **Make Android Production build**
-`flutter build apk --flavor runner -t lib/src/env/main_prod.dart`
+`flutter build apk --flavor runne_prodr -t lib/src/env/main_prod.dart`
 
 **Make iOS UAT build**
 `flutter build ios --flavor runner_uat -t lib/src/env/main_uat.dart`
 
 **Make iOS Production build**
-`flutter build ios --flavor runner -t lib/src/env/main_prod.dart`
+`flutter build ios --flavor runner_prod -t lib/src/env/main_prod.dart`
 
 ### Localization
 
