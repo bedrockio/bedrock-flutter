@@ -343,13 +343,12 @@ packages:
     source: hosted
     version: "1.0.1"
   flutter_libphonenumber_ios:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "packages/flutter_libphonenumber_ios"
-      ref: fix-pnk-version
-      resolved-ref: "3689b7d75690ee062f413000bac8f95f0fd1ffda"
-      url: "https://github.com/inway/flutter_libphonenumber"
-    source: git
+      name: flutter_libphonenumber_ios
+      sha256: e10ac1e4f9045c7f6ba1e6475439b5f83429096a3e5f1afd9d46130fab94c4da
+      url: "https://pub.dev"
+    source: hosted
     version: "1.1.4"
   flutter_libphonenumber_platform_interface:
     dependency: transitive

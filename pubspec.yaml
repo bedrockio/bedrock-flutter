@@ -27,14 +27,7 @@ dependencies:
   geolocator: ^9.0.2
   flutter_svg: ^2.0.6
   equatable: ^2.0.5
-  flutter_libphonenumber: ^2.1.4
-
-dependency_overrides:
-  flutter_libphonenumber_ios:
-    git:
-      url: https://github.com/inway/flutter_libphonenumber
-      path: packages/flutter_libphonenumber_ios
-      ref: fix-pnk-version
+  flutter_libphonenumber: ^2.1.5
 
 dev_dependencies:
   flutter_test:

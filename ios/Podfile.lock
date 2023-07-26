@@ -1,8 +1,8 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_libphonenumber_ios (1.1.0):
+  - flutter_libphonenumber_ios (1.1.4):
     - Flutter
-    - PhoneNumberKit/PhoneNumberKitCore (~> 3.6.1)
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.6.6)
   - flutter_secure_storage (6.0.0):
     - Flutter
   - FMDB (2.7.5):
@@ -70,7 +70,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_libphonenumber_ios: 86318f180eb65cdc24ddfca271ba0fcf6a4337c1
+  flutter_libphonenumber_ios: 80bfe6d4d69334aaf36642c1b528615bfffe7c6a
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
