@@ -1,5 +1,4 @@
 import '/src/auth/cubit/auth_cubit.dart';
-import '/src/auth/login_otp_screen.dart';
 import '/src/network/api_error.dart';
 import '/src/utils/constants/fonts.dart';
 import '/src/utils/constants/padding.dart';
