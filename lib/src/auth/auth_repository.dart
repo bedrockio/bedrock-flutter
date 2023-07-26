@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'model/login_user_request.dart';
 import 'model/login_response_model.dart';
 import 'model/registration_request.dart';
-import 'model/registration_response.dart';
 
 import '../network/api_service.dart';
 
@@ -14,13 +13,12 @@ class AuthRepository {
 
   /// Create new user profile
   /// POST /auth/register
-  Future<RegistrationResponseModel> register(
-      {required String firstName, required String lastName, String? phoneNumber}) async {
+  Future<bool> register({required String firstName, required String lastName, String? phoneNumber}) async {
     RegistrationRequestModel request =
         RegistrationRequestModel(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber);
     try {
       Response response = await apiService.post('/auth/register', data: request.toJson());
-      return RegistrationResponseModel.fromJson(response.data['data']);
+      return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
       rethrow;
     }

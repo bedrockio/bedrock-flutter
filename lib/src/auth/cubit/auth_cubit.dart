@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bedrock_flutter/src/utils/error_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -8,7 +9,6 @@ import '../../network/api_error.dart';
 import '../../network/api_service.dart';
 import '../../utils/auth_storage.dart';
 import '../../utils/preferences.dart';
-import '../model/registration_response.dart';
 import '../model/login_response_model.dart';
 import '../auth_repository.dart';
 
@@ -32,13 +32,16 @@ class AuthCubit extends Cubit<AuthState> {
   void registerUser({required String firstName, required String lastName, String? phoneNumber}) async {
     emit(RegistrationLoading());
     try {
-      RegistrationResponseModel response =
-          await repository.register(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber);
-      await storage.storeAuthToken(response.token);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
-      emit(const RegistrationSuccess());
+      final success = await repository.register(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber);
+      if (success) {
+        emit(const RegistrationSuccess());
+      } else {
+        emit(const RegistrationError());
+        ErrorHelper.broadcastError(ApiError(message: ApiError.defaultErrorMessage));
+      }
     } catch (e) {
       emit(RegistrationError(error: e is DioException ? e : null));
+      ErrorHelper.broadcastError(e);
     }
   }
 
@@ -50,6 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginRequestSuccess());
     } catch (e) {
       emit(LoginError(error: e is DioException ? e : null));
+      ErrorHelper.broadcastError(e);
     }
   }
 
@@ -63,19 +67,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(const LoginSuccess());
     } catch (e) {
       emit(LoginError(error: e is DioException ? e : null));
-    }
-  }
-
-  void performRegistrationLogin(String phoneNumber, String code) async {
-    emit(LoginLoading());
-    try {
-      LoginResponseModel response = await repository.loginVerify(phoneNumber, code);
-      await storage.storeAuthToken(response.token);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
-
-      emit(const RegistrationOTPSuccess());
-    } catch (e) {
-      emit(LoginError(error: e is DioException ? e : null));
+      ErrorHelper.broadcastError(e);
     }
   }
 

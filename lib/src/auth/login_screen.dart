@@ -1,7 +1,6 @@
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/auth/login_otp_screen.dart';
 import '/src/auth/register_screen.dart';
-import '/src/network/api_error.dart';
 import '/src/utils/constants/fonts.dart';
 import '/src/utils/constants/padding.dart';
 import '/src/utils/widgets/cta_button.dart';
@@ -63,9 +62,6 @@ class LoginScreen extends StatelessWidget {
                                     LoginOtpScreen.route,
                                     arguments: _phoneNumberTextController.text,
                                   );
-                                } else if (state is LoginError) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(state.error?.message ?? ApiError.defaultErrorMessage)));
                                 }
                               }, builder: (context, state) {
                                 if (state is LoginLoading) {

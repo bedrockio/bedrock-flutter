@@ -1,6 +1,5 @@
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/main_screen.dart';
-import '/src/network/api_error.dart';
 import '/src/profile/cubit/profile_cubit.dart';
 import '/src/utils/constants/colors.dart';
 import '/src/utils/constants/padding.dart';
@@ -40,11 +39,6 @@ class LoginOtpScreen extends StatelessWidget {
                     if (state is LoginSuccess) {
                       BlocProvider.of<ProfileCubit>(context).fetchUser();
                       Navigator.of(context).pushNamedAndRemoveUntil(MainScreen.route, (route) => false);
-                    }
-
-                    if (state is LoginError) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(state.error?.message ?? ApiError.defaultErrorMessage)));
                     }
                   }, builder: (context, state) {
                     if (state is LoginLoading) {

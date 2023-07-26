@@ -11,7 +11,6 @@ import 'package:bedrock_flutter/src/auth/auth_repository.dart';
 import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
 import 'package:bedrock_flutter/src/auth/model/login_response_model.dart';
 import 'package:bedrock_flutter/src/auth/model/registration_request.dart';
-import 'package:bedrock_flutter/src/auth/model/registration_response.dart';
 import 'package:bedrock_flutter/src/network/api_error.dart';
 import 'package:bedrock_flutter/src/utils/auth_storage.dart';
 import 'package:bedrock_flutter/src/utils/error_helper.dart';
@@ -156,9 +155,7 @@ void main() {
                     firstName: registrationRequestModel.firstName,
                     phoneNumber: registrationRequestModel.phoneNumber))
                 .thenAnswer(
-              (realInvocation) => Future.value(
-                RegistrationResponseModel.fromJson(value['data']),
-              ),
+              (realInvocation) => Future.value(true),
             );
           });
         },
@@ -184,35 +181,6 @@ void main() {
               const TypeMatcher<RegistrationError>().having((p0) {
                 return p0.error?.message;
               }, 'error.message', 'Incorrect password')
-            ]);
-
-    blocTest<AuthCubit, AuthState>('User account registration (Correct code)',
-        setUp: () async {
-          loadStub('auth_success').then((value) {
-            LoginResponseModel response = LoginResponseModel(value['data']['token']);
-            when(repository.loginVerify(phoneNumber, otp)).thenAnswer((realInvocation) => Future.value(response));
-          });
-        },
-        build: () => authBloc,
-        wait: const Duration(seconds: 1),
-        act: (bloc) => bloc.performRegistrationLogin(phoneNumber, otp),
-        expect: () {
-          return [const TypeMatcher<LoginLoading>(), const TypeMatcher<RegistrationOTPSuccess>()];
-        });
-
-    blocTest<AuthCubit, AuthState>('User account registration (Incorrect code)',
-        setUp: () async {
-          when(repository.loginVerify(phoneNumber, otp)).thenAnswer(
-              (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'));
-        },
-        build: () => authBloc,
-        wait: const Duration(seconds: 1),
-        act: (bloc) => bloc.performRegistrationLogin(phoneNumber, otp),
-        expect: () => [
-              const TypeMatcher<LoginLoading>(),
-              const TypeMatcher<LoginError>().having((p0) {
-                return p0.error?.message;
-              }, 'message', 'Incorrect password')
             ]);
   });
 }

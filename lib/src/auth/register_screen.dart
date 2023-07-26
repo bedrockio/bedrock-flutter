@@ -1,5 +1,4 @@
 import '/src/auth/cubit/auth_cubit.dart';
-import '/src/network/api_error.dart';
 import '/src/utils/constants/fonts.dart';
 import '/src/utils/constants/padding.dart';
 import '/src/utils/widgets/cta_button.dart';
@@ -75,11 +74,6 @@ class RegisterScreen extends StatelessWidget {
                                 if (state is RegistrationSuccess) {
                                   BlocProvider.of<AuthCubit>(context).requestVerificationCode(
                                       '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}');
-                                }
-
-                                if (state is RegistrationError) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(state.error?.message ?? ApiError.defaultErrorMessage)));
                                 }
                               }, builder: (context, state) {
                                 if (state is RegistrationLoading) {
