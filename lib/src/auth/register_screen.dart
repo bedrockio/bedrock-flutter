@@ -74,11 +74,8 @@ class RegisterScreen extends StatelessWidget {
                               const SizedBox(height: BRPadding.small),
                               BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
                                 if (state is RegistrationSuccess) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    LoginOtpScreen.route,
-                                    arguments: _phoneNumberTextController.text,
-                                  );
+                                  BlocProvider.of<AuthCubit>(context).requestVerificationCode(
+                                      '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}');
                                 }
 
                                 if (state is RegistrationError) {
