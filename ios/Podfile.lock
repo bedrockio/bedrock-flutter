@@ -1,0 +1,85 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_libphonenumber_ios (1.1.0):
+    - Flutter
+    - PhoneNumberKit/PhoneNumberKitCore (~> 3.6.1)
+  - flutter_secure_storage (6.0.0):
+    - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - geolocator_apple (1.2.0):
+    - Flutter
+  - package_info_plus (0.4.5):
+    - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - PhoneNumberKit (3.6.6):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.6.6)
+    - PhoneNumberKit/UIKit (= 3.6.6)
+  - PhoneNumberKit/PhoneNumberKitCore (3.6.6)
+  - PhoneNumberKit/UIKit (3.6.6):
+    - PhoneNumberKit/PhoneNumberKitCore
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - sqflite (0.0.3):
+    - Flutter
+    - FMDB (>= 2.7.5)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_libphonenumber_ios (from `.symlinks/plugins/flutter_libphonenumber_ios/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - PhoneNumberKit (from `https://github.com/marmelroy/PhoneNumberKit`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+
+SPEC REPOS:
+  trunk:
+    - FMDB
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_libphonenumber_ios:
+    :path: ".symlinks/plugins/flutter_libphonenumber_ios/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  PhoneNumberKit:
+    :git: https://github.com/marmelroy/PhoneNumberKit
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+
+CHECKOUT OPTIONS:
+  PhoneNumberKit:
+    :commit: 8412c66d654411ff6bc36207c0e52d2983b8874f
+    :git: https://github.com/marmelroy/PhoneNumberKit
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_libphonenumber_ios: 86318f180eb65cdc24ddfca271ba0fcf6a4337c1
+  flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
+  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  PhoneNumberKit: 5b1be7ee4955dfeeb855f51eecdd829ab24b3484
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
+  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
+
+PODFILE CHECKSUM: 82086cd20fb8890a07e27009b642bab17d08e566
+
+COCOAPODS: 1.12.1
