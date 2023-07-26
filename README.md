@@ -43,7 +43,7 @@ For help getting started with Flutter, view our
 [online documentation](), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-When adding new data transfer objects (check [shop_model.dart](https://github.com/bedrockio/bedrock-flutter/blob/authentication/lib/src/shops/shop_model.dart)) generate the boiler plate code by running
+When adding new data transfer objects (check [product_model.dart](https://github.com/bedrockio/bedrock-flutter/blob/lib/src/products/model/product_model.dart)) generate the boiler plate code by running
 
 - `flutter pub run build_runner build`
 - (In case there's conflicts run) `flutter packages pub run build_runner build --delete-conflicting-outputs`
@@ -67,32 +67,20 @@ Bedrock Flutter uses a StreamController to globally handle error messages. To di
 For custom error handling, continue to emit error states either instead of, or in addition to the ErrorHelper broadcaster.
 
 ## Running the app
-**Run app in UAT** 
-`flutter run --flavor runner_uat -t lib/src/env/main_uat.dart`  
+**UAT:** `flutter run --flavor runner_uat -t lib/src/env/main_uat.dart`
+**PROD:** `flutter run --flavor runner_prod -t lib/src/env/main_prod.dart`
 
-**Run app in Production** 
-`flutter run --flavor runner_prod -t lib/src/env/main_prod.dart`  
+## Building the app
+**UAT:** `flutter run --flavor runner_uat -t lib/src/env/main_uat.dart`  
+**PROD:** `flutter run --flavor runner_prod -t lib/src/env/main_prod.dart`  
 
-**Make Android UAT build**
-`flutter build apk --flavor runner_uat -t lib/src/env/main_uat.dart`
+### Android
+**UAT:** `flutter build apk --flavor runner_uat -t lib/src/env/main_uat.dart`
+**PROD:** `flutter build apk --flavor runner_prod -t lib/src/env/main_prod.dart`
 
-**Make Android Production build**
-`flutter build apk --flavor runne_prodr -t lib/src/env/main_prod.dart`
-
-**Make iOS UAT build**
-`flutter build ios --flavor runner_uat -t lib/src/env/main_uat.dart`
-
-**Make iOS Production build**
-`flutter build ios --flavor runner_prod -t lib/src/env/main_prod.dart`
-
-### Localization
-
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+### iOS
+**UAT:** `flutter build ios --flavor runner_uat -t lib/src/env/main_uat.dart`
+**PROD:** `flutter build ios --flavor runner_prod -t lib/src/env/main_prod.dart`
 
 ## Useful Links
 
