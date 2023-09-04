@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 class BRFontStyle {
-  static TextStyle h1({Color color = BRColors.black}) {
+  static TextStyle h1({Color color = BRColors.primaryText}) {
     return TextStyle(
       fontFamily: 'Inter',
       fontSize: 45,
@@ -12,7 +12,7 @@ class BRFontStyle {
     );
   }
 
-  static TextStyle h2({Color color = BRColors.black}) {
+  static TextStyle h2({Color color = BRColors.primaryText}) {
     return TextStyle(
       fontFamily: 'Inter',
       fontSize: 26,
@@ -24,7 +24,7 @@ class BRFontStyle {
 
   static TextStyle header(
     double size, {
-    Color color = BRColors.black,
+    Color color = BRColors.primaryText,
     FontStyle fontStyle = FontStyle.italic,
     double? letterSpacing,
     FontWeight fontWeight = FontWeight.w400,
@@ -40,7 +40,7 @@ class BRFontStyle {
   }
 
   static TextStyle body(
-      {double size = 14, Color color = BRColors.black, TextDecoration? decoration, double? letterSpacing}) {
+      {double size = 14, Color color = BRColors.primaryText, TextDecoration? decoration, double? letterSpacing}) {
     return TextStyle(
       fontFamily: 'Inter',
       fontSize: size,
@@ -53,7 +53,7 @@ class BRFontStyle {
   }
 
   static TextStyle bodyMedium(
-      {double size = 14, Color color = BRColors.black, TextDecoration? decoration, double? letterSpacing}) {
+      {double size = 14, Color color = BRColors.primaryText, TextDecoration? decoration, double? letterSpacing}) {
     return TextStyle(
       fontFamily: 'Inter',
       fontSize: size,

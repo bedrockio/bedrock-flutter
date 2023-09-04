@@ -27,7 +27,7 @@ class CtaButton extends StatelessWidget {
           padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 22)),
           elevation: MaterialStateProperty.all<double>(0),
           backgroundColor: MaterialStateProperty.all(colorScheme?.backgroundColor.withOpacity(enabled ? 1.0 : 0.5) ??
-              BRColors.brown.withOpacity(enabled ? 1.0 : 0.5)),
+              BRColors.primary.withOpacity(enabled ? 1.0 : 0.5)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -44,7 +44,7 @@ class CtaButton extends StatelessWidget {
               baseline: 10,
               child: Text(
                 text.toUpperCase(),
-                style: BRFontStyle.bodyMedium(color: colorScheme?.textColor ?? BRColors.white),
+                style: BRFontStyle.bodyMedium(color: colorScheme?.textColor ?? BRColors.secondary),
               ),
             ),
           ],

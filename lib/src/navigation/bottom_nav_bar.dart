@@ -14,7 +14,7 @@ class BottomNavBar extends StatelessWidget {
     return BlocBuilder<BottomNavCubit, BottomNavTab>(builder: (context, state) {
       return BottomAppBar(
           notchMargin: 1,
-          color: BRColors.lightBrown,
+          color: BRColors.primaryAccent,
           elevation: 1,
           clipBehavior: Clip.hardEdge,
           shape: const CircularNotchedRectangle(),
@@ -57,9 +57,9 @@ class _TabBarItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           const SizedBox(height: 6),
-          Icon(icon, color: isSelected ? BRColors.brown : Colors.grey),
+          Icon(icon, color: isSelected ? BRColors.primary : Colors.grey),
           const SizedBox(height: 3),
-          Text(name, style: BRFontStyle.body(size: 10, color: BRColors.brown)),
+          Text(name, style: BRFontStyle.body(size: 10, color: BRColors.primary)),
         ],
       ),
     );

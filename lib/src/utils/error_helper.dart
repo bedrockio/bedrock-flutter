@@ -31,7 +31,7 @@ class ErrorHelper {
 
 showErrorBottomSheet(ApiError error, BuildContext context) {
   RouteGenerator.showModal(
-    barrierColor: BRColors.brown.withOpacity(0.3),
+    barrierColor: BRColors.primary.withOpacity(0.3),
     backgroundColor: Colors.transparent,
     context: context,
     builder: (BuildContext context) => ErrorDialog(

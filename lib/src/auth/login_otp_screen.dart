@@ -42,7 +42,7 @@ class LoginOtpScreen extends StatelessWidget {
                     }
                   }, builder: (context, state) {
                     if (state is LoginLoading) {
-                      return const Center(child: CircularProgressIndicator(color: BRColors.black));
+                      return const Center(child: CircularProgressIndicator(color: BRColors.primaryText));
                     }
                     return OtpWidget(
                         phoneNumber: phoneNumber,

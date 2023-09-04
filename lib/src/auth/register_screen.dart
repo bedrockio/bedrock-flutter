@@ -1,3 +1,5 @@
+import 'package:bedrock_flutter/src/auth/login_otp_screen.dart';
+
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/utils/constants/fonts.dart';
 import '/src/utils/constants/padding.dart';
@@ -73,7 +75,15 @@ class RegisterScreen extends StatelessWidget {
                               BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
                                 if (state is RegistrationSuccess) {
                                   BlocProvider.of<AuthCubit>(context).requestVerificationCode(
-                                      '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}');
+                                      '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}',
+                                      isRegistration: true);
+                                }
+                                if (state is RegisterRequestSuccess) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    LoginOtpScreen.route,
+                                    arguments: _phoneNumberTextController.text,
+                                  );
                                 }
                               }, builder: (context, state) {
                                 if (state is RegistrationLoading) {

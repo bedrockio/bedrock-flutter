@@ -45,12 +45,16 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void requestVerificationCode(String phoneNumber) async {
+  void requestVerificationCode(String phoneNumber, {bool isRegistration = false}) async {
     emit(LoginLoading());
 
     try {
       await repository.login(phoneNumber);
-      emit(LoginRequestSuccess());
+      if (isRegistration) {
+        emit(RegisterRequestSuccess());
+      } else {
+        emit(LoginRequestSuccess());
+      }
     } catch (e) {
       emit(LoginError(error: e is DioException ? e : null));
       ErrorHelper.broadcastError(e);

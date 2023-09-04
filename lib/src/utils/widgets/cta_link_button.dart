@@ -10,7 +10,7 @@ class CtaLinkButton extends StatelessWidget {
   const CtaLinkButton({
     super.key,
     required this.text,
-    this.textColor = BRColors.black,
+    this.textColor = BRColors.primaryText,
     required this.onPressed,
   });
 

@@ -15,9 +15,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: BRColors.black,
+          backgroundColor: BRColors.primary,
           centerTitle: true,
-          title: const Text('Profile', style: TextStyle(color: BRColors.white)),
+          title: const Text('Profile', style: TextStyle(color: BRColors.secondary)),
         ),
         body: BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
           if (state is ProfileLoaded) {
@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                 ]));
           }
 
-          return const Center(child: CircularProgressIndicator(color: BRColors.brown));
+          return const Center(child: CircularProgressIndicator(color: BRColors.primary));
         }));
   }
 }

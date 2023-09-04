@@ -69,7 +69,7 @@ class NetworkLogsScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontFamily: logItem != 'null' ? 'American Typewriter' : null,
                                 fontStyle: logItem == 'null' ? FontStyle.italic : null,
-                                color: logItem == 'null' ? Colors.grey : BRColors.black),
+                                color: logItem == 'null' ? Colors.grey : BRColors.primaryText),
                             maxLines: 10,
                             overflow: TextOverflow.ellipsis,
                           ));
@@ -77,7 +77,7 @@ class NetworkLogsScreen extends StatelessWidget {
                     separatorBuilder: (context, _) {
                       return Padding(
                           padding: const EdgeInsets.symmetric(vertical: BRPadding.small),
-                          child: Divider(color: BRColors.black.withOpacity(0.6), thickness: 2));
+                          child: Divider(color: BRColors.primaryText.withOpacity(0.6), thickness: 2));
                     },
                     itemCount: logs.length,
                   );

@@ -59,7 +59,7 @@ class ErrorDialog extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: Container(
         decoration: const BoxDecoration(
-          color: BRColors.lightBrown,
+          color: BRColors.primaryAccent,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.all(
             Radius.circular(28),
@@ -78,7 +78,7 @@ class ErrorDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(15),
               child: CtaButton(
-                colorScheme: BRColorScheme.black,
+                colorScheme: BRColorScheme.primaryText,
                 text: buttonLabel,
                 onPressed: () {
                   if (onTap != null) onTap!();

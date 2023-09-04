@@ -18,7 +18,7 @@ class ImageRender extends StatelessWidget {
       width: size?.width ?? 50,
       height: size?.height ?? 50,
       progressIndicatorBuilder: (context, url, progress) {
-        return const Center(child: CircularProgressIndicator(color: BRColors.brown));
+        return const Center(child: CircularProgressIndicator(color: BRColors.primary));
       },
       errorWidget: (context, _, __) {
         return ImagePlaceholder(size: Size(size?.width ?? 50, size?.height ?? 50));
@@ -37,6 +37,6 @@ class ImagePlaceholder extends StatelessWidget {
     return Container(
         width: size?.width ?? 50,
         height: size?.height ?? 50,
-        decoration: BoxDecoration(color: BRColors.lightBrown, borderRadius: BorderRadius.circular(BRPadding.small)));
+        decoration: BoxDecoration(color: BRColors.primaryAccent, borderRadius: BorderRadius.circular(BRPadding.small)));
   }
 }

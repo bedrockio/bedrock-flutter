@@ -9,9 +9,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: BRColors.black,
+          backgroundColor: BRColors.primary,
           centerTitle: true,
-          title: const Text('Bedrock Flutter', style: TextStyle(color: BRColors.white)),
+          title: const Text('Bedrock Flutter', style: TextStyle(color: BRColors.secondary)),
           actions: [
             IconButton(
                 onPressed: () {
@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.settings,
-                  color: BRColors.white,
+                  color: BRColors.secondary,
                 ))
           ],
         ),

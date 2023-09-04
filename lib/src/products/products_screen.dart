@@ -39,15 +39,15 @@ class _ProductScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: BRColors.black,
+          backgroundColor: BRColors.primary,
           centerTitle: true,
-          title: const Text('Products', style: TextStyle(color: BRColors.white)),
+          title: const Text('Products', style: TextStyle(color: BRColors.secondary)),
           actions: [
             IconButton(
                 onPressed: () {},
                 icon: const Icon(
                   Icons.shopping_cart,
-                  color: BRColors.white,
+                  color: BRColors.secondary,
                 ))
           ],
         ),
@@ -56,7 +56,7 @@ class _ProductScreenState extends State<ProductsScreen> {
             buildWhen: (previous, current) => current is ProductsLoading || current is ProductsLoaded,
             builder: (context, state) {
               if (state is ProductsLoading) {
-                return const Center(child: CircularProgressIndicator(color: BRColors.brown));
+                return const Center(child: CircularProgressIndicator(color: BRColors.primary));
               }
 
               if (state is ProductsLoaded) {
@@ -67,7 +67,7 @@ class _ProductScreenState extends State<ProductsScreen> {
                       return ProductListItem(product: state.products[index]);
                     },
                     separatorBuilder: (context, index) {
-                      return Divider(thickness: 1, color: BRColors.brown.withOpacity(0.5));
+                      return Divider(thickness: 1, color: BRColors.primary.withOpacity(0.5));
                     },
                     itemCount: state.products.length);
               }

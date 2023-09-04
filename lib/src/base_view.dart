@@ -38,7 +38,7 @@ class _BaseViewState extends State<BaseView> {
           }
 
           if (state is LoginInitial) {
-            return const Center(child: CircularProgressIndicator(color: BRColors.white));
+            return const Center(child: CircularProgressIndicator(color: BRColors.secondary));
           }
 
           return LoginScreen();

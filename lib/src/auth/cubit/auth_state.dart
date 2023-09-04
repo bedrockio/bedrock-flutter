@@ -34,6 +34,8 @@ class LoginError extends AuthState {
 
 class LoginRequestSuccess extends AuthState {}
 
+class RegisterRequestSuccess extends AuthState {}
+
 class RegistrationError extends AuthState {
   final DioException? error;
 

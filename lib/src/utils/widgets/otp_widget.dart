@@ -22,7 +22,8 @@ class OtpWidget extends StatelessWidget {
         length: 6,
         obscureText: true,
         obscuringWidget: const Padding(
-            padding: EdgeInsets.only(top: 10), child: Text('*', style: TextStyle(color: BRColors.black, fontSize: 34))),
+            padding: EdgeInsets.only(top: 10),
+            child: Text('*', style: TextStyle(color: BRColors.primaryText, fontSize: 34))),
         blinkWhenObscuring: true,
         animationType: AnimationType.fade,
         pinTheme: PinTheme(
@@ -32,10 +33,10 @@ class OtpWidget extends StatelessWidget {
             fieldHeight: 65,
             fieldWidth: 50,
             selectedFillColor: Colors.white,
-            activeColor: BRColors.black,
+            activeColor: BRColors.primaryText,
             inactiveFillColor: Colors.white,
             activeFillColor: Colors.white,
-            inactiveColor: BRColors.black),
+            inactiveColor: BRColors.primaryText),
         cursorColor: Colors.black,
         animationDuration: const Duration(milliseconds: 100),
         enableActiveFill: true,
