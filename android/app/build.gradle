@@ -64,12 +64,12 @@ android {
     flavorDimensions "flavor-type"
 
     productFlavors {
-        housebar_uat {
+        runner_uat {
             dimension "flavor-type"
             versionNameSuffix "-uat"
             manifestPlaceholders = [appName: "Runner UAT"]
         }
-        housebar {
+        runner {
             dimension "flavor-type"
             manifestPlaceholders = [appName: "Runner"]
         }
