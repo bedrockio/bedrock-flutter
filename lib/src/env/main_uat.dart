@@ -1,4 +1,5 @@
-import 'package:bedrock_flutter/main.dart';
+import '/main.dart';
+
 import 'environment.dart';
 
 Future<void> main() async {

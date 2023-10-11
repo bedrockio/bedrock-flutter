@@ -1,6 +1,5 @@
 # Miscellaneous
 *.class
-*.lock
 *.log
 *.pyc
 *.swp
@@ -20,7 +19,7 @@
 .classpath
 .project
 .settings/
-.vscode/
+.vscode/settings.json
 
 # Flutter repo-specific
 /bin/cache/

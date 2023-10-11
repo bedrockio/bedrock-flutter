@@ -1,0 +1,24 @@
+{
+	"data": {
+		"token": "__sample_token",
+		"user": {
+			"lastLocation": {
+				"geometry": {
+					"type": "Point",
+					"coordinates": []
+				}
+			},
+			"email": "corret@email.com",
+			"firstName": "John",
+			"lastName": "Appleseed",
+			"dateOfBirth": "1994-02-18T00:00:00.000Z",
+			"phoneNo": "+15551234567",
+			"roles": [],
+			"preferences": [],
+			"createdAt": "2022-02-18T15:53:57.377Z",
+			"updatedAt": "2022-02-20T18:08:31.039Z",
+			"name": "John Appleseed",
+			"id": "1"
+		}
+	}
+}
