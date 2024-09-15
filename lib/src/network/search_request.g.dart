@@ -18,7 +18,7 @@ SearchRequest _$SearchRequestFromJson(Map<String, dynamic> json) =>
           ? null
           : SearchSortRequest.fromJson(json['sort'] as Map<String, dynamic>),
       type: json['type'],
-      skip: json['skip'] as int?,
+      skip: (json['skip'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SearchRequestToJson(SearchRequest instance) {

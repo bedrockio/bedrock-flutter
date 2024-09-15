@@ -8,13 +8,13 @@ part of 'login_user_request.dart';
 
 LoginUserRequest _$LoginUserRequestFromJson(Map<String, dynamic> json) =>
     LoginUserRequest(
-      phoneNumber: json['phoneNumber'] as String,
+      phone: json['phone'] as String,
       code: json['code'] as String?,
     );
 
 Map<String, dynamic> _$LoginUserRequestToJson(LoginUserRequest instance) {
   final val = <String, dynamic>{
-    'phoneNumber': instance.phoneNumber,
+    'phone': instance.phone,
   };
 
   void writeNotNull(String key, dynamic value) {

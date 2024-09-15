@@ -1,8 +1,7 @@
+import '/src/utils/widgets/button.dart';
 import '/src/env/environment.dart';
 import '/src/route_generator.dart';
 import '/src/utils/constants/colors.dart';
-import '/src/utils/constants/fonts.dart';
-import '/src/utils/widgets/cta_button.dart';
 import 'package:flutter/material.dart';
 
 class ErrorDialog extends StatelessWidget {
@@ -39,7 +38,7 @@ class ErrorDialog extends StatelessWidget {
                           child: SingleChildScrollView(
                             child: Text(
                               logMessage,
-                              style: BRFontStyle.body(),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                         ),
@@ -71,14 +70,13 @@ class ErrorDialog extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
-              child: Text(title, style: BRFontStyle.h2()),
+              child: Text(title, style: Theme.of(context).textTheme.titleMedium),
             ),
-            _buildDescription(),
+            _buildDescription(context),
             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(15),
-              child: CtaButton(
-                colorScheme: BRColorScheme.primaryText,
+              child: BRCtaButton(
                 text: buttonLabel,
                 onPressed: () {
                   if (onTap != null) onTap!();
@@ -92,13 +90,13 @@ class ErrorDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildDescription() {
+  Widget _buildDescription(BuildContext context) {
     if (description.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
         child: Text(
           description,
-          style: BRFontStyle.body(),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       );
     } else {

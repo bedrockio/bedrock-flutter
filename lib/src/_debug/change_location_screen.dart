@@ -1,6 +1,7 @@
 import '/src/utils/constants/padding.dart';
 import '/src/utils/geolocator.dart';
 import '/src/utils/shared_preferences.dart';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -39,11 +40,16 @@ class ChangeLocationScreen extends StatelessWidget {
                     speed: 0.0,
                     heading: 0.0,
                     speedAccuracy: 0.0,
-                    timestamp: null);
+                    altitudeAccuracy: 0.0,
+                    headingAccuracy: 0.0,
+                    timestamp: DateTime.now());
 
-                await BedrockSharedPreferences().setPosition(position).then((value) => {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(content: Text('Location data changed.')))
+                await BRSharedPreferences.shared.setPosition(position).then((value) => {
+                      if (context.mounted)
+                        {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(content: Text('Location data changed.')))
+                        }
                     });
               } else {
                 ScaffoldMessenger.of(context)

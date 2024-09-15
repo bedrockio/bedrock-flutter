@@ -1,13 +1,17 @@
+import 'package:package_info_plus/package_info_plus.dart';
+
 import '/src/auth/cubit/auth_cubit.dart';
-import '/src/auth/login_otp_screen.dart';
 import '/src/auth/register_screen.dart';
-import '/src/utils/constants/fonts.dart';
 import '/src/utils/constants/padding.dart';
-import '/src/utils/widgets/cta_button.dart';
-import '/src/utils/widgets/cta_link_button.dart';
+import '/src/utils/widgets/button.dart';
+import '/src/utils/widgets/link_button.dart';
+import '/src/utils/widgets/textfield.dart';
+import 'otp_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   static const route = '/login';
@@ -19,72 +23,98 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
         body: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(BRPadding.small),
-                child: Stack(alignment: Alignment.bottomCenter, children: [
-                  Column(children: [
-                    const SizedBox(width: double.infinity, height: BRPadding.large),
-                    Image.asset('assets/images/bedrock.png', width: 150, height: 150),
-                    const SizedBox(height: BRPadding.large),
-                    Text('Welcome to', style: BRFontStyle.h2()),
-                    Text('bedrock flutter', style: BRFontStyle.h1()),
-                    const Spacer()
-                  ]),
-                  Column(children: [
+          child: Padding(
+            padding: const EdgeInsets.all(BRPadding.small),
+            child: CustomScrollView(slivers: [
+              SliverToBoxAdapter(
+                  child: Column(children: [
+                const SizedBox(width: double.infinity, height: BRPadding.large),
+                Hero(tag: 'bedrockImage', child: Image.asset('assets/images/bedrock.png', width: 150, height: 150)),
+                const SizedBox(height: BRPadding.large),
+                Text('Welcome to', style: Theme.of(context).textTheme.titleMedium),
+                Text('bedrock flutter', style: Theme.of(context).textTheme.titleLarge),
+              ])),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(children: [
                     const Spacer(),
                     Container(
-                        padding: const EdgeInsets.all(BRPadding.xsmall),
-                        color: Colors.white,
-                        child: Form(
-                            onChanged: () {
-                              _formValidated.value = _phoneNumberTextController.text.isNotEmpty;
-                            },
-                            child: Column(children: [
-                              TextFormField(
-                                  controller: _phoneNumberTextController,
-                                  keyboardType: TextInputType.phone,
-                                  inputFormatters: [
-                                    LibPhonenumberTextFormatter(
-                                      phoneNumberFormat: PhoneNumberFormat.national,
-                                      inputContainsCountryCode: true,
-                                      country: const CountryWithPhoneCode.us(),
-                                    )
-                                  ],
-                                  decoration: const InputDecoration(label: Text('Phone number'))),
-                              const SizedBox(height: BRPadding.small),
-                              BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
-                                if (state is LoginRequestSuccess) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    LoginOtpScreen.route,
-                                    arguments: _phoneNumberTextController.text,
+                      padding: const EdgeInsets.all(BRPadding.xsmall),
+                      child: Form(
+                        onChanged: () {
+                          // Based on formatting (XXX) XXX-XXXX
+                          _formValidated.value = _phoneNumberTextController.text.length == 14;
+                        },
+                        child: Column(children: [
+                          BRTextField(
+                            controller: _phoneNumberTextController,
+                            label: 'Phone number',
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              LibPhonenumberTextFormatter(
+                                phoneNumberFormat: PhoneNumberFormat.national,
+                                inputContainsCountryCode: true,
+                                country: const CountryWithPhoneCode.us(),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: BRPadding.small),
+                          BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+                            state.maybeWhen(
+                                loginOtpRequested: () {
+                                  context.push(OtpScreen.loginRoute, extra: _phoneNumberTextController.text);
+                                },
+                                orElse: () {});
+                          }, builder: (context, state) {
+                            return state.maybeWhen(loading: () {
+                              return const Center(child: CircularProgressIndicator());
+                            }, orElse: () {
+                              return ValueListenableBuilder<bool>(
+                                  valueListenable: _formValidated,
+                                  builder: (_, value, __) => BRCtaButton(
+                                      onPressed: () {
+                                        FocusManager.instance.primaryFocus?.unfocus();
+
+                                        BlocProvider.of<AuthCubit>(context).requestVerificationCode(
+                                            '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}');
+                                      },
+                                      enabled: value,
+                                      text: 'Login'));
+                            });
+                          }),
+                          const SizedBox(height: BRPadding.xsmall),
+                          BRLinkButton(
+                              text: 'No account yet? Register now!',
+                              onPressed: () {
+                                context.push(RegisterScreen.route);
+                              }),
+                          FutureBuilder(
+                              future: PackageInfo.fromPlatform(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                    'Version ${snapshot.data!.version} (${snapshot.data!.buildNumber})',
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
                                   );
                                 }
-                              }, builder: (context, state) {
-                                if (state is LoginLoading) {
-                                  return const Center(child: CircularProgressIndicator());
-                                }
-                                return ValueListenableBuilder<bool>(
-                                    valueListenable: _formValidated,
-                                    builder: (_, value, __) => CtaButton(
-                                        onPressed: () {
-                                          BlocProvider.of<AuthCubit>(context).requestVerificationCode(
-                                              '+1${_phoneNumberTextController.text.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}');
-                                        },
-                                        enabled: value,
-                                        text: 'Login'));
+                                return Container();
                               }),
-                              const SizedBox(height: BRPadding.xsmall),
-                              CtaLinkButton(
-                                  text: 'No account yet? Register now!',
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed(RegisterScreen.route);
-                                  })
-                            ])))
-                  ])
-                ]))));
+                        ]),
+                      ),
+                    )
+                  ]),
+                ),
+              )
+            ]),
+          ),
+        ),
+      ),
+    );
   }
 }

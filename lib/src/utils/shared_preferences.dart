@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class IBedrockSharedPreferences {
+abstract class IBRSharedPreferences {
   Future<void> setPosition(Position position);
-  Future<Position?> getPosition();
+  Position? getPosition();
 
   Future<void> deleteData();
 }
@@ -22,23 +23,42 @@ manageSharedPreferences() async {
   }
 }
 
-class BedrockSharedPreferences extends IBedrockSharedPreferences {
-  @override
-  Future<void> setPosition(Position position) async {
-    final prefs = await SharedPreferences.getInstance();
-    final positionMap = <String, dynamic>{};
-    positionMap['latitude'] = position.latitude;
-    positionMap['longitude'] = position.longitude;
-    await prefs.setString('position', json.encode(positionMap));
+class BRSharedPreferences extends IBRSharedPreferences {
+  late SharedPreferences _prefs;
+
+  static BRSharedPreferences? _instance;
+
+  static BRSharedPreferences get shared {
+    _instance ??= BRSharedPreferences._();
+    return _instance!;
+  }
+
+  static void load() {
+    BRSharedPreferences.shared;
+  }
+
+  BRSharedPreferences._() {
+    SharedPreferences.getInstance().then((value) => _prefs = value);
+  }
+
+  @visibleForTesting
+  static set shared(BRSharedPreferences instance) {
+    _instance = instance;
   }
 
   @override
-  Future<Position?> getPosition() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> setPosition(Position position) async {
+    final positionMap = <String, dynamic>{};
+    positionMap['latitude'] = position.latitude;
+    positionMap['longitude'] = position.longitude;
+    await _prefs.setString('position', json.encode(positionMap));
+  }
 
-    if (prefs.getString('position') != null) {
-      final latitude = json.decode(prefs.getString('position')!)['latitude'];
-      final longitude = json.decode(prefs.getString('position')!)['longitude'];
+  @override
+  Position? getPosition() {
+    if (_prefs.getString('position') != null) {
+      final latitude = json.decode(_prefs.getString('position')!)['latitude'];
+      final longitude = json.decode(_prefs.getString('position')!)['longitude'];
 
       Position position = Position(
           latitude: latitude,
@@ -48,7 +68,9 @@ class BedrockSharedPreferences extends IBedrockSharedPreferences {
           speed: 0.0,
           heading: 0.0,
           speedAccuracy: 0.0,
-          timestamp: null);
+          altitudeAccuracy: 0.0,
+          headingAccuracy: 0.0,
+          timestamp: DateTime.now());
 
       return position;
     }
@@ -57,7 +79,6 @@ class BedrockSharedPreferences extends IBedrockSharedPreferences {
 
   @override
   Future<void> deleteData() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    _prefs.clear();
   }
 }

@@ -9,8 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../utils/auth_storage.dart';
-import '../env/environment.dart';
+import '/src/utils/auth_storage.dart';
+import '/src/env/environment.dart';
 import 'api_error.dart';
 
 class DioLogger {
@@ -54,18 +54,18 @@ class DioLogger {
       log('RequestBody: ${response.requestOptions.data.toString()} \n');
     }
 
-    final responseData = response.data.toString();
+    final responseData = response.data.length == 0 ? 'No response' : jsonEncode(response.data);
 
     log('Response: ${responseData.substring(0, math.min(responseData.length, 1000))} \n');
 
     if (collectLogs) {
       collectedLogs.add(curlRequest);
-      collectedLogs.add(response.data.toString());
+      collectedLogs.add(responseData);
     }
 
     if ((response.statusCode ?? 0) >= 400) {
       errorLogs.add(curlRequest);
-      errorLogs.add(response.data.toString());
+      errorLogs.add(responseData);
     }
   }
 }

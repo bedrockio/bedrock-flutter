@@ -39,40 +39,37 @@ class _ProductScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: BRColors.primary,
           centerTitle: true,
-          title: const Text('Products', style: TextStyle(color: BRColors.secondary)),
+          title: const Text('Products'),
           actions: [
             IconButton(
                 onPressed: () {},
                 icon: const Icon(
                   Icons.shopping_cart,
-                  color: BRColors.secondary,
                 ))
           ],
         ),
         body: BlocBuilder<ProductCubit, ProductState>(
             bloc: context.read<ProductCubit>()..fetchProducts(),
-            buildWhen: (previous, current) => current is ProductsLoading || current is ProductsLoaded,
+            buildWhen: (previous, current) =>
+                current.maybeWhen(loading: () => true, loaded: (_) => true, error: (_) => true, orElse: () => false),
             builder: (context, state) {
-              if (state is ProductsLoading) {
-                return const Center(child: CircularProgressIndicator(color: BRColors.primary));
-              }
-
-              if (state is ProductsLoaded) {
+              return state.maybeWhen(loading: () {
+                return const Center(child: CircularProgressIndicator());
+              }, loaded: (products) {
                 return ListView.separated(
                     padding: const EdgeInsets.only(top: BRPadding.xsmall),
                     controller: scrollController,
                     itemBuilder: (context, index) {
-                      return ProductListItem(product: state.products[index]);
+                      return ProductListItem(product: products[index]);
                     },
                     separatorBuilder: (context, index) {
                       return Divider(thickness: 1, color: BRColors.primary.withOpacity(0.5));
                     },
-                    itemCount: state.products.length);
-              }
-
-              return Container();
+                    itemCount: products.length);
+              }, orElse: () {
+                return Container();
+              });
             }));
   }
 }

@@ -1,4 +1,4 @@
-import '../network/api_service.dart';
+import '/src/network/api_service.dart';
 
 enum Stage { uat, prod }
 

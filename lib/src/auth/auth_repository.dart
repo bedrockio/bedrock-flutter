@@ -1,10 +1,8 @@
+import '/src/auth/model/login_response_model.dart';
+import '/src/auth/model/login_user_request.dart';
+import '/src/auth/model/registration_request.dart';
+import '/src/network/api_service.dart';
 import 'package:dio/dio.dart';
-
-import 'model/login_user_request.dart';
-import 'model/login_response_model.dart';
-import 'model/registration_request.dart';
-
-import '../network/api_service.dart';
 
 class AuthRepository {
   final ApiService apiService;
@@ -12,12 +10,13 @@ class AuthRepository {
   const AuthRepository(this.apiService);
 
   /// Create new user profile
-  /// POST /auth/register
-  Future<bool> register({required String firstName, required String lastName, String? phoneNumber}) async {
+  /// POST /auth/otp/register
+  Future<bool> register(
+      {required String firstName, required String lastName, required String email, String? phoneNumber}) async {
     RegistrationRequestModel request =
-        RegistrationRequestModel(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber);
+        RegistrationRequestModel(firstName: firstName, lastName: lastName, email: email, phone: phoneNumber);
     try {
-      Response response = await apiService.post('/auth/register', data: request.toJson());
+      Response response = await apiService.post('/auth/otp/register', data: request.toJson());
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
       rethrow;
@@ -25,11 +24,11 @@ class AuthRepository {
   }
 
   /// Request verification code for existing user
-  /// POST /auth/login/send-sms
+  /// POST /auth/otp/send-code
   Future<bool> login(String phoneNumber) async {
     try {
-      LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber);
-      Response response = await apiService.post('/auth/login/send-sms', data: request.toJson());
+      LoginUserRequest request = LoginUserRequest(phone: phoneNumber);
+      Response response = await apiService.post('/auth/otp/send-code', data: request.toJson());
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
       rethrow;
@@ -37,11 +36,11 @@ class AuthRepository {
   }
 
   /// Verify 2FA code for existing user
-  /// POST /auth/login/verify-sms
+  /// POST /auth/otp/login
   Future<LoginResponseModel> loginVerify(String phoneNumber, String code) async {
-    LoginUserRequest request = LoginUserRequest(phoneNumber: phoneNumber, code: code);
+    LoginUserRequest request = LoginUserRequest(phone: phoneNumber, code: code);
     try {
-      Response response = await apiService.post('/auth/login/verify-sms', data: request.toJson());
+      Response response = await apiService.post('/auth/otp/login', data: request.toJson());
       return LoginResponseModel(response.data['data']['token']);
     } catch (_) {
       rethrow;

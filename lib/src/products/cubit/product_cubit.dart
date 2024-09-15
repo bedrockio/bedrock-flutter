@@ -1,10 +1,13 @@
+import 'package:dio/dio.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '/src/network/meta_data.dart';
 import '/src/products/cubit/product_repository.dart';
 import '/src/products/model/product_model.dart';
 import '/src/utils/error_helper.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+part 'product_cubit.freezed.dart';
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
@@ -13,15 +16,15 @@ class ProductCubit extends Cubit<ProductState> {
 
   MetaData? meta;
 
-  ProductCubit(this.repository) : super(ProductsLoading());
+  ProductCubit(this.repository) : super(const ProductState.loading());
 
   void fetchProducts({String? query, String? sortField, String? sortOrder}) async {
     try {
       if ((meta != null && (meta!.total > meta!.skip + meta!.limit)) || meta == null) {
         if (meta == null) {
-          emit(ProductsLoading());
+          emit(const ProductState.loading());
         } else {
-          emit(ProductsLoadingMore());
+          emit(const ProductState.loadingMore());
         }
 
         final response = await repository.getProducts(
@@ -37,9 +40,11 @@ class ProductCubit extends Cubit<ProductState> {
         meta = response.meta;
 
         products.addAll(response.items);
-        emit(ProductsLoaded(products));
+        emit(ProductState.loaded(products));
       }
     } catch (e) {
+      emit(const ProductState.error());
+
       ErrorHelper.broadcastError(e);
     }
   }

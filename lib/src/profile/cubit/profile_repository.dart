@@ -1,9 +1,9 @@
-import '/src/profile/model/user_model.dart';
 import 'package:dio/dio.dart';
 
-import '../model/update_user_request.dart';
-import '../../network/upload_response_model.dart';
-import '../../network/api_service.dart';
+import '/src/profile/model/update_user_request.dart';
+import '/src/profile/model/user_model.dart';
+import '/src/network/upload_response_model.dart';
+import '/src/network/api_service.dart';
 
 class ProfileRepository {
   final ApiService apiService;

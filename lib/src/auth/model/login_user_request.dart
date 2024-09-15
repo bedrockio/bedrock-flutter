@@ -4,12 +4,12 @@ part 'login_user_request.g.dart';
 
 @JsonSerializable()
 class LoginUserRequest {
-  String phoneNumber;
+  String phone;
 
   @JsonKey(includeIfNull: false)
   String? code;
 
-  LoginUserRequest({required this.phoneNumber, this.code});
+  LoginUserRequest({required this.phone, this.code});
 
   factory LoginUserRequest.fromJson(Map<String, dynamic> json) => _$LoginUserRequestFromJson(json);
 

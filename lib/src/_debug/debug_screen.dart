@@ -1,14 +1,13 @@
 import '/src/auth/cubit/auth_cubit.dart';
-import '/src/base_view.dart';
 import '/src/_debug/change_location_screen.dart';
 import '/src/_debug/network_log_screen.dart';
 import '/src/env/environment.dart';
 import '/src/network/api_error.dart';
 import '/src/network/api_service_interceptor.dart';
 import '/src/utils/auth_storage.dart';
-import '/src/utils/constants/fonts.dart';
 import '/src/utils/constants/padding.dart';
 import '/src/utils/error_helper.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,15 +40,14 @@ class DebugScreen extends StatelessWidget {
       ),
       body: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
-            if (state is LoggedOut) {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamedAndRemoveUntil(BaseView.route, (route) => false);
-
-              if (_shouldSwitchEnvironment.value == true) {
-                env = _selectedEnvironment.value;
-                Environment().load();
-              }
-            }
+            state.maybeWhen(
+                loggedOut: () {
+                  if (_shouldSwitchEnvironment.value == true) {
+                    env = _selectedEnvironment.value;
+                    Environment().load();
+                  }
+                },
+                orElse: () {});
           },
           child: Padding(
               padding: const EdgeInsets.all(BRPadding.small),
@@ -62,11 +60,14 @@ class DebugScreen extends StatelessWidget {
 
   Widget _general(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('general', style: BRFontStyle.h2()),
+      Text('general', style: Theme.of(context).textTheme.titleMedium),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton(onPressed: () {}, child: Text('Toggle environment', style: BRFontStyle.bodyMedium())),
+          TextButton(
+              onPressed: () {},
+              child: Text('Toggle environment',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
           ValueListenableBuilder<Stage>(
               valueListenable: _selectedEnvironment,
               builder: (_, value, __) => CupertinoSegmentedControl(
@@ -95,7 +96,9 @@ class DebugScreen extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Switched to ${_selectedEnvironment.value.name}. Now logging out.')));
                       Future.delayed(const Duration(seconds: 2)).then((value) {
-                        BlocProvider.of<AuthCubit>(context).performLogout();
+                        if (context.mounted) {
+                          BlocProvider.of<AuthCubit>(context).performLogout();
+                        }
                       });
                     },
                   ))
@@ -107,47 +110,64 @@ class DebugScreen extends StatelessWidget {
               DioLogger.collectLogs = !DioLogger.collectLogs;
               _collectingLogs.value = DioLogger.collectLogs;
             },
-            child: Text('Collect network logs', style: BRFontStyle.bodyMedium())),
+            child: Text('Collect network logs',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
         ValueListenableBuilder<bool>(
             valueListenable: _collectingLogs,
-            builder: (_, value, __) => Text(value ? 'On' : 'Off', style: BRFontStyle.bodyMedium()))
+            builder: (_, value, __) => Text(value ? 'On' : 'Off',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)))
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         TextButton(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(NetworkLogsScreen.route, arguments: NetworkLogsScreenType.all),
-            child: Text('Show network logs', style: BRFontStyle.bodyMedium())),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NetworkLogsScreen(type: NetworkLogsScreenType.all),
+                )),
+            child: Text('Show network logs',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         TextButton(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(NetworkLogsScreen.route, arguments: NetworkLogsScreenType.error),
-            child: Text('Show error logs', style: BRFontStyle.bodyMedium())),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NetworkLogsScreen(type: NetworkLogsScreenType.error),
+                )),
+            child: Text('Show error logs',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         TextButton(
-            onPressed: () => Navigator.of(context).pushNamed(ChangeLocationScreen.route),
-            child: Text('Mock GPS', style: BRFontStyle.bodyMedium())),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeLocationScreen(),
+                )),
+            child:
+                Text('Mock GPS', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       TextButton(
           onPressed: () {
             ErrorHelper.broadcastError(ApiError(message: 'This is a test. Nothing to see here!'));
           },
-          child: Text('Test error handler', style: BRFontStyle.bodyMedium())),
+          child: Text('Test error handler',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
       TextButton(
           onPressed: () {
             DefaultCacheManager().emptyCache();
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Caches cleared.')));
           },
-          child: Text('Clear caches', style: BRFontStyle.bodyMedium())),
+          child: Text('Clear caches',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
       TextButton(
           onPressed: () {
             BlocProvider.of<AuthCubit>(context).performLogout();
           },
-          child: Text('Logout', style: BRFontStyle.bodyMedium())),
+          child: Text('Logout', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
     ]);
   }
 
@@ -155,12 +175,12 @@ class DebugScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('stored variables', style: BRFontStyle.h2()),
+        Text('stored variables', style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: BRPadding.small),
-        Text('ENVIRONMENT', style: BRFontStyle.bodyMedium()),
+        Text('ENVIRONMENT', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
         Text(env.name),
         const SizedBox(height: BRPadding.small),
-        Text('ACCESS TOKEN', style: BRFontStyle.bodyMedium()),
+        Text('ACCESS TOKEN', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
         FutureBuilder(
             future: AuthStorage(const FlutterSecureStorage()).readAuthToken(),
             builder: (context, snapshot) => InkWell(
@@ -177,7 +197,7 @@ class DebugScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ))),
         const SizedBox(height: BRPadding.small),
-        Text('APP VERSION', style: BRFontStyle.bodyMedium()),
+        Text('APP VERSION', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
         ValueListenableBuilder<String>(
             valueListenable: _appVersion,
             builder: (_, value, __) => InkWell(

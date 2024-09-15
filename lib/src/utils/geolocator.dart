@@ -7,7 +7,7 @@ Future<Position?> getUserLocation() async {
 
   try {
     if (env == Stage.uat) {
-      position = await BedrockSharedPreferences().getPosition();
+      position = BRSharedPreferences.shared.getPosition();
 
       position ??= await Geolocator.getCurrentPosition();
     } else {

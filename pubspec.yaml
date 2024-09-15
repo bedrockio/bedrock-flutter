@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none'
 
-version: 2.0.0+1
+version: 2.1.0+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -12,32 +12,32 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dio: ^5.1.2
-  json_serializable: ^6.7.0
-  flutter_secure_storage: ^8.0.0
-  package_info_plus: ^4.0.0
-  json_annotation: ^4.8.1
-  intl: ^0.18.1
-  flutter_bloc: ^8.1.2
+  dio: ^5.7.0
+  flutter_secure_storage: ^9.2.2
+  package_info_plus: ^8.0.2
+  json_annotation: ^4.8.0
+  flutter_bloc: ^8.1.6
   jwt_decoder: ^2.0.1
-  shared_preferences: ^2.1.1
-  pin_code_fields: ^7.4.0
-  cached_network_image: ^3.2.3
-  flutter_cache_manager: ^3.3.0
-  geolocator: ^9.0.2
-  flutter_svg: ^2.0.6
-  equatable: ^2.0.5
-  flutter_libphonenumber: ^2.1.5
+  shared_preferences: ^2.3.2
+  pin_code_fields: ^8.0.1
+  cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
+  geolocator: ^13.0.1
+  flutter_svg: ^2.0.10+1
+  flutter_libphonenumber: ^2.3.3
+  go_router: ^14.2.7
+  freezed_annotation: ^2.4.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
-  dart_jsonwebtoken: ^2.4.0
-  bloc_test: ^9.1.0
-  build_runner: ^2.1.4
-  mockito: ^5.4.0
+  json_serializable: ^6.8.0
+  flutter_lints: ^4.0.0
+  bloc_test: ^9.1.7
+  build_runner: ^2.4.12
+  mockito: ^5.4.4
+  freezed: ^2.5.2
   
 flutter:
   uses-material-design: true

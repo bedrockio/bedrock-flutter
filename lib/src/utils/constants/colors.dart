@@ -34,3 +34,23 @@ class BRColorScheme {
     textColor: BRColors.secondary,
   );
 }
+
+extension ColorExtension on Color {
+  MaterialColor toMaterialColor() {
+    return MaterialColor(
+      value,
+      <int, Color>{
+        50: this,
+        100: this,
+        200: this,
+        300: this,
+        400: this,
+        500: this,
+        600: this,
+        700: this,
+        800: this,
+        900: this,
+      },
+    );
+  }
+}
