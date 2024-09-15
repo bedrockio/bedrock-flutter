@@ -63,7 +63,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           setState(() {
                             tabController.index = 0;
                           });
-                          GoRouter.of(context).go(HomeScreen.route);
+                          context.go(HomeScreen.route);
                         },
                       ),
                       BottomBarItem(
@@ -74,7 +74,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           setState(() {
                             tabController.index = 1;
                           });
-                          GoRouter.of(context).go(ProductsScreen.route);
+                          context.go(ProductsScreen.route);
                         },
                       ),
                       BottomBarItem(
@@ -85,7 +85,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           setState(() {
                             tabController.index = 2;
                           });
-                          GoRouter.of(context).go(ProfileScreen.route);
+                          context.go(ProfileScreen.route);
                         },
                       ),
                     ]),

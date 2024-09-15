@@ -9,6 +9,7 @@ import '/src/utils/widgets/textfield.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class RegisterScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.chevron_left, size: 32, color: BRColors.primary),
           onPressed: () {
-            Navigator.of(context).pop();
+            context.pop();
           },
         ),
       ),
