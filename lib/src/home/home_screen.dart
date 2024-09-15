@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   static const route = '/home';
 
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final ValueNotifier<List<int>> selected = ValueNotifier<List<int>>([]);
 
   @override
   Widget build(BuildContext context) {

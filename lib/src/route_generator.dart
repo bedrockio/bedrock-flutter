@@ -57,7 +57,7 @@ class RouteGenerator {
                         listener: (context, state) {
                           state.maybeWhen(
                               loggedOut: () {
-                                context.replace('/');
+                                context.replace('/login');
                               },
                               orElse: () {});
                         },
@@ -71,7 +71,7 @@ class RouteGenerator {
                       GoRoute(
                         path: '/home',
                         pageBuilder: (context, GoRouterState state) {
-                          return MaterialPage(key: state.pageKey, child: const HomeScreen());
+                          return MaterialPage(key: state.pageKey, child: HomeScreen());
                         },
                       ),
                     ],

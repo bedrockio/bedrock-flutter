@@ -1,5 +1,4 @@
-import 'package:package_info_plus/package_info_plus.dart';
-
+import '/src/utils/constants/validators.dart';
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/auth/register_screen.dart';
 import '/src/utils/constants/padding.dart';
@@ -48,8 +47,7 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(BRPadding.xsmall),
                       child: Form(
                         onChanged: () {
-                          // Based on formatting (XXX) XXX-XXXX
-                          _formValidated.value = _phoneNumberTextController.text.length == 14;
+                          _formValidated.value = Validators.phoneNumberRegExp.hasMatch(_phoneNumberTextController.text);
                         },
                         child: Column(children: [
                           BRTextField(
@@ -93,17 +91,6 @@ class LoginScreen extends StatelessWidget {
                               text: 'No account yet? Register now!',
                               onPressed: () {
                                 context.push(RegisterScreen.route);
-                              }),
-                          FutureBuilder(
-                              future: PackageInfo.fromPlatform(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text(
-                                    'Version ${snapshot.data!.version} (${snapshot.data!.buildNumber})',
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
-                                  );
-                                }
-                                return Container();
                               }),
                         ]),
                       ),

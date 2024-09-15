@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class CheckBox extends StatelessWidget {
   final Color selectedColor;
   final Color unselectedColor;
+  final Color unselectedBorderColor;
   final bool selected;
 
   const CheckBox({
@@ -12,6 +13,7 @@ class CheckBox extends StatelessWidget {
     this.selected = false,
     this.selectedColor = BRColors.primary,
     this.unselectedColor = BRColors.secondary,
+    this.unselectedBorderColor = BRColors.primary,
   });
 
   @override
@@ -25,7 +27,7 @@ class CheckBox extends StatelessWidget {
             height: 18,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(4)),
-                border: Border.all(color: selectedColor, width: 2))),
+                border: Border.all(color: selected ? selectedColor : unselectedBorderColor, width: 2))),
         Positioned(
           top: 2,
           left: 2,
@@ -65,8 +67,11 @@ class CheckBoxItem extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(bottom: BRPadding.xsmall),
         child: InkWell(
+          splashFactory: NoSplash.splashFactory,
           onTap: onSelect,
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
             constraints: const BoxConstraints(minHeight: 70),
             padding: const EdgeInsets.symmetric(horizontal: BRPadding.small, vertical: BRPadding.small),
             decoration: BoxDecoration(
@@ -99,32 +104,54 @@ class CheckBoxItem extends StatelessWidget {
   }
 }
 
-class CheckBoxGroup extends StatelessWidget {
+class CheckBoxGroup extends StatefulWidget {
   final List<String> leftLabels;
   final List<String>? rightLabels;
-  final List<int> selected;
-  final Function(int selectedIndex) onSelect;
+  final List<int>? selected;
+  final Function(List<int> selectedIndexes) onSelect;
 
   const CheckBoxGroup({
     super.key,
     required this.leftLabels,
     this.rightLabels,
-    required this.selected,
+    this.selected,
     required this.onSelect,
   });
 
   @override
+  State<CheckBoxGroup> createState() => _CheckBoxGroup();
+}
+
+class _CheckBoxGroup extends State<CheckBoxGroup> {
+  late List<int> _selected;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selected = widget.selected ?? [];
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
-        children: leftLabels.map((option) {
-      int index = leftLabels.indexOf(option);
+        children: widget.leftLabels.map((option) {
+      int index = widget.leftLabels.indexOf(option);
 
       return CheckBoxItem(
           leftLabel: option,
-          rightLabel: rightLabels != null && rightLabels!.length > index ? rightLabels![index] : null,
-          selected: selected.contains(index),
+          rightLabel:
+              widget.rightLabels != null && widget.rightLabels!.length > index ? widget.rightLabels![index] : null,
+          selected: _selected.contains(index),
           onSelect: () {
-            onSelect(index);
+            setState(() {
+              if (_selected.contains(index)) {
+                _selected.remove(index);
+              } else {
+                _selected.add(index);
+              }
+            });
+            widget.onSelect(_selected);
           });
     }).toList());
   }

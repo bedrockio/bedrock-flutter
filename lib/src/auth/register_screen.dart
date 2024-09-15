@@ -1,3 +1,4 @@
+import '/src/utils/constants/validators.dart';
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/auth/otp_screen.dart';
 import '/src/utils/constants/colors.dart';
@@ -153,7 +154,7 @@ class RegisterScreen extends StatelessWidget {
     _formValidated.value = _firstNameTextController.text.isNotEmpty &&
         _lastNameTextController.text.isNotEmpty &&
         _emailTextController.text.isNotEmpty &&
-        _phoneNumberTextController.text.length == 14 &&
+        Validators.phoneNumberRegExp.hasMatch(_phoneNumberTextController.text) &&
         _agreeTerms.value == true;
   }
 }

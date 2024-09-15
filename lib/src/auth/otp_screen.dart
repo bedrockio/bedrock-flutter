@@ -38,19 +38,21 @@ class OtpScreen extends StatelessWidget {
                     child: Image.asset('assets/images/bedrock.png', width: 75, height: 75),
                   ),
                   const SizedBox(height: BRPadding.large),
-                  BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-                    return state.maybeWhen(loading: () {
-                      return const Center(child: CircularProgressIndicator());
-                    }, orElse: () {
-                      return OtpWidget(
-                          phoneNumber: phoneNumber,
-                          instructionText: 'Enter the code below to continue.',
-                          onCompleted: (code) {
-                            BlocProvider.of<AuthCubit>(context).performLogin(
-                                '+1${phoneNumber.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}', code);
-                          });
-                    });
-                  })
+                  BlocBuilder<AuthCubit, AuthState>(
+                      buildWhen: (previous, current) => current.maybeWhen(loggedIn: () => false, orElse: () => true),
+                      builder: (context, state) {
+                        return state.maybeWhen(loading: () {
+                          return const Center(child: CircularProgressIndicator());
+                        }, orElse: () {
+                          return OtpWidget(
+                              phoneNumber: phoneNumber,
+                              instructionText: 'Enter the code below to continue.',
+                              onCompleted: (code) {
+                                BlocProvider.of<AuthCubit>(context).performLogin(
+                                    '+1${phoneNumber.replaceAll(RegExp(' |-|\\(|\\)'), '').toString()}', code);
+                              });
+                        });
+                      })
                 ]))));
   }
 }
