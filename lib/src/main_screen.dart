@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import '/src/home/home_screen.dart';
+import '/src/products/products_screen.dart';
+import '/src/profile/profile_screen.dart';
 import '/src/utils/bottom_nav_tab.dart';
 import '/src/utils/constants/colors.dart';
 import '/src/utils/error_helper.dart';
@@ -48,29 +51,43 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 TabBar(
                     labelPadding: EdgeInsets.zero,
                     enableFeedback: false,
-                    onTap: (value) {
-                      setState(() {
-                        tabController.index = value;
-                        switch (value) {
-                          case 0:
-                            GoRouter.of(context).go('/home');
-                            break;
-                          case 1:
-                            GoRouter.of(context).go('/products');
-                            break;
-                          case 2:
-                            GoRouter.of(context).go('/profile');
-                            break;
-                        }
-                      });
-                    },
                     automaticIndicatorColorAdjustment: false,
                     indicatorWeight: 4,
                     controller: tabController,
                     tabs: [
-                      BottomBarItem(tab: BottomNavTab.home, isSelected: tabController.index == 0),
-                      BottomBarItem(tab: BottomNavTab.products, isSelected: tabController.index == 1),
-                      BottomBarItem(tab: BottomNavTab.profile, isSelected: tabController.index == 2),
+                      BottomBarItem(
+                        key: Key('home-${tabController.index == 0}'),
+                        tab: BottomNavTab.home,
+                        isSelected: tabController.index == 0,
+                        onSelect: () {
+                          setState(() {
+                            tabController.index = 0;
+                          });
+                          GoRouter.of(context).go(HomeScreen.route);
+                        },
+                      ),
+                      BottomBarItem(
+                        key: Key('products-${tabController.index == 1}'),
+                        tab: BottomNavTab.products,
+                        isSelected: tabController.index == 1,
+                        onSelect: () {
+                          setState(() {
+                            tabController.index = 1;
+                          });
+                          GoRouter.of(context).go(ProductsScreen.route);
+                        },
+                      ),
+                      BottomBarItem(
+                        key: Key('profile-${tabController.index == 2}'),
+                        tab: BottomNavTab.profile,
+                        isSelected: tabController.index == 2,
+                        onSelect: () {
+                          setState(() {
+                            tabController.index = 2;
+                          });
+                          GoRouter.of(context).go(ProfileScreen.route);
+                        },
+                      ),
                     ]),
               ])),
         ),

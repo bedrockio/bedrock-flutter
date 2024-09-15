@@ -26,6 +26,7 @@ class BRCtaButton extends StatelessWidget {
             backgroundColor: WidgetStateProperty.all(backgroundColor.withOpacity(enabled ? 1.0 : 0.5)),
             overlayColor: WidgetStateProperty.all<Color>(textColor.withOpacity(0.15)),
             foregroundColor: WidgetStateProperty.all<Color>(textColor.withOpacity(enabled ? 1.0 : 0.5)),
+            splashFactory: NoSplash.splashFactory,
             elevation: WidgetStateProperty.all<double>(0.0),
             shape:
                 WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(BRPadding.small)))),

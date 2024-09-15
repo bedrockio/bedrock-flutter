@@ -8,20 +8,43 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 enum NetworkLogsScreenType { all, error }
 
-class NetworkLogsScreen extends StatelessWidget {
+class NetworkLogsScreen extends StatefulWidget {
   static const route = '/network_logs_screen';
 
   final NetworkLogsScreenType type;
 
   const NetworkLogsScreen({super.key, this.type = NetworkLogsScreenType.all});
 
+  @override
+  State<NetworkLogsScreen> createState() => _NetworkLogsScreen();
+}
+
+class _NetworkLogsScreen extends State<NetworkLogsScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   List<String> get logs {
-    switch (type) {
+    switch (widget.type) {
       case NetworkLogsScreenType.all:
         return DioLogger.collectedLogs;
       case NetworkLogsScreenType.error:
         return DioLogger.errorLogs;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToBottom() {
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
   }
 
   @override
@@ -33,7 +56,7 @@ class NetworkLogsScreen extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  switch (type) {
+                  switch (widget.type) {
                     case NetworkLogsScreenType.all:
                       DioLogger.collectedLogs.clear();
                       break;
@@ -51,6 +74,7 @@ class NetworkLogsScreen extends StatelessWidget {
                 future: AuthStorage(const FlutterSecureStorage()).readAuthToken(),
                 builder: (context, snapshot) {
                   return ListView.separated(
+                    controller: _scrollController,
                     itemBuilder: (context, index) {
                       final logItem = logs[index];
 

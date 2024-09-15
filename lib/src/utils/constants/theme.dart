@@ -18,7 +18,8 @@ class BRTheme {
       tabBarTheme: TabBarTheme(
           indicatorColor: Colors.transparent,
           dividerColor: Colors.transparent,
-          overlayColor: WidgetStateProperty.all<Color>(BRColors.primary.withOpacity(0.1))),
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: WidgetStateProperty.all<Color>(Colors.transparent)),
       fontFamily: 'Inter',
       textTheme: const TextTheme(
           titleLarge: TextStyle(
