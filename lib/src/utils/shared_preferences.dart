@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,17 +9,6 @@ abstract class IBRSharedPreferences {
   Position? getPosition();
 
   Future<void> deleteData();
-}
-
-manageSharedPreferences() async {
-  final prefs = await SharedPreferences.getInstance();
-  if (prefs.getBool('first_run') ?? true) {
-    FlutterSecureStorage storage = const FlutterSecureStorage();
-
-    await storage.deleteAll();
-
-    prefs.setBool('first_run', false);
-  }
 }
 
 class BRSharedPreferences extends IBRSharedPreferences {
