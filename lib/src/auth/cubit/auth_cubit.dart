@@ -5,7 +5,6 @@ import '/src/utils/shared_preferences.dart';
 import '/src/network/api_error.dart';
 import '/src/network/api_service.dart';
 import '/src/utils/auth_storage.dart';
-import '/src/utils/preferences.dart';
 import '../model/login_response_model.dart';
 import '../auth_repository.dart';
 
@@ -72,7 +71,6 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       LoginResponseModel response = await repository.loginVerify(phoneNumber, code);
       await storage.storeAuthToken(response.token);
-      BedrockPreferences.shared.setBool(BedrockPreferenceKey.isHomeFirstVisit, true);
 
       emit(const AuthState.loggedIn());
     } catch (e) {
