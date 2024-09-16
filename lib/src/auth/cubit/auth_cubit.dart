@@ -5,7 +5,6 @@ import '/src/utils/shared_preferences.dart';
 import '/src/network/api_error.dart';
 import '/src/network/api_service.dart';
 import '/src/utils/auth_storage.dart';
-import '/src/utils/preferences.dart';
 import '../model/login_response_model.dart';
 import '../auth_repository.dart';
 
