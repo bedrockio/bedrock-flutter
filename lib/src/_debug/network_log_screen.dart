@@ -6,7 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-enum NetworkLogsScreenType { all, error }
+enum NetworkLogsScreenType {
+  all,
+  error;
+
+  String get title {
+    switch (this) {
+      case all:
+        return 'Network logs';
+      case error:
+        return 'Error logs';
+    }
+  }
+}
 
 class NetworkLogsScreen extends StatefulWidget {
   static const route = '/network_logs_screen';
@@ -51,7 +63,7 @@ class _NetworkLogsScreen extends State<NetworkLogsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Network logs'),
+          title: Text(widget.type.title),
           backgroundColor: Colors.red,
           actions: [
             TextButton(
