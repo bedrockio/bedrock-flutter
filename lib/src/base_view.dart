@@ -14,10 +14,10 @@ class BaseView extends StatefulWidget {
   const BaseView({super.key});
 
   @override
-  State<BaseView> createState() => _BaseViewState();
+  State<BaseView> createState() => _BaseView();
 }
 
-class _BaseViewState extends State<BaseView> {
+class _BaseView extends State<BaseView> {
   @override
   void initState() {
     ErrorHelper.errorStream.stream.listen((error) {

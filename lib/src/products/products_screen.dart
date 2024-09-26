@@ -11,10 +11,10 @@ class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
   @override
-  State<ProductsScreen> createState() => _ProductScreenState();
+  State<ProductsScreen> createState() => _ProductScreen();
 }
 
-class _ProductScreenState extends State<ProductsScreen> {
+class _ProductScreen extends State<ProductsScreen> {
   final ScrollController scrollController = ScrollController();
 
   @override

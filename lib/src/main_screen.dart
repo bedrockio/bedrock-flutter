@@ -19,10 +19,10 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key, required this.child});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreen();
 }
 
-class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
+class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
