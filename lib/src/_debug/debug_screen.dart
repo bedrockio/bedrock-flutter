@@ -34,42 +34,47 @@ class DebugScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text('Debug Screen'),
-        centerTitle: true,
+    return Theme(
+      data: ThemeData(useMaterial3: false),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: const Text('Debug Screen'),
+          centerTitle: true,
+        ),
+        body: BlocListener<AuthCubit, AuthState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                  loggedOut: () {
+                    if (_shouldSwitchEnvironment.value == true) {
+                      env = _selectedEnvironment.value;
+                      Environment().load();
+                    }
+                  },
+                  orElse: () {});
+            },
+            child: Padding(
+                padding: const EdgeInsets.all(BRPadding.small),
+                child: SingleChildScrollView(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  _general(context),
+                  const SizedBox(height: BRPadding.large),
+                  _storedData(context)
+                ])))),
       ),
-      body: BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) {
-            state.maybeWhen(
-                loggedOut: () {
-                  if (_shouldSwitchEnvironment.value == true) {
-                    env = _selectedEnvironment.value;
-                    Environment().load();
-                  }
-                },
-                orElse: () {});
-          },
-          child: Padding(
-              padding: const EdgeInsets.all(BRPadding.small),
-              child: SingleChildScrollView(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [_general(context), const SizedBox(height: BRPadding.large), _storedData(context)])))),
     );
   }
 
   Widget _general(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('general', style: Theme.of(context).textTheme.titleMedium),
+      const Text('general', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton(
               onPressed: () {},
-              child: Text('Toggle environment',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+              child:
+                  const Text('Toggle environment', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
           ValueListenableBuilder<Stage>(
               valueListenable: _selectedEnvironment,
               builder: (_, value, __) => CupertinoSegmentedControl(
@@ -112,12 +117,12 @@ class DebugScreen extends StatelessWidget {
               DioLogger.collectLogs = !DioLogger.collectLogs;
               _collectingLogs.value = DioLogger.collectLogs;
             },
-            child: Text('Collect network logs',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+            child:
+                const Text('Collect network logs', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
         ValueListenableBuilder<bool>(
             valueListenable: _collectingLogs,
-            builder: (_, value, __) => Text(value ? 'On' : 'Off',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)))
+            builder: (_, value, __) =>
+                Text(value ? 'On' : 'Off', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w700)))
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         TextButton(
@@ -126,8 +131,7 @@ class DebugScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => const LogsScreen(type: BRLogType.network),
                 )),
-            child: Text('Show network logs',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+            child: const Text('Show network logs', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -137,8 +141,7 @@ class DebugScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => const LogsScreen(type: BRLogType.error),
                 )),
-            child: Text('Show error logs',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+            child: const Text('Show error logs', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -148,8 +151,7 @@ class DebugScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => const LogsScreen(type: BRLogType.console),
                 )),
-            child: Text('Show console logs',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+            child: const Text('Show console logs', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -159,28 +161,25 @@ class DebugScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => ChangeLocationScreen(),
                 )),
-            child:
-                Text('Mock GPS', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+            child: const Text('Mock GPS', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
       TextButton(
           onPressed: () {
             ErrorHelper.broadcastError(ApiError(message: 'This is a test. Nothing to see here!'));
           },
-          child: Text('Test error handler',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+          child: const Text('Test error handler', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
       TextButton(
           onPressed: () {
             DefaultCacheManager().emptyCache();
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Caches cleared.')));
           },
-          child: Text('Clear caches',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+          child: const Text('Clear caches', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
       TextButton(
           onPressed: () {
             BlocProvider.of<AuthCubit>(context).performLogout();
           },
-          child: Text('Logout', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+          child: const Text('Logout', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w700))),
     ]);
   }
 
@@ -188,12 +187,12 @@ class DebugScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('stored variables', style: Theme.of(context).textTheme.titleMedium),
+        const Text('stored variables', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
         const SizedBox(height: BRPadding.small),
-        Text('ENVIRONMENT', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+        const Text('ENVIRONMENT', style: TextStyle(fontWeight: FontWeight.w700)),
         Text(env.name),
         const SizedBox(height: BRPadding.small),
-        Text('ACCESS TOKEN', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+        const Text('ACCESS TOKEN', style: TextStyle(fontWeight: FontWeight.w700)),
         FutureBuilder(
             future: AuthStorage(const FlutterSecureStorage()).readAuthToken(),
             builder: (context, snapshot) => InkWell(
@@ -210,7 +209,7 @@ class DebugScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ))),
         const SizedBox(height: BRPadding.small),
-        Text('APP VERSION', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+        const Text('APP VERSION', style: TextStyle(fontWeight: FontWeight.w700)),
         ValueListenableBuilder<String>(
             valueListenable: _appVersion,
             builder: (_, value, __) => InkWell(

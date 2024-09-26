@@ -43,7 +43,9 @@ class _LogsScreen extends State<LogsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Theme(
+      data: ThemeData(useMaterial3: false),
+      child: Scaffold(
         appBar: AppBar(
           title: Text(widget.type.title),
           backgroundColor: Colors.red,
@@ -57,42 +59,45 @@ class _LogsScreen extends State<LogsScreen> {
           ],
         ),
         body: Padding(
-            padding: const EdgeInsets.all(BRPadding.small),
-            child: FutureBuilder(
-                future: AuthStorage(const FlutterSecureStorage()).readAuthToken(),
-                builder: (context, snapshot) {
-                  return ListView.separated(
-                    controller: _scrollController,
-                    itemBuilder: (context, index) {
-                      final logItem = logs[index];
+          padding: const EdgeInsets.all(BRPadding.small),
+          child: FutureBuilder(
+              future: AuthStorage(const FlutterSecureStorage()).readAuthToken(),
+              builder: (context, snapshot) {
+                return ListView.separated(
+                  controller: _scrollController,
+                  itemBuilder: (context, index) {
+                    final logItem = logs[index];
 
-                      return InkWell(
-                          onTap: () {
-                            Clipboard.setData(ClipboardData(text: logs[index].message));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(content: Text('Log entry copied to clipboard.')));
-                          },
-                          child: Text(
-                            logItem.message == 'null'
-                                ? 'No response'
-                                : snapshot.hasData
-                                    ? logs[index].message.replaceAll(snapshot.data!, '[TOKEN]')
-                                    : logs[index].message,
-                            style: TextStyle(
-                                fontFamily: logItem.message != 'null' ? 'American Typewriter' : null,
-                                fontStyle: logItem.message == 'null' ? FontStyle.italic : null,
-                                color: logItem.message == 'null' ? Colors.grey : BRColors.primaryText),
-                            maxLines: 10,
-                            overflow: TextOverflow.ellipsis,
-                          ));
-                    },
-                    separatorBuilder: (context, _) {
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: BRPadding.small),
-                          child: Divider(color: BRColors.primaryText.withOpacity(0.6), thickness: 2));
-                    },
-                    itemCount: logs.length,
-                  );
-                })));
+                    return InkWell(
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: logs[index].message));
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(content: Text('Log entry copied to clipboard.')));
+                        },
+                        child: Text(
+                          logItem.message == 'null'
+                              ? 'No response'
+                              : snapshot.hasData
+                                  ? logs[index].message.replaceAll(snapshot.data!, '[TOKEN]')
+                                  : logs[index].message,
+                          style: TextStyle(
+                              fontFamily: logItem.message != 'null' ? 'American Typewriter' : null,
+                              fontStyle: logItem.message == 'null' ? FontStyle.italic : null,
+                              color: logItem.message == 'null' ? Colors.grey : BRColors.primaryText),
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                        ));
+                  },
+                  separatorBuilder: (context, _) {
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: BRPadding.small),
+                        child: Divider(color: BRColors.primaryText.withOpacity(0.6), thickness: 2));
+                  },
+                  itemCount: logs.length,
+                );
+              }),
+        ),
+      ),
+    );
   }
 }

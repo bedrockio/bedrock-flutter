@@ -303,42 +303,42 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_libphonenumber
-      sha256: "3995deed6fe6d05b565e059f006e7559db6d6f9ef9ec80cb63b2a65d5b7f2bf0"
+      sha256: "1c846c6828e296b2180be39fa7893abed858260265b988c09166d09e75d30266"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.5.0"
   flutter_libphonenumber_android:
     dependency: transitive
     description:
       name: flutter_libphonenumber_android
-      sha256: "0c5e2600d522c824451f3fdcdca7b5e2ff5116a37da83bac478bb4cbe0d53fd7"
+      sha256: "520ce2519ee550b618298cc68781a4bb7adfc131bf6790ae2941ed0034e5943a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.4.0"
   flutter_libphonenumber_ios:
     dependency: transitive
     description:
       name: flutter_libphonenumber_ios
-      sha256: "8598da3119ec0f2e1b6b5d5478bc4e31d759244980f14932a25abf9e3f8ab54b"
+      sha256: c979da7ce78f97d24f70e9c596ec37a721daa83814776dbdcb38286de1942a4f
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.4.0"
   flutter_libphonenumber_platform_interface:
     dependency: transitive
     description:
       name: flutter_libphonenumber_platform_interface
-      sha256: "5ae1d2f8f19f53221b5f4d87e752a5799b7bf2670c970b3edbb73f26895442dc"
+      sha256: "9de1bd623103aefe1cb892693f85f6b2d2979ab9e6cce5d452ba10aa61ed41ed"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "2.1.0"
   flutter_libphonenumber_web:
     dependency: transitive
     description:
       name: flutter_libphonenumber_web
-      sha256: "471aa29ade35826ac2bb49d0c66bcb8fd68e9474fb5299201dbf7aac7830296a"
+      sha256: "3b5be4d5325e8d670f241f02a11d4bf9fd832cb5460d6b6a6926b38861b5881f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.3.0"
   flutter_lints:
     dependency: "direct dev"
     description:

@@ -24,64 +24,67 @@ class ChangeLocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Change location'),
-        backgroundColor: Colors.red,
-        actions: [
-          TextButton(
-            onPressed: () async {
-              if (isNumeric(latitudeController.text) && isNumeric(longitudeController.text)) {
-                Position position = Position(
-                    latitude: double.parse(latitudeController.text),
-                    longitude: double.parse(longitudeController.text),
-                    accuracy: 0.0,
-                    altitude: 0.0,
-                    speed: 0.0,
-                    heading: 0.0,
-                    speedAccuracy: 0.0,
-                    altitudeAccuracy: 0.0,
-                    headingAccuracy: 0.0,
-                    timestamp: DateTime.now());
+    return Theme(
+      data: ThemeData(useMaterial3: false),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Change location'),
+          backgroundColor: Colors.red,
+          actions: [
+            TextButton(
+              onPressed: () async {
+                if (isNumeric(latitudeController.text) && isNumeric(longitudeController.text)) {
+                  Position position = Position(
+                      latitude: double.parse(latitudeController.text),
+                      longitude: double.parse(longitudeController.text),
+                      accuracy: 0.0,
+                      altitude: 0.0,
+                      speed: 0.0,
+                      heading: 0.0,
+                      speedAccuracy: 0.0,
+                      altitudeAccuracy: 0.0,
+                      headingAccuracy: 0.0,
+                      timestamp: DateTime.now());
 
-                await BRSharedPreferences.shared.setPosition(position).then((value) => {
-                      if (context.mounted)
-                        {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(content: Text('Location data changed.')))
-                        }
-                    });
-              } else {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text('Invalid latitude or longitude.')));
-              }
-            },
-            child: const Text('Save', style: TextStyle(color: Colors.white)),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(BRPadding.small),
-        child: Column(children: [
-          TextFormField(
-            controller: latitudeController,
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              label: Text('Latitude'),
-              contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  await BRSharedPreferences.shared.setPosition(position).then((value) => {
+                        if (context.mounted)
+                          {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(content: Text('Location data changed.')))
+                          }
+                      });
+                } else {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(const SnackBar(content: Text('Invalid latitude or longitude.')));
+                }
+              },
+              child: const Text('Save', style: TextStyle(color: Colors.white)),
+            )
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(BRPadding.small),
+          child: Column(children: [
+            TextFormField(
+              controller: latitudeController,
+              cursorColor: Colors.black,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                label: Text('Latitude'),
+                contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+              ),
             ),
-          ),
-          TextFormField(
-            controller: longitudeController,
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              label: Text('Longitude'),
-              contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            TextFormField(
+              controller: longitudeController,
+              cursorColor: Colors.black,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                label: Text('Longitude'),
+                contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
