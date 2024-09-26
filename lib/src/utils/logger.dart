@@ -2,18 +2,46 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 
-class BRLogger {
-  static List<String> logs = [];
+enum BRLogType {
+  console,
+  network,
+  error;
 
-  static void clearLogs() {
-    logs.clear();
+  String get title {
+    switch (this) {
+      case network:
+        return 'Network logs';
+      case console:
+        return 'Console logs';
+      case error:
+        return 'Error logs';
+    }
   }
 }
 
-void brlog(String message) {
+class BRLogger {
+  static List<BRLogItem> logs = [];
+
+  static void clearLogs({BRLogType? type}) {
+    if (type == null) {
+      logs.clear();
+    } else {
+      logs.removeWhere((e) => e.type == type);
+    }
+  }
+}
+
+void brlog(String message, {BRLogType type = BRLogType.console}) {
   if (kDebugMode) {
-    BRLogger.logs.add(message);
+    BRLogger.logs.add(BRLogItem(message, type));
   }
 
   log(message);
+}
+
+class BRLogItem {
+  final String message;
+  final BRLogType type;
+
+  BRLogItem(this.message, this.type);
 }

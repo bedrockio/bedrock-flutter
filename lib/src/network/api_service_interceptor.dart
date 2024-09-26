@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:bedrock_flutter/src/utils/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,8 +15,6 @@ import '/src/env/environment.dart';
 import 'api_error.dart';
 
 class DioLogger {
-  static List<String> collectedLogs = [];
-  static List<String> errorLogs = [];
   static bool collectLogs = false;
   static bool isLogOn = false;
 
@@ -59,13 +58,13 @@ class DioLogger {
     log('Response: ${responseData.substring(0, math.min(responseData.length, 1000))} \n');
 
     if (collectLogs) {
-      collectedLogs.add(curlRequest);
-      collectedLogs.add(responseData);
+      brlog(curlRequest, type: BRLogType.network);
+      brlog(responseData, type: BRLogType.network);
     }
 
     if ((response.statusCode ?? 0) >= 400) {
-      errorLogs.add(curlRequest);
-      errorLogs.add(responseData);
+      brlog(curlRequest, type: BRLogType.error);
+      brlog(responseData, type: BRLogType.error);
     }
   }
 }

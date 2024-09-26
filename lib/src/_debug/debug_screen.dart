@@ -1,3 +1,5 @@
+import 'package:bedrock_flutter/src/utils/logger.dart';
+
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/_debug/change_location_screen.dart';
 import 'logs_screen.dart';
@@ -122,7 +124,7 @@ class DebugScreen extends StatelessWidget {
             onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LogsScreen(type: LogScreenType.network),
+                  builder: (context) => const LogsScreen(type: BRLogType.network),
                 )),
             child: Text('Show network logs',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
@@ -133,7 +135,7 @@ class DebugScreen extends StatelessWidget {
             onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LogsScreen(type: LogScreenType.error),
+                  builder: (context) => const LogsScreen(type: BRLogType.error),
                 )),
             child: Text('Show error logs',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
@@ -144,7 +146,7 @@ class DebugScreen extends StatelessWidget {
             onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LogsScreen(type: LogScreenType.console),
+                  builder: (context) => const LogsScreen(type: BRLogType.console),
                 )),
             child: Text('Show console logs',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
