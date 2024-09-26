@@ -1,3 +1,5 @@
+import 'package:bedrock_flutter/src/utils/logger.dart';
+
 import '/src/network/api_service_interceptor.dart';
 import '/src/utils/auth_storage.dart';
 import '/src/utils/constants/colors.dart';
@@ -6,40 +8,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-enum NetworkLogsScreenType {
-  all,
-  error;
+enum LogScreenType {
+  network,
+  error,
+  console;
 
   String get title {
     switch (this) {
-      case all:
+      case network:
         return 'Network logs';
+      case console:
+        return 'Console logs';
       case error:
         return 'Error logs';
     }
   }
 }
 
-class NetworkLogsScreen extends StatefulWidget {
-  static const route = '/network_logs_screen';
+class LogsScreen extends StatefulWidget {
+  static const route = '/logs_screen';
 
-  final NetworkLogsScreenType type;
+  final LogScreenType type;
 
-  const NetworkLogsScreen({super.key, this.type = NetworkLogsScreenType.all});
+  const LogsScreen({super.key, this.type = LogScreenType.network});
 
   @override
-  State<NetworkLogsScreen> createState() => _NetworkLogsScreen();
+  State<LogsScreen> createState() => _NetworkLogsScreen();
 }
 
-class _NetworkLogsScreen extends State<NetworkLogsScreen> {
+class _NetworkLogsScreen extends State<LogsScreen> {
   final ScrollController _scrollController = ScrollController();
 
   List<String> get logs {
     switch (widget.type) {
-      case NetworkLogsScreenType.all:
+      case LogScreenType.network:
         return DioLogger.collectedLogs;
-      case NetworkLogsScreenType.error:
+      case LogScreenType.error:
         return DioLogger.errorLogs;
+      case LogScreenType.console:
+        return BRLogger.logs;
     }
   }
 
@@ -69,11 +76,14 @@ class _NetworkLogsScreen extends State<NetworkLogsScreen> {
             TextButton(
                 onPressed: () {
                   switch (widget.type) {
-                    case NetworkLogsScreenType.all:
+                    case LogScreenType.network:
                       DioLogger.collectedLogs.clear();
                       break;
-                    case NetworkLogsScreenType.error:
+                    case LogScreenType.error:
                       DioLogger.errorLogs.clear();
+                      break;
+                    case LogScreenType.console:
+                      BRLogger.clearLogs();
                       break;
                   }
                 },

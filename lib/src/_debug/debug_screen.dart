@@ -1,6 +1,6 @@
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/_debug/change_location_screen.dart';
-import '/src/_debug/network_log_screen.dart';
+import 'logs_screen.dart';
 import '/src/env/environment.dart';
 import '/src/network/api_error.dart';
 import '/src/network/api_service_interceptor.dart';
@@ -122,7 +122,7 @@ class DebugScreen extends StatelessWidget {
             onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NetworkLogsScreen(type: NetworkLogsScreenType.all),
+                  builder: (context) => const LogsScreen(type: LogScreenType.network),
                 )),
             child: Text('Show network logs',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
@@ -133,9 +133,20 @@ class DebugScreen extends StatelessWidget {
             onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NetworkLogsScreen(type: NetworkLogsScreenType.error),
+                  builder: (context) => const LogsScreen(type: LogScreenType.error),
                 )),
             child: Text('Show error logs',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
+        const Icon(Icons.chevron_right, color: Colors.red)
+      ]),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        TextButton(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LogsScreen(type: LogScreenType.console),
+                )),
+            child: Text('Show console logs',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
         const Icon(Icons.chevron_right, color: Colors.red)
       ]),
