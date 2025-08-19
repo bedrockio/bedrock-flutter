@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:bedrock_flutter/env/environment.dart';
 import 'package:bedrock_flutter/src/utils/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '/src/utils/auth_storage.dart';
-import '/src/env/environment.dart';
 import 'api_error.dart';
 
 class DioLogger {
@@ -76,7 +76,7 @@ class ApiServiceInterceptor extends Interceptor {
   String? userAgent;
 
   ApiServiceInterceptor(this.dio, {this.errorStream}) : super() {
-    if (env != Stage.prod || kDebugMode) {
+    if (Environment.isDev || kDebugMode) {
       DioLogger.isLogOn = true;
       DioLogger.collectLogs = true;
     }

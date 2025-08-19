@@ -38,6 +38,7 @@ class BRColorScheme {
 extension ColorExtension on Color {
   MaterialColor toMaterialColor() {
     return MaterialColor(
+      // ignore: deprecated_member_use
       value,
       <int, Color>{
         50: this,

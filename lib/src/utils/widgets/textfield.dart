@@ -141,7 +141,7 @@ class _BRTextField extends State<BRTextField> {
           enabledBorder: widget.hasBorder
               ? OutlineInputBorder(
                   borderRadius: BorderRadius.circular(BRPadding.small),
-                  borderSide: BorderSide(color: BRColors.primary.withOpacity(0.5), width: 1),
+                  borderSide: BorderSide(color: BRColors.primary.withValues(alpha: 0.5), width: 1),
                   gapPadding: 2.0,
                 )
               : null,

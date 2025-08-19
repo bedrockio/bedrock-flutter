@@ -1,16 +1,15 @@
+import 'package:bedrock_flutter/env/environment.dart';
 import 'package:bedrock_flutter/src/utils/logger.dart';
 
 import '/src/auth/cubit/auth_cubit.dart';
 import '/src/_debug/change_location_screen.dart';
 import 'logs_screen.dart';
-import '/src/env/environment.dart';
 import '/src/network/api_error.dart';
 import '/src/network/api_service_interceptor.dart';
 import '/src/utils/auth_storage.dart';
 import '/src/utils/constants/padding.dart';
 import '/src/utils/error_helper.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +21,7 @@ class DebugScreen extends StatelessWidget {
   static const route = '/debug';
 
   final ValueNotifier<String> _appVersion = ValueNotifier('-');
-  final ValueNotifier<Stage> _selectedEnvironment = ValueNotifier(env);
   final ValueNotifier<bool> _collectingLogs = ValueNotifier(DioLogger.collectLogs);
-  final ValueNotifier<bool> _shouldSwitchEnvironment = ValueNotifier(false);
 
   DebugScreen({super.key}) {
     PackageInfo.fromPlatform().then((value) {
@@ -37,80 +34,27 @@ class DebugScreen extends StatelessWidget {
     return Theme(
       data: ThemeData(useMaterial3: false),
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.red,
-          title: const Text('Debug Screen'),
-          centerTitle: true,
-        ),
-        body: BlocListener<AuthCubit, AuthState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                  loggedOut: () {
-                    if (_shouldSwitchEnvironment.value == true) {
-                      env = _selectedEnvironment.value;
-                      Environment().load();
-                    }
-                  },
-                  orElse: () {});
-            },
-            child: Padding(
-                padding: const EdgeInsets.all(BRPadding.small),
-                child: SingleChildScrollView(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  _general(context),
-                  const SizedBox(height: BRPadding.large),
-                  _storedData(context)
-                ])))),
-      ),
+          appBar: AppBar(
+            backgroundColor: Colors.red,
+            title: const Text('Debug Screen'),
+            centerTitle: true,
+          ),
+          body: Padding(
+              padding: const EdgeInsets.all(BRPadding.small),
+              child: SingleChildScrollView(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                _general(context),
+                const SizedBox(height: BRPadding.large),
+                _envData(context),
+                const SizedBox(height: BRPadding.large),
+                _storedData(context)
+              ])))),
     );
   }
 
   Widget _general(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text('general', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextButton(
-              onPressed: () {},
-              child:
-                  const Text('Toggle environment', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700))),
-          ValueListenableBuilder<Stage>(
-              valueListenable: _selectedEnvironment,
-              builder: (_, value, __) => CupertinoSegmentedControl(
-                    borderColor: Colors.red,
-                    selectedColor: Colors.red,
-                    pressedColor: Colors.red.withOpacity(0.2),
-                    groupValue: value == Stage.uat ? 0 : 1,
-                    padding: EdgeInsets.zero,
-                    children: const {
-                      0: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: BRPadding.xsmall, vertical: BRPadding.xxsmall),
-                          child: Text('UAT')),
-                      1: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: BRPadding.xsmall, vertical: BRPadding.xxsmall),
-                          child: Text('PROD'))
-                    },
-                    onValueChanged: (obj) {
-                      if (_selectedEnvironment.value == Stage.uat) {
-                        _selectedEnvironment.value = Stage.prod;
-                      } else {
-                        _selectedEnvironment.value = Stage.uat;
-                      }
-
-                      _shouldSwitchEnvironment.value = true;
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Switched to ${_selectedEnvironment.value.name}. Now logging out.')));
-                      Future.delayed(const Duration(seconds: 2)).then((value) {
-                        if (context.mounted) {
-                          BlocProvider.of<AuthCubit>(context).performLogout();
-                        }
-                      });
-                    },
-                  ))
-        ],
-      ),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         TextButton(
             onPressed: () {
@@ -190,7 +134,7 @@ class DebugScreen extends StatelessWidget {
         const Text('stored variables', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
         const SizedBox(height: BRPadding.small),
         const Text('ENVIRONMENT', style: TextStyle(fontWeight: FontWeight.w700)),
-        Text(env.name),
+        const Text(Environment.isDev ? 'DEVELOPMENT' : 'PRODUCTION'),
         const SizedBox(height: BRPadding.small),
         const Text('ACCESS TOKEN', style: TextStyle(fontWeight: FontWeight.w700)),
         FutureBuilder(
@@ -223,6 +167,34 @@ class DebugScreen extends StatelessWidget {
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                 ))),
+      ],
+    );
+  }
+
+  Widget _envData(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('env.json variables', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: BRPadding.small),
+        ...Environment.values.entries.map(
+          (e) => InkWell(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: e.value.toString()));
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('Value for ${e.key.toUpperCase()} copied to clipboard.')));
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(e.key.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(e.value.toString()),
+                const SizedBox(height: BRPadding.xsmall),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -9,13 +9,13 @@ class BRTheme {
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: BRColors.primary,
       ),
-      bottomAppBarTheme: const BottomAppBarTheme(
+      bottomAppBarTheme: const BottomAppBarThemeData(
         color: BRColors.primaryAccent,
         elevation: 1,
         shape: CircularNotchedRectangle(),
         padding: EdgeInsets.zero,
       ),
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
           indicatorColor: Colors.transparent,
           dividerColor: Colors.transparent,
           splashFactory: NoSplash.splashFactory,

@@ -23,9 +23,9 @@ class BRCtaButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(backgroundColor.withOpacity(enabled ? 1.0 : 0.5)),
-            overlayColor: WidgetStateProperty.all<Color>(textColor.withOpacity(0.15)),
-            foregroundColor: WidgetStateProperty.all<Color>(textColor.withOpacity(enabled ? 1.0 : 0.5)),
+            backgroundColor: WidgetStateProperty.all(backgroundColor.withValues(alpha: enabled ? 1.0 : 0.5)),
+            overlayColor: WidgetStateProperty.all<Color>(textColor.withValues(alpha: 0.15)),
+            foregroundColor: WidgetStateProperty.all<Color>(textColor.withValues(alpha: enabled ? 1.0 : 0.5)),
             splashFactory: NoSplash.splashFactory,
             elevation: WidgetStateProperty.all<double>(0.0),
             shape:

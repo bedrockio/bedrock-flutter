@@ -1,4 +1,5 @@
-import '/src/env/environment.dart';
+import 'package:bedrock_flutter/env/environment.dart';
+
 import '/src/utils/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -6,7 +7,7 @@ Future<Position?> getUserLocation() async {
   Position? position;
 
   try {
-    if (env == Stage.uat) {
+    if (Environment.isDev) {
       position = BRSharedPreferences.shared.getPosition();
 
       position ??= await Geolocator.getCurrentPosition();

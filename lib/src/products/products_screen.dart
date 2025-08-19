@@ -66,7 +66,7 @@ class _ProductScreen extends State<ProductsScreen> {
                       return ProductListItem(product: products[index]);
                     },
                     separatorBuilder: (context, index) {
-                      return Divider(thickness: 1, color: BRColors.primary.withOpacity(0.5));
+                      return Divider(thickness: 1, color: BRColors.primary.withValues(alpha: 0.5));
                     },
                     itemCount: products.length);
               }, orElse: () {

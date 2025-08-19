@@ -91,7 +91,7 @@ class _LogsScreen extends State<LogsScreen> {
                   separatorBuilder: (context, _) {
                     return Padding(
                         padding: const EdgeInsets.symmetric(vertical: BRPadding.small),
-                        child: Divider(color: BRColors.primaryText.withOpacity(0.6), thickness: 2));
+                        child: Divider(color: BRColors.primaryText.withValues(alpha: 0.6), thickness: 2));
                   },
                   itemCount: logs.length,
                 );

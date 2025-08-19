@@ -1,5 +1,6 @@
+import 'package:bedrock_flutter/env/environment.dart';
+
 import '/src/utils/widgets/button.dart';
-import '/src/env/environment.dart';
 import '/src/route_generator.dart';
 import '/src/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -26,25 +27,23 @@ class ErrorDialog extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        env != Stage.prod
+        Environment.isDev
             ? InkWell(
                 onTap: () {
-                  if (env != Stage.prod) {
-                    RouteGenerator.showModal(
-                      context: context,
-                      builder: (BuildContext context) => Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              logMessage,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
+                  RouteGenerator.showModal(
+                    context: context,
+                    builder: (BuildContext context) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            logMessage,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
-                    );
-                  }
+                    ),
+                  );
                 },
                 child: _buildBody(context),
               )

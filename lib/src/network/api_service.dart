@@ -17,7 +17,7 @@ class ApiService {
     dio.options.sendTimeout = const Duration(seconds: 10);
   }
 
-  setBaseUrl(String baseUrl) {
+  void setBaseUrl(String baseUrl) {
     dio.options.baseUrl = baseUrl;
   }
 

@@ -75,7 +75,7 @@ class CheckBoxItem extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 70),
             padding: const EdgeInsets.symmetric(horizontal: BRPadding.small, vertical: BRPadding.small),
             decoration: BoxDecoration(
-                color: selected ? BRColors.primary.withOpacity(0.75) : BRColors.primary.withOpacity(0.25),
+                color: selected ? BRColors.primary.withValues(alpha: 0.75) : BRColors.primary.withValues(alpha: 0.25),
                 borderRadius: BorderRadius.circular(11)),
             child: Row(
               children: [
