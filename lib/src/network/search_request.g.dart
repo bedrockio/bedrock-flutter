@@ -21,21 +21,13 @@ SearchRequest _$SearchRequestFromJson(Map<String, dynamic> json) =>
       skip: (json['skip'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$SearchRequestToJson(SearchRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('keyword', instance.keyword);
-  writeNotNull('product', instance.product);
-  writeNotNull('isFeatured', instance.isFeatured);
-  writeNotNull('sort', instance.sort);
-  writeNotNull('type', instance.type);
-  writeNotNull('categories', instance.categories);
-  writeNotNull('skip', instance.skip);
-  return val;
-}
+Map<String, dynamic> _$SearchRequestToJson(SearchRequest instance) =>
+    <String, dynamic>{
+      if (instance.keyword case final value?) 'keyword': value,
+      if (instance.product case final value?) 'product': value,
+      if (instance.isFeatured case final value?) 'isFeatured': value,
+      if (instance.sort case final value?) 'sort': value,
+      if (instance.type case final value?) 'type': value,
+      if (instance.categories case final value?) 'categories': value,
+      if (instance.skip case final value?) 'skip': value,
+    };

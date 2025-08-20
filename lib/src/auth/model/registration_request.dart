@@ -8,8 +8,10 @@ class RegistrationRequestModel {
   String lastName;
   String email;
   String? phone;
+  String type;
 
-  RegistrationRequestModel({required this.firstName, required this.lastName, required this.email, this.phone});
+  RegistrationRequestModel(
+      {required this.firstName, required this.lastName, required this.email, this.phone, this.type = 'code'});
 
   factory RegistrationRequestModel.fromJson(Map<String, dynamic> json) => _$RegistrationRequestModelFromJson(json);
 

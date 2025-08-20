@@ -16,7 +16,7 @@ class AuthRepository {
     RegistrationRequestModel request =
         RegistrationRequestModel(firstName: firstName, lastName: lastName, email: email, phone: phoneNumber);
     try {
-      Response response = await apiService.post('/auth/otp/register', data: request.toJson());
+      Response response = await apiService.post('/signup', data: request.toJson());
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
       rethrow;
@@ -27,8 +27,8 @@ class AuthRepository {
   /// POST /auth/otp/send-code
   Future<bool> login(String phoneNumber) async {
     try {
-      LoginUserRequest request = LoginUserRequest(phone: phoneNumber);
-      Response response = await apiService.post('/auth/otp/send-code', data: request.toJson());
+      LoginUserRequest request = LoginUserRequest(phone: phoneNumber, channel: 'sms');
+      Response response = await apiService.post('/auth/otp/send', data: request.toJson());
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     } catch (_) {
       rethrow;

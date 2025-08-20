@@ -13,6 +13,7 @@ RegistrationRequestModel _$RegistrationRequestModelFromJson(
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       phone: json['phone'] as String?,
+      type: json['type'] as String? ?? 'code',
     );
 
 Map<String, dynamic> _$RegistrationRequestModelToJson(
@@ -22,4 +23,5 @@ Map<String, dynamic> _$RegistrationRequestModelToJson(
       'lastName': instance.lastName,
       'email': instance.email,
       'phone': instance.phone,
+      'type': instance.type,
     };

@@ -9,7 +9,10 @@ class LoginUserRequest {
   @JsonKey(includeIfNull: false)
   String? code;
 
-  LoginUserRequest({required this.phone, this.code});
+  @JsonKey(includeIfNull: false)
+  String? channel;
+
+  LoginUserRequest({required this.phone, this.code, this.channel});
 
   factory LoginUserRequest.fromJson(Map<String, dynamic> json) => _$LoginUserRequestFromJson(json);
 
