@@ -8,6 +8,7 @@ class BRTheme {
       primarySwatch: BRColors.primary.toMaterialColor(),
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: BRColors.primary,
+        strokeCap: StrokeCap.round,
       ),
       bottomAppBarTheme: const BottomAppBarThemeData(
         color: BRColors.primaryAccent,
