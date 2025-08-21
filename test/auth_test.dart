@@ -7,9 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:bedrock_flutter/src/auth/model/login_response_model.dart';
 import 'package:bedrock_flutter/src/auth/auth_repository.dart';
 import 'package:bedrock_flutter/src/auth/cubit/auth_cubit.dart';
-import 'package:bedrock_flutter/src/auth/model/login_response_model.dart';
 import 'package:bedrock_flutter/src/auth/model/registration_request.dart';
 import 'package:bedrock_flutter/src/network/api_error.dart';
 import 'package:bedrock_flutter/src/utils/auth_storage.dart';
@@ -34,7 +34,7 @@ void main() {
   const String token = '__sample_token';
 
   RegistrationRequestModel registrationRequestModel =
-      RegistrationRequestModel(firstName: 'Test', lastName: 'Person', phoneNumber: '+15551234567');
+      RegistrationRequestModel(firstName: 'Test', lastName: 'Person', email: 'test@person.com', phone: '+15551234567');
   ErrorHelper.errorStream = StreamController<ApiError>.broadcast();
 
   const MethodChannel channel = MethodChannel('dev.fluttercommunity.plus/package_info');
@@ -69,7 +69,7 @@ void main() {
         build: () => authBloc,
         wait: const Duration(seconds: 1),
         act: (bloc) => bloc.requestVerificationCode(phoneNumber),
-        expect: () => [const TypeMatcher<LoginLoading>(), const TypeMatcher<LoginRequestSuccess>()]);
+        expect: () => [const AuthState.loading(), const AuthState.loginOtpRequested()]);
 
     blocTest<AuthCubit, AuthState>('User log in (Phone number, failure)',
         setUp: () async {
@@ -80,10 +80,14 @@ void main() {
         wait: const Duration(seconds: 1),
         act: (bloc) => bloc.requestVerificationCode(phoneNumber),
         expect: () => [
-              const TypeMatcher<LoginLoading>(),
-              const TypeMatcher<LoginError>().having((p0) {
-                return p0.error?.message;
-              }, 'error.message', 'Incorrect password')
+              const AuthState.loading(),
+              isA<AuthState>().having(
+                  (state) => state.maybeMap(
+                        error: (errorState) => errorState.error,
+                        orElse: () => null,
+                      ),
+                  'error',
+                  isA<DioException>().having((e) => e.message, 'error', 'Incorrect password')),
             ]);
 
     blocTest<AuthCubit, AuthState>('User log in (Correct code)',
@@ -101,7 +105,7 @@ void main() {
             assert(value == token);
           });
 
-          return [const TypeMatcher<LoginLoading>(), const TypeMatcher<LoginSuccess>()];
+          return [const AuthState.loading(), const AuthState.loggedIn()];
         });
 
     blocTest<AuthCubit, AuthState>('User log in (Incorrect code)',
@@ -113,10 +117,14 @@ void main() {
         wait: const Duration(seconds: 1),
         act: (bloc) => bloc.performLogin('incorrect@email.com', 'wrong_code'),
         expect: () => [
-              const TypeMatcher<LoginLoading>(),
-              const TypeMatcher<LoginError>().having((p0) {
-                return p0.error?.message;
-              }, 'error.message', 'Incorrect password')
+              const AuthState.loading(),
+              isA<AuthState>().having(
+                  (state) => state.maybeMap(
+                        error: (errorState) => errorState.error,
+                        orElse: () => null,
+                      ),
+                  'error',
+                  isA<DioException>().having((e) => e.message, 'error', 'Incorrect password')),
             ]);
 
     blocTest<AuthCubit, AuthState>('User token invalid',
@@ -128,10 +136,14 @@ void main() {
         wait: const Duration(seconds: 1),
         act: (bloc) => bloc.performLogin('incorrect@email.com', 'bogus_data'),
         expect: () => [
-              const TypeMatcher<LoginLoading>(),
-              const TypeMatcher<LoginError>().having((p0) {
-                return p0.error?.message;
-              }, 'error.message', 'Incorrect password')
+              const AuthState.loading(),
+              isA<AuthState>().having(
+                  (state) => state.maybeMap(
+                        error: (errorState) => errorState.error,
+                        orElse: () => null,
+                      ),
+                  'error',
+                  isA<DioException>().having((e) => e.message, 'error', 'Incorrect password')),
             ]);
 
     blocTest<AuthCubit, AuthState>('User logout',
@@ -142,7 +154,7 @@ void main() {
         wait: const Duration(seconds: 1),
         act: (bloc) => bloc.performLogout(),
         expect: () {
-          return [const TypeMatcher<LoginLoading>(), const TypeMatcher<LoggedOut>()];
+          return [const AuthState.loading(), const AuthState.loggedOut()];
         });
   });
 
@@ -153,7 +165,8 @@ void main() {
             when(repository.register(
                     lastName: registrationRequestModel.lastName,
                     firstName: registrationRequestModel.firstName,
-                    phoneNumber: registrationRequestModel.phoneNumber))
+                    email: registrationRequestModel.email,
+                    phoneNumber: registrationRequestModel.phone))
                 .thenAnswer(
               (realInvocation) => Future.value(true),
             );
@@ -161,26 +174,33 @@ void main() {
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
-        act: (bloc) => bloc.registerUser(firstName: 'Test', lastName: 'Person', phoneNumber: '+15551234567'),
-        expect: () => [const TypeMatcher<RegistrationLoading>(), const TypeMatcher<RegistrationSuccess>()]);
+        act: (bloc) => bloc.registerUser(
+            firstName: 'Test', lastName: 'Person', email: 'test@person.com', phoneNumber: '+15551234567'),
+        expect: () => [const AuthState.loading(), const AuthState.registerSuccess()]);
     blocTest<AuthCubit, AuthState>('User account registration (Failure, duplicate phone number)',
         setUp: () async {
           when(repository.register(
                   lastName: registrationRequestModel.lastName,
                   firstName: registrationRequestModel.firstName,
-                  phoneNumber: registrationRequestModel.phoneNumber))
+                  email: registrationRequestModel.email,
+                  phoneNumber: registrationRequestModel.phone))
               .thenAnswer(
             (realInvocation) => throw DioException(requestOptions: RequestOptions(), message: 'Incorrect password'),
           );
         },
         build: () => authBloc,
         wait: const Duration(seconds: 1),
-        act: (bloc) => bloc.registerUser(firstName: 'Test', lastName: 'Person', phoneNumber: '+15551234567'),
+        act: (bloc) => bloc.registerUser(
+            firstName: 'Test', lastName: 'Person', email: 'test@person.com', phoneNumber: '+15551234567'),
         expect: () => [
-              const TypeMatcher<RegistrationLoading>(),
-              const TypeMatcher<RegistrationError>().having((p0) {
-                return p0.error?.message;
-              }, 'error.message', 'Incorrect password')
+              const AuthState.loading(),
+              isA<AuthState>().having(
+                  (state) => state.maybeMap(
+                        error: (errorState) => errorState.error,
+                        orElse: () => null,
+                      ),
+                  'error',
+                  isA<DioException>().having((e) => e.message, 'error', 'Incorrect password')),
             ]);
   });
 }

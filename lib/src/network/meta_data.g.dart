@@ -7,9 +7,9 @@ part of 'meta_data.dart';
 // **************************************************************************
 
 MetaData _$MetaDataFromJson(Map<String, dynamic> json) => MetaData(
-      json['total'] as int,
-      json['skip'] as int,
-      json['limit'] as int,
+      (json['total'] as num).toInt(),
+      (json['skip'] as num).toInt(),
+      (json['limit'] as num).toInt(),
     );
 
 Map<String, dynamic> _$MetaDataToJson(MetaData instance) => <String, dynamic>{

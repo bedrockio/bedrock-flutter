@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../constants/colors.dart';
-import '../constants/fonts.dart';
+import '/src/utils/constants/colors.dart';
 
 class OtpWidget extends StatelessWidget {
   final String phoneNumber;
@@ -15,15 +14,15 @@ class OtpWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('We just sent you a six-digit code to $phoneNumber. $instructionText', style: BRFontStyle.body()),
+      Text('We just sent you a six-digit code to $phoneNumber. $instructionText',
+          style: Theme.of(context).textTheme.bodyMedium),
       const SizedBox(height: 30),
       PinCodeTextField(
         appContext: context,
         length: 6,
         obscureText: true,
-        obscuringWidget: const Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Text('*', style: TextStyle(color: BRColors.primaryText, fontSize: 34))),
+        obscuringWidget:
+            const Padding(padding: EdgeInsets.only(top: 10), child: Text('*', style: TextStyle(fontSize: 34))),
         blinkWhenObscuring: true,
         animationType: AnimationType.fade,
         pinTheme: PinTheme(
@@ -37,7 +36,7 @@ class OtpWidget extends StatelessWidget {
             inactiveFillColor: Colors.white,
             activeFillColor: Colors.white,
             inactiveColor: BRColors.primaryText),
-        cursorColor: Colors.black,
+        cursorColor: BRColors.primary,
         animationDuration: const Duration(milliseconds: 100),
         enableActiveFill: true,
         controller: textEditingController,

@@ -1,3 +1,5 @@
+import 'package:bedrock_flutter/env/environment.dart';
+
 import 'api_service_interceptor.dart';
 import 'package:dio/dio.dart';
 
@@ -12,12 +14,13 @@ class ApiService {
       dio.interceptors.add(interceptor);
     }
 
+    dio.options.baseUrl = '${Environment.baseUrl}/1';
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
     dio.options.sendTimeout = const Duration(seconds: 10);
   }
 
-  setBaseUrl(String baseUrl) {
+  void setBaseUrl(String baseUrl) {
     dio.options.baseUrl = baseUrl;
   }
 

@@ -1,0 +1,4 @@
+{
+    "BASE_URL": "http://localhost:2300",
+    "IS_DEV": false
+}

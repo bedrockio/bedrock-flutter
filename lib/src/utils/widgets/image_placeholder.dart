@@ -18,7 +18,7 @@ class ImageRender extends StatelessWidget {
       width: size?.width ?? 50,
       height: size?.height ?? 50,
       progressIndicatorBuilder: (context, url, progress) {
-        return const Center(child: CircularProgressIndicator(color: BRColors.primary));
+        return const Center(child: CircularProgressIndicator());
       },
       errorWidget: (context, _, __) {
         return ImagePlaceholder(size: Size(size?.width ?? 50, size?.height ?? 50));

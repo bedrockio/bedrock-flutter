@@ -4,20 +4,26 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-      {
-          "name": "runner_uat",
-          "request": "launch",
-          "type": "dart",
-          "program": "./lib/src/env/main_uat.dart",
-          "args": ["--flavor", "runner_uat"],
-      },
-      {
-          "name": "runner_prod",
-          "request": "launch",
-          "type": "dart",
-          "program": "./lib/src/env/main_prod.dart",
-          "args": ["--flavor", "runner_prod"],
-
-      }
+    {
+        "name": "runner_dev",
+        "request": "launch",
+        "type": "dart",
+        "program": "./lib/main.dart",
+        "args": ["--dart-define-from-file=lib/env/uat.json"],
+    },
+    {
+        "name": "runner_uat",
+        "request": "launch",
+        "type": "dart",
+        "program": "./lib/main.dart",
+        "args": ["--dart-define-from-file=lib/env/uat.json"],
+    },
+    {
+        "name": "runner_prod",
+        "request": "launch",
+        "type": "dart",
+        "program": "./lib/main.dart",
+        "args": ["--dart-define-from-file=lib/env/prod.json"],
+    }
   ]
 }

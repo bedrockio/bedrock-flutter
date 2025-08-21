@@ -6,9 +6,12 @@ part 'registration_request.g.dart';
 class RegistrationRequestModel {
   String firstName;
   String lastName;
-  String? phoneNumber;
+  String email;
+  String? phone;
+  String type;
 
-  RegistrationRequestModel({required this.firstName, required this.lastName, this.phoneNumber});
+  RegistrationRequestModel(
+      {required this.firstName, required this.lastName, required this.email, this.phone, this.type = 'code'});
 
   factory RegistrationRequestModel.fromJson(Map<String, dynamic> json) => _$RegistrationRequestModelFromJson(json);
 
